@@ -1,0 +1,70 @@
+<div class="address-form page-customer" id="address-form">
+    <form id="form-address" class="form form-address" data-id="{{ address.id|default(-1) }}">
+
+        <div class="form-group">
+            <label for="edit-address-designation">Désignation</label>
+            <input type="text" id="edit-address-designation" required value="{{ address.designation|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="row row-split">
+            <div class="form-group form-radio">
+                <input type="radio" name="edit-address-title" value="0"
+                       id="edit-address-title-mr" {% if address.title|default(0) == 0 %}checked{% endif %}>
+                <label for="edit-address-title-mr">Monsieur</label>
+            </div>
+
+            <div class="form-group form-radio">
+                <input type="radio" name="edit-address-title" value="1"
+                       id="edit-address-title-mrs" {% if address.title|default(0) == 1 %}checked{% endif %}>
+                <label for="edit-address-title-mrs">Madame</label>
+            </div> {# /.form-group #}
+        </div> {# /.row #}
+
+        <div class="form-group">
+            <label for="edit-address-lastname">Nom</label>
+            <input type="text" id="edit-address-lastname" required value="{{ address.lastname|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address-firstname">Prénom</label>
+            <input type="text" id="edit-address-firstname" required value=" {{ address.firstname|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address">Adresse</label>
+            <input type="text" id="edit-address" value="{{ address.address|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address-complement">Complément</label>
+            <input type="text" id="edit-address-complement" value="{{ address.complement|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address-zip-code">Code postal</label>
+            <input type="text" id="edit-address-zip-code" value="{{ address.zipCode|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address-city">Ville</label>
+            <input type="text" id="edit-address-city" value="{{ address.city|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address-country">Pays</label>
+            <input type="text" id="edit-address-country" value="{{ address.country|default('') }}">
+        </div> {# /.form-group #}
+
+        <div class="form-group">
+            <label for="edit-address-instruction">Instructions de lirvaison</label>
+            <textarea id="edit-address-instruction" >{{ address.instruction|default('') }}</textarea>
+        </div> {# /.form-group #}
+
+        <div class="controls">
+            <button id="edit-address-submit" class="btn btn-submit">Enregister</button>
+            <button id="btn-address-return" class="btn btn-address-return">Annuler</button>
+            <p id="edit-address-errors"></p>
+        </div>
+
+    </form>
+</div>

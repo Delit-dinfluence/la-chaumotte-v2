@@ -1,0 +1,59 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block topbar_right %}
+    <select name="" id="select-languages">
+        {% for language in languages %}
+            <option value="{{ language.id }}">{{ language.designation }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block content %}
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#promotions">SEO</a></li>
+        <li><a data-toggle="tab" href="#reductions">Commentaires</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div id="promotions" class="tab-pane fade">
+            {{ form_start(form_entity) }}
+
+            <div>
+                <p>Aide à la recherche:</p>
+                {{ form_row(form_entity.use_cache) }}
+                {{ form_row(form_entity.use_suggest) }}
+
+            </div>
+            <div>
+                <p>Champs de recherches:</p>
+                {{ form_row(form_entity.by_reference) }}
+                {{ form_row(form_entity.by_url) }}
+                {{ form_row(form_entity.by_designation) }}
+                {{ form_row(form_entity.by_keywords) }}
+            </div>
+
+            {{ form_end(form_entity) }}
+        </div>
+
+        <div id="reductions" class="tab-pane fade in active show">
+            {% include '@core/admin/theme/basique/includes/table.html.twig' with {'admin_entity_settings' : searches_settings , 'entities' : searches, 'default_entity': search }%}
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+    <script>
+
+    </script>
+{% endblock %}

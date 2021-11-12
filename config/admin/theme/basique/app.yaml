@@ -1,0 +1,931 @@
+page_general:
+    disabled_actions: ['view', 'list', 'remove']
+
+    form:
+        fields:
+            - { property: 'sitename', type: 'text', label: 'Nom du site' }
+            - { property: 'domain', type: 'text', label: 'Nom de domaine' }
+            - { property: 'logoFile', type: 'image', label: 'Logo du site' }
+
+            - { property: 'uri', type: 'translation', label: 'URL' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description' }
+
+    edit:
+        title: 'Configuration générale'
+###
+## PAGES SPECIFIQUES
+###
+
+page_actualites:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'priority', type: 'text', label: 'Priorité',  help: 'Importance de la page entre 0 et 1.' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+
+page_actualite:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'priority', type: 'text', label: 'Priorité',  help: 'Importance de la page entre 0 et 1.' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+actualite:
+    disabled_actions: ['view']
+
+    list:
+        fields:
+            - { property: 'isEnabled', type: 'toggle', label: 'Status' }
+            - { property: 'designation', label: 'URL' }
+
+    form:
+        fields:
+            - { property: 'is_enabled', type: 'checkbox', label: 'En ligne' }
+            - { property: 'reference', type: 'text', label: 'Référence' }
+            - { property: 'designation', type: 'translation', label: 'URL' }
+            - { property: 'description_short', type: 'translation', label: 'URL' }
+            - { property: 'description_long', type: 'translation', label: 'URL', class: 'wysiwyg' }
+            - { property: 'imageFile', type: 'image' }
+            - { property: 'image_alt', type: 'translation' }
+            - { property: 'pictureFile', type: 'image' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+
+slide:
+    disabled_actions: ['view']
+
+    list:
+        fields:
+            - { property: 'isEnabled', type: 'toggle', label: 'Status' }
+            - { property: 'image', type: 'image', label: 'Image' }
+            - { property: 'reference', label: 'Référence' }
+            - { property: 'sortorder', label: 'Ordre' }
+
+    form:
+        title: 'Gestion des "Carousels"'
+
+        fields:
+            - { property: 'is_enabled', type: 'checkbox', label: 'En ligne', help: "Affiche/masque l'élement sur le site internet." }
+            - { property: 'reference', type: 'text', label: 'Référence', required: 'true', help: "Désignation utilisée pour la recherche dans l'espace d'administration." }
+            - { property: 'sortorder', type: 'text', label: 'Ordre', required: 'true', help: "Ordre d'affichage des élements. Un nombre entier est attendu."}
+#            - { property: 'page', type: 'entity', module: 'page',  entity: 'page', required: 'true', help: "Sélection de la page qui accueillera l'élement."}
+            #            - { property: 'designation', type: 'translation', label: 'Contenu', help: "Contenu de l'élement.", class: 'wysiwyg' }
+            #            - { property: 'use_logo', type: 'checkbox', label: 'Insérer le logo' }
+            #            - { property: 'slide_type', type: 'select', label: 'Type' }
+            - { property: 'imageFile', type: 'image', required: 'true', label: 'Image',  help: "Image de couverture." }
+            - { property: 'image_alt', type: 'translation', label: 'Texte alternatif', required: 'true', help: "Texte alternatif permettant un meilleur référencement et l'utilisation du site internet sur les navigateurs de personnes handicapées."  }
+            #            - { property: 'use_url', type: 'checkbox', label: 'Insérer un lien', help: "Activer l'utilisation d'un lien de redirection." }
+            #            - { property: 'url', type: 'text', label: 'URL de redirection', help: "Lien de redirection au clique sur l'élement."}
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_error:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_error403:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_error404:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_home:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_connect:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_register:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_info_delivery:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+
+page_info_payment:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_faq:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_coming_soon:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_maintenance:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+
+page_mini:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+
+page_custom_one:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_two:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_three:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_four:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_five:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_six:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_seven:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_eight:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_nine:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_custom_ten:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Accueil"'
+
+###
+## PAGES ECOMMERCE
+###
+
+page_category:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Catégories"'
+
+page_products:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Produits"'
+
+page_product:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Produit"'
+
+page_cart:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Panier"'
+
+page_order:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Panier"'
+
+page_order_validated:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Panier"'
+
+page_order_failed:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Panier"'
+###
+## PAGES ANNEXES
+###
+
+page_research:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+    edit:
+        title: 'Page "Recherche"'
+
+page_notice:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Mentions légales"'
+
+page_about:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Qui sommes nous ?"'
+
+page_contact:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Contact"'
+
+page_cgv:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'priority', type: 'text', label: 'Priorité',  help: 'Importance de la page entre 0 et 1.' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Conditions Générales de Ventes"'
+
+page_disconnect:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account_info:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account_adress:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account_adress_form:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account_historic:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account_historic_details:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_account_newsletter:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+page_forgot_password:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'
+
+
+page_forgot_password_reset:
+    disabled_actions: ['view', 'remove', 'list']
+
+    form:
+        fields:
+            - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la page',  help: 'Répertorie la page dans les moteurs de recherches' }
+            - { property: 'uri', type: 'translation', label: 'URL', required: 'true', help: 'Adresse de la page <br />(Ex: /actualites)' }
+            - { property: 'seo_title', type: 'translation', label: 'Meta titre', required: 'true', help: 'Ce titre sera affiché dans les moteurs de recherche et dans les onglets de navigateur web.' }
+            - { property: 'seo_description', type: 'translation', label: 'Meta description', required: 'true', help: 'Cette description sera affichée dans les moteurs de recherche.' }
+            - { property: 'seo_keywords', type: 'translation', label: 'Meta mot(s) clé(s)', help: 'Les mots clés servent à retrouver la page plus facilement dans les moteurs de recherche' }
+            - { property: 'sn_title', type: 'translation', label: 'Réseaux sociaux - Titre', help: 'Ce titre sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'sn_description', type: 'translation', label: 'Réseaux sociaux - Description', help: 'Cette description sera affiché lors du partage de la page sur les réseaux sociaux' }
+            - { property: 'twitterFile', type: 'image', label: 'Réseaux sociaux - Twitter', help: 'Image de partage de la page sur Twitter'}
+            - { property: 'facebookFile', type: 'image', label: 'Réseaux sociaux - Facebook', help: 'Image de partage par defaut sur les réseaux sociaux' }
+
+
+    edit:
+        title: 'Page "Accueil"'

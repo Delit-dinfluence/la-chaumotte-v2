@@ -1,0 +1,29 @@
+{% extends '@app/base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/home.min.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="page page-home">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div> {# /.page #}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function () {
+
+
+        });
+
+    </script>
+{% endblock %}

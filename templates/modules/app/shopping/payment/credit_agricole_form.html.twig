@@ -1,0 +1,6 @@
+<form method="POST" action="{{ serveur_link }}">
+    {% for key, value in params %}
+    <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <input type="submit" id="payment_submit" value="Envoyer">
+</form>

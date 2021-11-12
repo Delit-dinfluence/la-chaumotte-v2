@@ -1,0 +1,125 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            {% set item_content %}
+                <div>
+                    <p>Statut: {{ account.statut|raw }}</p>
+                    <p>Identité: {{ account.firstName ~ ' ' ~ account.lastName }}</p>
+                    <p>Adresse email : {{ account.email }}</p>
+                    <p>Société: {{ account.companyName }}</p>
+                    <p>
+                        Adresse: {{ account.address.street ~ ' ' ~  account.address.city ~ ' ' ~  account.address.zipCode ~ ' ' ~  account.address.country }}</p>
+                    <p>Compte: {{ account.offer.type ~ ' - ' }}
+
+                        {% set credits =  account.offer.credits %}
+
+                        <span{% if  credits > 5000 %}
+                            class="success"
+                        {% elseif credits == 0 %}
+                            class="danger"
+                        {% else %}
+                            class="warning"
+                                {% endif %}>{{ credits }} crédits restants</span></p>
+
+
+                </div>
+            {% endset %}
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                title: 'Informations du compte',
+                content: item_content,
+            } %}
+        </div>
+
+        <div class="col-md-6">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' with {title: ''} %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% set item_content %}
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Statut</th>
+                        <th>Désignation</th>
+                        <th>Programmation</th>
+                        <th>Dernière modification</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in campaigns %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            {% if item.status == 'draft' %}
+                                <td>Brouillon</td>
+                            {% else %}
+                                <td>{{ item.status }}</td>
+                            {% endif %}
+
+                            <td>{{ item.name }}</td>
+                            {% if item.scheduledAt == '' %}
+                                <td>Aucune</td>
+                            {% else %}
+                                <td>{{ item.scheduledAt|date('d-m-Y \à H:i') }}</td>
+                            {% endif %}
+
+                            <td>{{ item.modifiedAt|date('d-m-Y \à H:i') }}</td>
+                            <td>
+                                <div>
+                                    <button class="campaign_email_view btn btn-success" data-id="{{ item.id }}">
+                                        <i class="material-icons">search</i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endset %}
+
+            {% set controls %}
+
+                <a href="" class="btn btn-submit"><i class="fas fa-plus"></i> Nouvelle campagne email</a>
+            {% endset %}
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                title: 'Campagnes emails',
+                content: item_content,
+            } %}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('.campaign_email_view').on('click', function () {
+
+                $.ajax({
+                    url: "",
+                    data: {'id': ''},
+                    method: 'post',
+                    done: function (_data) {
+
+                    }
+                })
+            });
+
+        });
+    </script>
+{% endblock %}
+

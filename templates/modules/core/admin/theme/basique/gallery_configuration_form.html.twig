@@ -1,0 +1,552 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('assets/css/gallery.css') }}">
+    <style>
+
+
+        .grid .grid-item .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+
+            background: #fff;
+
+            padding: 10px;
+        }
+
+        .grid .grid-item .controls {
+            visibility: hidden;
+        }
+
+        .grid .grid-item:hover .controls {
+            visibility: visible;
+        }
+
+        .grid-item {
+            width: calc(100% / {{ form_entity.vars.value.columnsNumber }});
+            height: {{ form_entity.vars.value.columnHeight }}px;
+        }
+
+        .grid-item[data-width="2"] {
+            width: calc(2 * (100% /{{ form_entity.vars.value.columnsNumber }}));
+
+        }
+
+        .grid-item[data-height="2"] {
+            height: calc(2 * {{ form_entity.vars.value.columnHeight }}px);
+        }
+
+        .grid-item[data-width="3"] {
+            width: calc(3 * (100% /{{ form_entity.vars.value.columnsNumber }}));
+
+        }
+
+        .grid-item[data-height="3"] {
+            height: calc(3 * {{ form_entity.vars.value.columnHeight }}px);
+        }
+
+        .grid-item[data-width="4"] {
+            width: calc(4 * (100% /{{ form_entity.vars.value.columnsNumber }}));
+
+        }
+
+        .grid-item[data-height="4"] {
+            height: calc(4 * {{ form_entity.vars.value.columnHeight }}px);
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+    {% include '@core/admin/theme/basique/includes/form.html.twig' %}
+
+
+
+    {% set item_content %}
+
+        <div class="alert alert-info alert-with-icon alert-authorizations">
+            <i class="material-icons" data-notify="icon">notifications</i>
+            <div>
+                <p style="margin-bottom:10px;"> Double-clique sur un element pour modifier son contenu.</p>
+            </div>
+        </div>
+
+        <div id="grid" class="grid">
+            <div class="grid-container">
+
+
+                {% for item in galleries %}
+                    <div class="grid-item" data-height="{{ item.rows }}" data-width="{{ item.columns }}">
+                        <div class="item">
+                            {% if item.image == null %}
+                                <img src="{{ asset('assets/media/images/no_image.jpeg') }}" data-type="image" alt=""
+                                     class="preview image">
+                            {% else %}
+                                <img src="{{ asset('assets/media/images/' ~ item.image) }}" data-type="image" alt=""
+                                     class="preview image">
+                            {% endif %}
+
+                            <img src="{{ asset('assets/media/images/no_image.jpeg') }}" style="display: none;" alt=""
+                                 data-type="cover" class="preview cover">
+
+
+                            <div class="controls">
+
+                                <div>
+                                    <div>Colonne: <span class="column-delete btn btn-default">-</span> <span
+                                                class="column-add btn btn-default">+</span></div>
+                                    <div>Ligne: <span class="row-delete btn btn-default">-</span> <span
+                                                class="row-add btn btn-default">+</span></div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="content" data-id="{{ item.id }}">
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if item.itemType == 1 %}active{% endif %}" id="video-tab" data-toggle="tab" href="video"
+                                       role="tab">Vidéo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if item.itemType == 2 %}active{% endif %}" id="image-tab" data-toggle="tab" href="image"
+                                       role="tab">Image</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if item.itemType == 3 %}active{% endif %}" id="full-tab" data-toggle="tab" href="full"
+                                       role="tab">Complet</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if item.itemType == 4 %}active{% endif %}" id="full-tab" data-toggle="tab" href="text"
+                                       role="tab">Texte</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="myTabContent">
+
+                                <div class="video tab-pane fade {% if item.itemType == 1 %}show active{% endif %}" id="video" role="tabpanel" data-type="1">
+                                    <input type="text" class="item-video" value="{{ item.video}}">
+
+                                </div>
+
+                                <div class="image tab-pane fade {% if item.itemType == 2 %}show active{% endif %}" id="image" role="tabpanel" data-type="2">
+
+                                    <input type="file" data-type="image" class="image">
+                                </div>
+
+                                <div class="full tab-pane fade {% if item.itemType == 3 %}show active{% endif %}" id="full" role="tabpanel" data-type="3">
+
+                                    <input type="file" data-type="cover" class="cover">
+
+                                    <textarea name=""  class="item-title wysiwyg">{{ item.title }}</textarea>
+                                    <textarea name=""  class="item-description wysiwyg">{{ item.description }}</textarea>
+                                    <input type="text" class="item-link" value="{{ item.link }}">
+                                    <input type="text" class="item-url" value="{{ item.slug }}">
+                                </div>
+
+                                <div class="text tab-pane fade {% if item.itemType == 4 %}show active{% endif %}" id="text" role="tabpanel" data-type="4">
+
+                                    <select name="" class="item-theme">
+                                        <option value="1" {% if item.theme == 1 %}selected{% endif %}>Fond vert</option>
+                                        <option value="2" {% if item.theme == 2 %}selected{% endif %}>Bordures vertes</option>
+                                        <option value="3" {% if item.theme == 3 %}selected{% endif %}>Fond noir</option>
+                                    </select>
+
+                                    <textarea name="" id="" class="item-content wysiwyg">{{ item.content }}</textarea>
+
+                                </div>
+                            </div>
+
+
+                            <div style="display: none;">
+
+
+                                <div class="form-group">
+                                    <label for="">Titre</label>
+                                    <input type="text" class="reference" value="{{ item.reference }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Texte alternatif</label>
+                                    <input type="text" class="alt" value="{{ item.alt }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">URL</label>
+                                </div>
+
+                            </div>
+                            <button class="grid-item-remove">Supprimer</button>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+
+        <div id="grid-form">
+
+        </div>
+
+
+
+    {% endset %}
+
+    {% set item_footer %}
+        <div class="grid-controls controls">
+
+
+            <div>
+                <button id="grid-add" class="btn btn-default append-button">Ajouter une image</button>
+            </div>
+            <div>
+                <button id="grid-item-close" class="btn btn-default grid-item-return">Annuler</button>
+                <button id="grid-item-save" class="btn btn-submit grid-item-save">Valider</button>
+                <button id="gallery-save" class="btn btn-submit">Mettre à jour</button>
+            </div>
+        </div>
+    {% endset %}
+
+    {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+        title: 'Galerie',
+        icon: 'subtitles',
+        content: item_content,
+        controls : item_footer
+    } %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script src="{{ asset('assets/vendors/packery-2.1.2/js/packery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/draggabilly-2.2.0/js/draggabilly.min.js') }}"></script>
+
+    <script>
+        $(function () {
+
+            var width = $('.grid-container').width() / {{ form_entity.vars.value.columnsNumber }};
+
+            var $grid = $('.grid-container').packery({
+                itemSelector: '.grid-item',
+                columnWidth: width,
+                gutter: 0
+            });
+            orderItems();
+
+            $grid.on('layoutComplete', orderItems);
+            $grid.on('dragItemPositioned', orderItems);
+
+
+            setPackery();
+
+            $('.append-button').on('click', function (event) {
+                event.preventDefault();
+
+                var $items = getItemElement();
+                $grid.append($items)
+                    .packery('appended', $items);
+
+                setPackery();
+            });
+
+
+            $(document).on('click', '.content .nav-link', function (event) {
+                event.preventDefault();
+
+                var item = $(this).closest('.content');
+                var attr = $(this).attr('href');
+
+                $(item).find('.tab-pane').removeClass('active').removeClass('show');
+                $(item).find('.' + attr + '.tab-pane').addClass('active').addClass('show');
+
+                console.log(item);
+            });
+
+
+
+            function getItemElement() {
+                return $('<div class="grid-item" data-height="1" data-width="1">' +
+                    '                        <div class="item">' +
+                    '                            <img src="{{ asset('assets/media/images/no_image.jpeg') }}" data-type="image" alt="" class="preview image">' +
+                    '                            <img style="display:none;" src="{{ asset('assets/media/images/no_image.jpeg') }}" data-type="cover" alt="" class="preview cover">' +
+                    '                        </div>' +
+                    '                        <div class="content" data-id="-1">' +
+                    '                            <input type="file" data-type="image" class="image">' +
+                    '                            <input type="file" data-type="cover" class="cover">' +
+                    '                            <div class="form-group">' +
+                    '                                <label for="">Référence</label>' +
+                    '                                <input type="text" class="reference" value="">' +
+                    '                            </div>' +
+                    '                            <div class="form-group">' +
+                    '                                <label for="">URL</label>' +
+                    '                                <input type="text" class="slug" value="">' +
+                    '                            </div>' +
+                    '                            <div class="form-group">' +
+                    '                                <label for="">Texte alternatif</label>' +
+                    '                                <input type="text" class="alt" value="">' +
+                    '                            </div>' +
+                    '                            <div class="form-group">' +
+                    '                                <label for="">Nombre de Colonnes</label>' +
+                    '                                <input type="text" class="x" value="1">' +
+                    '                            </div>' +
+                    '                            <div class="form-group">' +
+                    '                                <label for="">Nombre de Lignes</label>' +
+                    '                                <input type="text" class="y" value="1">' +
+                    '                            </div>' +
+                    '<div class="form-group">' +
+                    '<label for="">Contenu</label>' +
+                    '<textarea class="item-content wysiwyg"></textarea>' +
+                    '</div>' +
+                    '                            <button class="grid-item-remove">Supprimer</button>' +
+                    '                        </div>' +
+                    '                    </div>');
+            }
+
+            function setPackery() {
+
+                $('.grid').find('.grid-item').each(function (i, gridItem) {
+                    var draggie = new Draggabilly(gridItem);
+
+                    $grid.packery('bindDraggabillyEvents', draggie);
+                });
+
+
+                $(document).on('click', '.column-delete', function (event) {
+                    event.preventDefault();
+
+                    var column = parseInt($(this).closest('.grid-item').attr('data-width'));
+                    $(this).closest('.grid-item').attr('data-width', column - 1);
+
+                    $grid.packery('layout');
+
+                });
+
+                $(document).on('click', '.column-add', function (event) {
+                    event.preventDefault();
+
+                    var column = parseInt($(this).closest('.grid-item').attr('data-width'));
+                    $(this).closest('.grid-item').attr('data-width', column + 1);
+
+                    $grid.packery('layout');
+                });
+
+                $(document).on('click', '.row-delete', function (event) {
+                    event.preventDefault();
+
+                    var row = parseInt($(this).closest('.grid-item').attr('data-height'));
+                    $(this).closest('.grid-item').attr('data-height', row - 1);
+
+                    $grid.packery('layout');
+                });
+
+                $(document).on('click', '.row-add', function (event) {
+                    event.preventDefault();
+
+                    var row = parseInt($(this).closest('.grid-item').attr('data-height'));
+                    $(this).closest('.grid-item').attr('data-height', row + 1);
+
+                    $grid.packery('layout');
+                });
+
+            }
+
+            function orderItems() {
+                var elems = $grid.packery('getItemElements');
+
+
+                $.each(elems, function (index) {
+                    $(elems[index]).attr('data-position', index);
+                })
+            }
+
+
+            $('.grid-item .input_image').on('change', function () {
+                readURL(this);
+            });
+
+
+            var item = null;
+            var default_content = null;
+
+            $(document).on('dblclick', '.grid .item', function (event) {
+                event.preventDefault();
+
+
+                item = $(this);
+
+                $('#grid').hide();
+                $('#grid-add').hide();
+                $('#gallery-save').hide();
+
+                $('#grid-item-close').show();
+                $('#grid-item-save').show();
+
+                var content = $(this).closest('.grid-item').find('.content');
+                default_content = content;
+
+                $('#grid-form').append(content);
+            });
+
+
+            $('#grid-item-close').on('click', function (event) {
+                event.preventDefault();
+
+                $('#grid').show();
+                $('#grid-add').show();
+                $('#gallery-save').show();
+
+                $('#grid-item-close').hide();
+                $('#grid-item-save').hide();
+
+
+                item.append(default_content);
+            });
+
+            $('#grid-item-save').on('click', function (event) {
+                event.preventDefault();
+
+                var content = $('#grid-form .content');
+
+
+                readPreviewImage(content.find('input.image')[0], '.image');
+                readPreviewImage(content.find('.cover')[0], '.cover');
+
+                $('#grid').show();
+                $('#grid-add').show();
+                $('#gallery-save').show();
+
+                $('#grid-item-close').hide();
+                $('#grid-item-save').hide();
+
+                item.append(content);
+
+
+                content.closest('.grid-item').attr('data-width', content.find('.y').val());
+                content.closest('.grid-item').attr('data-height', content.find('.x').val());
+
+                $grid.packery('layout');
+            });
+
+            $(document).on('click', '.grid-item-remove', function (event) {
+                event.preventDefault();
+
+                $('#grid').show();
+                $('#grid-add').show();
+                $('#gallery-save').show();
+
+                $('#grid-item-close').hide();
+                $('#grid-item-save').hide();
+
+                item.append(default_content);
+
+                $('.grid-container').packery('remove', item.closest('.grid-item'));
+
+                $('.grid-container').packery('shiftLayout');
+
+                // item.closest('.grid-item').remove();
+            });
+
+            function readPreviewImage(input, dest) {
+
+                console.log(input);
+
+
+                if (input.files && input.files[0]) {
+                    console.log('start 3');
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+
+                        item.closest('.grid-item').find(dest).attr('src', e.target.result);
+
+                        console.log('readed');
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $(input).closest('.item').find('.preview').attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+            $('#gallery-save').on('click', function (event) {
+                event.preventDefault();
+
+                var dataToSend = [];
+
+
+                var elems = $grid.packery('getItemElements');
+
+                $.each(elems, function (index) {
+
+                    var content = $(elems[index]).find('.content');
+                    var obj = {
+                        'id': content.attr('data-id'),
+                        'file': content.closest('.grid-item').find('.image').attr('src'),
+                        'cover': content.closest('.grid-item').find('.cover').attr('src'),
+                        'reference': content.find('.reference').val(),
+                        'slug': content.find('.slug').val(),
+
+                        'content': content.find('.item-content').val(),
+                        'theme': content.find('.item-theme option:selected').val(),
+
+                        'alt': content.find('.alt').val(),
+                        'position': content.closest('.grid-item').attr('data-position'),
+
+                        'x': $(elems[index]).attr('data-width'),
+                        'y': $(elems[index]).attr('data-height'),
+
+                        'type': content.find('.tab-pane.active').attr('data-type'),
+
+                        'title': content.find('.item-title').val(),
+                        'description': content.find('.item-description').val(),
+                        'link': content.find('.item-link').val(),
+
+                        'url': content.find('.item-url').val(),
+                        'video': content.find('.item-video').val(),
+                    };
+
+                    dataToSend.push(obj);
+
+                    console.log(obj);
+                });
+
+
+                $.ajax({
+                    url: "{{ path('core_admin_gallery_save') }}",
+                    method: 'post',
+                    data: {
+                        'elements': dataToSend
+                    },
+                    success: function (_data) {
+
+                    }
+                });
+
+            })
+        })
+        ;
+    </script>
+
+{% endblock %}

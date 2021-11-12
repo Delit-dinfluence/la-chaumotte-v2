@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="{{ locale }}">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="language" content="{{ locale }}">
+{#    <meta http-equiv="content-language" content="{{ locale }}">#}
+
+    {% if page_indexable %}
+        <meta name="robots" content="index, follow">
+    {% else %}
+        <meta name="robots" content="noindex, follow">
+    {% endif %}
+
+    <link rel="canonical" href="{{ uri_full }}">
+
+    {% for lang_code, lang_uri in uris %}
+        <link rel="alternate" href="{{ website.domain ~ '/' ~ lang_uri }}" hreflang="{{ lang_code }}"/>
+    {% endfor %}
+
+    <title>{% block page_title %}{{ seo.title }}{% endblock %}</title>
+    <meta name="description" content="{{ seo.description }}"/>
+    <meta name="keywords" content="{{ seo.keywords }}">
+
+    {# SOCIAL NETWORKS - TWITTER #}
+    <meta name="twitter:site" content="{{ website.name }}">
+    <meta name="twitter:title" content="{{ seo.title }}">
+    <meta name="twitter:description" content="{{ seo.description }}">
+    <meta name="twitter:url" content="https://www.la-chaumotte.fr"/>
+    <meta name="twitter:domain" content="{{ website.domain }}"/>
+    <meta name="twitter:image:src"
+          content="https://www.la-chaumotte.fr{{ asset('assets/media/images/'~  sn.image_twitter) }}">
+
+    {# SOCIAL NETWORKS #}
+    <meta property="og:title" content="{{ seo.title }}">
+    <meta property="og:description" content="{{ seo.description }}">
+    <meta property="og:url" content="https://www.la-chaumotte.fr">
+    <meta property="og:language" content="{{ locale }}">
+    <meta property="og:image"
+          content="https://www.la-chaumotte.fr{{ asset('assets/media/images/' ~  sn.image_social_networks) }}"/>
+    <meta property="og:type" content="website">
+
+    {# FAVICON #}
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-icon-180x180.png') }}">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
+
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+
+    {# STYLESHEETS #}
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-4.0.0/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome-5.0.0/css/all.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('build/base.min.css') }}">
+
+    {# GOOGLE FONTS #}
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body>
+
+{% block content %}{% endblock %}
+
+{# JAVASCRIPTS #}
+<script src="{{ asset('assets/vendors/jquery-3.3.1/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/popper-1.12.9/js/popper.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/bootstrap-4.0.0/js/bootstrap.min.js') }}"></script>
+
+{#<script src="{{ asset('assets/vendors/jquery-ui-1.12.1/js/jquery-ui.min.js') }}"></script>#}
+<script src="{{ asset('assets/vendors/jquery-selectric-1.13.0/js/selectric.min.js') }}"></script>
+
+<script src="{{ asset('assets/vendors/jquery-validate-1.19.0/js/validate.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-validate-1.19.0/js/localization/messages_fr.min.js') }}"></script>
+
+{#<script src="{{ asset('assets/vendors/lightslider-1.1.6/js/lightslider.min.js') }}"></script>#}
+
+<script src="{{ asset('assets/vendors/tarteaucitron-1.2/tarteaucitron.min.js') }}"></script>
+
+<script type="application/ld+json">
+        {
+            "@context" : "http://schema.org",
+            "@type" : "Organization",
+            "name" : "",
+            "url" : "",
+            "sameAs" : [
+              {% if social_networks is defined and social_networks|length > 0 %}
+    {% for item in social_networks %}
+                  "{{ item.link }}" {% if loop.index < social_networks|length %}{% endif %}
+    {% endfor %}
+    {% endif %}
+            ]
+        }
+
+
+</script>
+
+<script>
+
+
+    tarteaucitron.init({
+        "privacyUrl": "{{ pages.notice.uri|default('/') }}",
+
+        "hashtag": "#tarteaucitron",
+        "cookieName": "tarteaucitron",
+
+        "orientation": "bottom",
+        "showAlertSmall": false,
+        "cookieslist": true,
+
+        "adblocker": false,
+        "AcceptAllCta": true,
+        "highPrivacy": false,
+        "handleBrowserDNTRequest": false,
+
+        "removeCredit": true,
+        "moreInfoLink": true,
+        "useExternalCss": false,
+
+        "readmoreLink": "{{ pages.notice.uri|default('/') }}"
+    });
+
+    {% if cookie_configuration.googleAnalytics != '' %} {# Google Analytics #}
+    tarteaucitron.user.gtagUa = '{{ cookie_configuration.googleAnalytics }}';
+    tarteaucitron.user.gtagMore = function () { /* add here your optionnal gtag() */
+    };
+    (tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+    {% endif %}
+
+    {% if cookie_configuration.addThis != '' %} {# AddThis #}
+    tarteaucitron.user.addthisPubId = '{{ cookie_configuration.addThis }}';
+    (tarteaucitron.job = tarteaucitron.job || []).push('addthis');
+    {% endif %}
+
+    {% if cookie_configuration.pixelFacebook != '' %} {# PIXEL FACEBOOK #}
+    tarteaucitron.user.facebookpixelId = '{{ cookie_configuration.pixelFacebook }}';
+    tarteaucitron.user.facebookpixelMore = function () {
+    };
+    (tarteaucitron.job = tarteaucitron.job || []).push('facebookpixel');
+    {% endif %}
+
+    {% if cookie_configuration.reCaptchaClient != '' %} {# reCAPTCHA #}
+    (tarteaucitron.job = tarteaucitron.job || []).push('recaptcha');
+    {% endif %}
+
+
+
+</script>
+
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "Organization",
+        "name" : "La Chaumotte",
+        "url" : "https://www.la-chaumotte.fr",
+    }
+</script>
+
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>

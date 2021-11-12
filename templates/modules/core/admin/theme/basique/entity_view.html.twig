@@ -1,0 +1,10 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block content %}
+
+    {% include '@core/admin/theme/basique/includes/view.html.twig' with {
+        'title':title|default(''),
+        'icon':icon|default('')
+    } %}
+
+{% endblock %}

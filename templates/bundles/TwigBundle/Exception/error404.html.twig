@@ -1,0 +1,23 @@
+{% extends '@core/app/pages/_base.html.twig' %}
+
+{% block page_title %}
+    {{ settings_general.error404Title }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="page page-error">
+
+        <div class="container">
+
+            <p class="subtitle">404</p>
+            <h1 class="title">{{ settings_general.error404Subtitle }}</h1>
+
+            <p class="description">
+
+                {{ settings_general.error404Content }} <a href="/">{{ settings_general.error404Link }}</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,402 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% macro tree_node(node) %}
+    {% import _self as form %}
+
+    {% if node.isEnabled == 1 %}
+        {
+        text: "{{ node.designation }}",
+        {% if node.children|length > 0 %}
+            nodes:
+            [
+            {% for item in node.children %}
+                {{ form.tree_node(item) }}
+            {% endfor %}
+            ]
+        {% else %}
+            href: "{{ node.id }}"
+        {% endif %}
+        },
+    {% endif %}
+
+{% endmacro %}
+
+{% block content %}
+
+    <div class="translations">
+        <div class="row">
+            <div class="col-md-4">
+                {% set item_content %}
+
+                {% endset %}
+
+                {% set array = '' %}
+                {% for language in languages %}
+                    {% set array = array ~ language.designation %}
+                    {% if loop.index < languages|length %}
+                        {% set array = array ~ ', ' %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if array|length > 20 %}
+                    {% set array = languages|length %}
+                {% endif %}
+                {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                    title: 'Langues',
+                    type: 'mini',
+                    data : array,
+                    content: item_content,
+                    footer_left: '<i class="fa fa-language"></i>Langues utilisables'
+                } %}
+            </div>
+            <div class="col-md-4">
+                {% set item_content %}
+
+                {% endset %}
+
+                {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                    title: 'Expressions',
+                    type: 'mini',
+                    data: expressions,
+                    content: item_content,
+                    footer_left: '<i class="fa fa-book"></i>Expressions traduisibles'
+                } %}
+            </div>
+            <div class="col-md-4">
+                {% set item_content %}
+
+                {% endset %}
+
+                {% if percentage != 100 %}
+                    {% set percentage = '<span class="danger">' ~ percentage|round(2, 'floor') ~ ' %</span>' %}
+                {% else %}
+                    {% set percentage = '<span class="success">' ~ percentage|round(2, 'floor') ~ ' %</span>' %}
+                {% endif %}
+
+                {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                    title: 'Traductions',
+                    type: 'mini',
+                    data : percentage,
+                    content: item_content,
+                    footer_left: '<i class="fa fa-clipboard-list"></i>Expressions complètes'
+                } %}
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="texts-choices" id="texts-choices">
+                    {% set item_content %}
+
+                        <div class="texts-choices-header">
+                            <button class="btn btn-deploy" id="btn-deploy">
+                                <i class="material-icons">keyboard_arrow_down</i><span>Déployer</span>
+                            </button>
+
+                            <button class="btn btn-reduce" id="btn-reduce">
+                                <i class="material-icons">keyboard_arrow_up</i><span>Réduire</span>
+                            </button>
+                        </div>
+                        <div id="groups"></div>
+
+                        <div class="translation-controls">
+                            <a href="/4DM1n157R4710N/entity-management?module=core&entity=TextGroup&action=form&id=-1"
+                               class="btn btn-submit"><i class="fas fa-folder-plus"></i>Catégorie</a>
+                            <a href="/4DM1n157R4710N/entity-management?module=core&entity=Text&action=form&id=-1"
+                               class="btn btn-submit"><i class="fa fa-plus"></i>Traduction</a>
+                        </div>
+                    {% endset %}
+
+                    {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                        icon_title: 'Catégories',
+                        content: item_content,
+                    } %}
+
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div id="texts-content" class="texts-content">
+
+                    {% set item_content %}
+                        <div class="text-header">
+                            {#<div class="search">#}
+                            {#<input type="text" placeholder="Rechercher une traduction par mot(s) clé(s)">#}
+                            {#<button id="search-submit">#}
+                            {#<img src="{{ asset('assets/media/images/icon_search.png') }}" alt="">#}
+                            {#</button>#}
+                            {#</div>#}
+                        </div>
+
+                        <div class="text-body">
+                            <div class="text-infos text-infos-first" style="display: none;">
+                                <div>
+                                    <span class="translateNumber"></span>
+                                </div>
+                                <button class="translate_submit btn btn-submit"><i class="fas fa-save"></i> Enregistrer
+                                </button>
+                            </div>
+                            <div id="texts">
+
+                            </div>
+                            <div class="text-infos text-infos-last" style="display: none;">
+                                <div>
+                                    <span class="translateNumber"></span>
+                                </div>
+                                <button class="translate_submit btn btn-submit"><i class="fas fa-save"></i> Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                    {% endset %}
+
+                    {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                        icon_title: 'Expressions',
+                        content: item_content,
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {% import _self as form %}
+
+    <script>
+
+        $(window).on('scroll', function () {
+
+            if ($(document).scrollTop() > $('#texts-content').offset().top) {
+                if (!$('#texts-choices').hasClass('fixed'))
+                    $('#texts-choices').addClass('fixed');
+            } else {
+                $('#texts-choices').removeClass('fixed');
+            }
+        });
+
+        var empty = '<div id="loading-texts" class="loading-texts">Aucune traduction disponible pour le moment...</div>';
+        var loading = '<div id="loading-texts" class="loading-texts">  <i class="fas fa-spinner fa-pulse"></i> <span>Chargement des traductions ...</span></div>';
+        $('#texts').html(empty);
+
+        $(document).on('keyup', '.text textarea, .text input', function () {
+            let $item = $(this).closest('form');
+
+            if (!$item.hasClass('active')) {
+                $item.addClass('active');
+            }
+
+        });
+
+        $('.translate_submit').on('click', function (event) {
+            event.preventDefault();
+
+            var success = true;
+
+
+            var xhrs = [];
+            $.each($('.text form'), function () {
+
+                var form = $(this);
+
+                var category = $('#translateCategory').attr('data-id');
+                var entity = $(this).closest('.text').attr('data-id');
+
+
+                if (form.hasClass('active')) {
+
+                    $.notify({
+                        title: 'Sauvegarde en cours ...',
+                        message: ''
+                    }, {
+                        type: 'warning',
+                        delay: 2000,
+                        timer: 1000,
+                        animate: {
+                            enter: 'animated fadeInDown',
+                            exit: 'animated fadeOutUp'
+                        },
+                    });
+
+                    var xhr = $.ajax({
+                        type: "POST",
+                        url: "{{ path('core_admin_translation_save') }}?category=" + category + '&entity=' + entity,
+                        data: form.serialize(),
+                        success: function (_data) {
+                            var code = _data['code'];
+
+                            if (code != 200) {
+                                success = false;
+                            }
+                        }
+                    });
+
+                    xhrs.push(xhr)
+                }
+            });
+
+
+            $.when.apply($, xhrs).done(function () {
+                if (success) {
+
+                    $.notify({
+                        title: 'Sauvegardé !',
+                        message: ''
+                    }, {
+                        type: 'success',
+                        delay: 2000,
+                        timer: 1000,
+                        animate: {
+                            enter: 'animated fadeInDown',
+                            exit: 'animated fadeOutUp'
+                        },
+                    });
+                } else {
+                    $.notify({
+                        title: 'Echec !',
+                        message: 'Une erreur est survenue...'
+                    }, {
+                        type: 'danger',
+                        delay: 2000,
+                        timer: 1000,
+                        animate: {
+                            enter: 'animated fadeInDown',
+                            exit: 'animated fadeOutUp'
+                        },
+                    });
+                }
+            });
+        });
+
+        var data = [
+            {% for group in groups %}
+            {{ form.tree_node(group) }}
+            {% endfor %}
+        ];
+
+        var tree = $('#groups');
+
+        tree.treeview({
+            data: data,
+            levels: 2,
+            highlightSelected: false,
+            selectable: false,
+            showBorder: false,
+            onNodeSelected: function (event, node) {
+                if (node.nodes === undefined) {
+
+                    console.log(event);
+
+                    $.ajax({
+                        url: "{{ path('core_admin_translation_form') }}",
+                        data: {
+                            'category': node.href
+                        },
+                        method: 'post',
+                        beforeSend: function () {
+                            $('#texts').html(loading);
+                            $('.text-infos').hide();
+                        },
+                        success: function (_data) {
+                            $('#texts').html('');
+
+                            var output = _data['output'];
+                            var data = output['texts'];
+                            var category = output['category'];
+                            var category_id = output['category_id'];
+
+                            $('#translateCategory').html(category);
+                            $('#translateCategory').attr('data-id', category_id);
+
+                            if (data.length > 1) {
+                                $('.translateNumber').html(data.length + ' expressions');
+                                $('.text-infos').show();
+                            } else if (data.length <= 0) {
+                                $('#texts').html(empty);
+                            } else {
+                                $('.text-infos').show();
+                                $('.translateNumber').html(data.length + ' expressions');
+                            }
+
+
+                            $.each(data, function (index) {
+                                $('#texts').append(data[index]);
+                            })
+
+                            var $textselects = $('.text select');
+                            $textselects.each(function () {
+                                $(this).selectric();
+                            });
+
+
+                            $.each($('.text #text_type'), function (index) {
+                                if ($(this).val() == 2) {
+                                    var array = $(this).closest('.text').find('.tab-pane');
+
+                                    $.each(array, function (index) {
+                                        $(array[index]).find('textarea').summernote({
+                                            height: 200,
+                                            fontNames: ["Roboto", "Italianno", 'Antic Didone', "Quattrocento Sans"],
+                                            fontSizes: ['10', '11', '12', '14', '16', '18', '20', '22', '24', '28'],
+                                            colors: [
+                                                ['#000', '#fff', '#66615d', '#c29b5b',],
+                                            ],
+                                            toolbar: [
+                                                ['fontname', ['fontname', 'bold', 'italic', 'underline', 'fontsize', 'color', 'paragraph', 'link', 'picture', 'clear']],
+                                                ['misc', ['codeview']],
+
+                                                // ['height', ['height']]
+                                            ],
+                                            callbacks: {
+                                                onChange: function (contents, $editable) {
+                                                    let $item = $(this).closest('form');
+
+                                                    if (!$item.hasClass('active')) {
+                                                        $item.addClass('active');
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    })
+
+                                    // Préselection des attributs summernote
+                                    $(".note-editable").css("font-size", "16px");
+                                    $(".note-editable").css("font-family", "Roboto");
+                                }
+                            })
+
+
+                        }
+                    });
+
+                } else if (node.state.expanded) {
+                    collapseNode(node.nodeId);
+                } else {
+                    expandNode(node.nodeId);
+                }
+
+            }
+        });
+
+
+        function collapseNode(nodeId) {
+            tree.treeview('collapseNode', [nodeId]);
+        }
+
+        function expandNode(nodeId) {
+            tree.treeview('expandNode', [nodeId]);
+        }
+
+        $('#btn-deploy').on('click', function () {
+            tree.treeview('expandAll');
+        });
+
+        $('#btn-reduce').on('click', function () {
+            tree.treeview('collapseAll');
+        });
+
+    </script>
+{% endblock %}

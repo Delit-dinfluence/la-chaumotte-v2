@@ -1,0 +1,29 @@
+{% extends '@app/base.html.twig' %}
+
+
+{% block content %}
+    <div class="page page-payment-success">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+        {# Fil d'arianne #}
+        <h1 id="breadcrumb" class="breadcrumb">
+            {{ translation.page_payment_success_title }}
+        </h1> {# /#breadcrumb #}
+
+        <div class="page-content">
+            <div class="page-container">
+
+                <p class="content-description">
+                    {{ translation.page_payment_success_introduction|raw }}
+                </p>
+
+            </div> {# /.page-container #}
+        </div>  {# /.page-content #}
+
+        {# PAGE FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div> {# /.page #}
+{% endblock %}

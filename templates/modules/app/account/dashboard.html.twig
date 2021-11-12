@@ -1,0 +1,61 @@
+{% extends '@app/account/base.html.twig' %}
+
+{% block account_content %}
+
+    <div class="dashboard">
+        <div class="item-list">
+            <div class="row">
+                <div class="item">
+                    <a href="{{ '/' ~ locale ~  pages.account_historic.translate(locale).uri }}">
+                        <div class="figure">
+                            <img src="{{ images['5cf7732ac884e'].slug }}" alt="">
+                        </div>
+
+                        <div class="item-content">
+                            <p class="item-title">{{ translation.page_account_order_title|raw }}</p>
+                        </div>
+                    </a>
+                </div> {# /.item #}
+
+                <div class="item">
+                    <a href="{{ '/' ~ locale ~  pages.account_adress.translate(locale).uri }}">
+                        <div class="figure">
+                            <img src="{{ images['5cf77383a19e7'].slug }}" alt="">
+                        </div>
+
+                        <div class="item-content">
+                            <p class="item-title">{{ translation.page_account_address_title|raw }}</p>
+                        </div>
+                    </a>
+                </div> {# /.item #}
+            </div>
+
+            <div class="row">
+                <div class="item">
+                    <a href="{{ '/' ~ locale ~  pages.account_newsletter.translate(locale).uri }}">
+                        <div class="figure">
+                            <img src="{{ images['5cf7739e6ab7e'].slug }}" alt="">
+                        </div>
+
+                        <div class="item-content">
+                            <p class="item-title">{{ translation.page_account_newsletter_title|raw }}</p>
+                        </div>
+                    </a>
+                </div> {# /.item #}
+
+                <div class="item">
+                    <a href="{{ '/' ~ locale ~  pages.account_info.translate(locale).uri }}">
+                        <div class="figure">
+                            <img src="{{ images['5cf773b273af5'].slug }}" alt="">
+                        </div>
+
+                        <div class="item-content">
+                            <p class="item-title">{{ translation.page_account_info_title|raw }}</p>
+                        </div>
+                    </a>
+                </div> {# /.item #}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

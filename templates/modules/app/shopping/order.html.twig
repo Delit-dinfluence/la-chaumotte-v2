@@ -1,0 +1,719 @@
+{% extends '@app/base.html.twig' %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="page page-order">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <h1 class="page-title">{{ translation.page_order_cart_return|raw }} (<a href="#"
+                                                                                id="cart-popover">{{ cart.cartTotalProductsCount }}
+                {{ translation.page_order_cart_articles|raw }}</a>)</h1>
+
+        <div class="page-content">
+            <div class="page-container">
+
+                <div class="columns">
+                    <div class="column">
+                        <div id="accordion" class="accordion">
+
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="card-title">
+                                        <span>{{ translation.page_order_category_title_1|raw }}</span>
+
+                                        <button id="btn-collaspe-address" data-toggle="collapse"
+                                                data-target="#collapseOne"
+                                                aria-expanded="true" aria-controls="collapseOne" class="btn btn-update">
+                                            {{ translation.page_order_category_update|raw }}
+                                        </button>
+                                    </h5>
+                                </div> {# /.card-header #}
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                     data-parent="#accordion">
+                                    <div class="card-body">
+                                        <form class="form form-deliveries">
+                                            <div class="deliveries" id="deliveries">
+                                                {% for item in deliveries %}
+                                                    <div class="delivery" data-delivery="{{ item.id }}">
+                                                        <div class="delivery-header">
+                                                            <div class="row">
+                                                                <div class="form form-radio">
+                                                                    <input type="checkbox" name="delivery_method"
+                                                                           {% if order.delivery_method != null and order.delivery_method.id == item.id %}checked{% endif %}
+                                                                           id="delivery_method" value="{{ item.id }}">
+                                                                    <label for="delivery_method"
+                                                                           class="address-select-title">{{ item.reference }}</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="delivery-content"></div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="card-controls">
+                                                <button id="btn-address-submit" class="btn btn-submit"
+                                                        disabled>
+                                                    {{ translation.page_order_select_delivery|raw }}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h5 class="card-title">
+                                        <span>{{ translation.page_order_category_title_2|raw }}</span>
+
+                                        <button id="btn-collapse-payment" class="btn btn-update collapsed"
+                                                data-toggle="collapse"
+                                                data-target="#collapseTwo"
+                                                aria-expanded="false" aria-controls="collapseTwo">
+                                            {{ translation.page_order_category_update|raw }}
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                     data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="payments">
+
+                                            <form class="form">
+                                                {% for item in payments %}
+                                                    <div class="payment" data-payment="{{ item.id }}">
+
+                                                        <div class="row">
+                                                            <div class="form form-radio">
+                                                                <input type="checkbox" name="payment_method"
+                                                                       {% if order.payment_method != null and order.payment_method.id == item.id %}checked{% endif %}
+                                                                       id="payment_method" value="{{ item.id }}">
+                                                                <label for="payment_method"
+                                                                       class="payment-select-title">{{ item.reference }}</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                {% endfor %}
+                                            </form>
+                                        </div>
+                                        <div class="card-controls">
+                                            <button id="btn-payment-submit" class="btn btn-submit"
+                                                    disabled>
+                                                {{ translation.page_order_select_payment|raw }}
+                                            </button>
+
+                                            <div id="payment_errors"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h5 class="card-title">
+                                        <span>{{ translation.page_order_category_title_3|raw }}</span>
+                                        <button id="btn-collapse-check" class="btn btn-update collapsed"
+                                                data-toggle="collapse"
+                                                data-target="#collapseThree" aria-expanded="false"
+                                                aria-controls="collapseThree">
+                                            {{ translation.page_order_category_update|raw }}
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                     data-parent="#accordion">
+                                    <div class="card-body">
+
+                                        <form id="form-pay" class="form form-pay">
+
+                                            <div class="row">
+                                                <div class="column"></div>
+                                                <div class="column">
+                                                    <div class="cart_total_amount">
+                                                        {{ translation.page_order_amount_total|raw }} <span
+                                                                id="cart_total_ttc">--</span> &euro;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="column">
+                                                    <div id="cart_pay_content">
+                                                        <button id="cart_pay"
+                                                                class="btn btn-submit">{{ translation.page_order_pay|raw }}</button>
+                                                        <div id="cart-pay-errors"></div>
+                                                    </div>
+                                                </div> {# /.column #}
+
+                                                <div class="column">
+
+
+                                                    <div class="row">
+                                                        <div class="form-group form-radio legal_check_birthday">
+
+                                                            <input type="checkbox" id="legal_check_birthday"
+                                                                   name="legal_check_birthday"
+                                                                   required>
+                                                            <label for="legal_check_birthday"
+                                                                   class="legal_check_birdthay_label"></label>
+                                                            <div>
+                                                                {{ translation.page_order_legal_age|raw }}
+                                                            </div>
+
+                                                            <div id="legal_check_birthday_error"
+                                                                 class="legal_check_birthday_error">
+                                                                {{ translation.page_order_legal_age_error|raw }}
+                                                            </div>
+                                                        </div> {# /.form-group #}
+                                                    </div> {# /.row #}
+
+                                                    <div class="row">
+                                                        <div class="form-group form-radio legal_check_cgv">
+                                                            <input type="checkbox" id="legal_check_cgv"
+                                                                   name="legal_check_cgv"
+                                                                   required>
+                                                            <label for="legal_check_cgv"
+                                                                   class="legal_check_cgv_label"></label>
+                                                            <div>
+                                                                {{ translation.page_order_legal_notices|raw }}
+                                                            </div>
+
+                                                            <div id="legal_check_cgv_error"
+                                                                 class="legal_check_cgv_error">
+                                                                {{ translation.page_order_legal_notices_error|raw }}
+                                                            </div>
+                                                        </div> {# /.form-group #}
+                                                    </div> {# /.row #}
+                                                </div> {# /.column #}
+                                            </div>
+                                        </form> {# /.form-pay #}
+
+                                        <div id="payment-form" style="display: none;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> {# /.column #}
+
+                    <div class="column">
+                        <div class="form-aside">
+
+                            <h2 class="aside-title">{{ translation.page_order_recap_title|raw }}</h2>
+
+
+                            <table class="table-aside">
+                                <tr>
+                                    <td>{{ translation.page_order_recap_subtotal|raw }}
+                                        ({{ cart.cartTotalProductsCount ~ ' ' ~ translation.page_order_recap_articles|raw }}
+                                        ) :
+                                    </td>
+                                    <td><span>{{ cart.cartTotalTTC }}</span> &euro;</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ translation.page_order_recap_delivery|raw }} :</td>
+                                    <td><span id="delivery-price">-- &euro;</span></td>
+                                </tr>
+                            </table>
+
+                            <table class="table-aside">
+                                <tr class="amount_total_ttc">
+                                    <td>{{ translation.page_order_recap_total|raw }} :</td>
+                                    <td><span id="order-total-ttc">--</span> &euro;</td>
+                                </tr>
+                            </table>
+
+                            <p class="aside-info">{{ translation.page_order_recap_tva|raw }} <a
+                                        href="{{ pages.cgv.uri }}"
+                                        target="_blank">{{ translation.page_order_recap_tva_link|raw }}</a></p>
+
+                        </div>
+                    </div> {# /.column #}
+
+                </div> {# /.columns #}
+            </div>
+        </div>
+
+        {# PAGE FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div> {# /.page #}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function () {
+
+            let popover = $('#cart-popover');
+            popover.popover({
+                'placement': 'bottom',
+                'toggle': 'popover',
+                'title': 'title',
+                'content': ' a',
+                'template':
+                    '<div class="order-popover">' +
+                    '   <p>{{ translation.page_order_popup_text|raw }}</p>' +
+                    '   <div class="popover-controls">' +
+                    '       <a href="#" id="popover-close">{{ translation.page_order_popup_cancel|raw }}</a>' +
+                    '       <a href="{{ pages.cart.uri }}">{{ translation.page_order_popup_submit|raw }}</a>' +
+                    '   </div>' +
+                    '</div>'
+            });
+
+            $(document).on('click', '#popover-close', function (event) {
+                event.preventDefault();
+
+                popover.popover('hide');
+            });
+
+            $(document).on('click', '.btn-address-create', function (event) {
+                event.preventDefault();
+
+                let button = $(this);
+
+                let dataToSend = {
+                    'address_id': -1
+                }
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>');
+
+                $.ajax({
+                    url: "{{ path('user_update_address_template') }}",
+                    data: dataToSend,
+                }).done(function (data) {
+
+                    $('#deliveries').append(data['content']['template']);
+                    button.html('Modifier');
+
+
+                    $('#form-address').validate({
+                        rules: {
+                            password_check: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            password_check: "Mot de passe incorrecte",
+                        },
+
+                        submitHandler: function (form) {
+
+                            var button = $('#edit-address-submit');
+                            var errors = $('#edit-address-errors');
+                            let dataToSend = {
+                                'id': $('#form-address').attr('data-id'),
+                                'designation': $('#edit-address-designation').val(),
+                                'title': $('input[name="edit-address-title"]:checked').val(),
+                                'lastname': $('#edit-address-lastname').val(),
+                                'firstname': $('#edit-address-firstname').val(),
+                                'address': $('#edit-address').val(),
+                                'complement': $('#edit-address-complement').val(),
+                                'zip_code': $('#edit-address-zip-code').val(),
+                                'city': $('#edit-address-city').val(),
+                                'country': $('#edit-address-country').val(),
+                                'instruction': $('#edit-address-instruction').val(),
+                            };
+
+                            button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                            remove_errors();
+
+                            $.ajax({
+                                url: '{{ path('user_update_address') }}',
+                                data: dataToSend,
+                            }).done(function () {
+
+                                location.reload();
+
+                            }).fail(function () {
+
+                                button.html('{{ translation.page_order_address_save|raw }}');
+
+                                errors.html('{{ translation.page_errors_fire|raw }}');
+                                errors.addClass('active');
+
+
+                            });
+
+                        }
+                    });
+
+                    function remove_errors() {
+                        var errors = $('#edit-address-errors');
+
+                        errors.removeClass('active');
+                        errors.html('');
+                    }
+
+                }).fail(function () {
+
+                });
+
+            });
+
+            $(document).on('click', '.btn-address-edit', function (event) {
+                event.preventDefault();
+
+                let button = $(this);
+                let address_id = $(this).attr('data-address');
+
+                let dataToSend = {
+                    'address_id': address_id
+                }
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>');
+
+                $.ajax({
+                    url: "{{ path('user_update_address_template') }}",
+                    data: dataToSend,
+                }).done(function (data) {
+
+                    $('#deliveries').append(data['content']['template']);
+                    button.html('Modifier');
+
+
+                    $('#form-address').validate({
+                        rules: {
+                            password_check: {
+                                required: true,
+                            },
+                        },
+                        messages: {
+                            password_check: "Mot de passe incorrecte",
+                        },
+
+                        submitHandler: function (form) {
+
+                            var button = $('#edit-address-submit');
+                            var errors = $('#edit-address-errors');
+                            let dataToSend = {
+                                'id': $('#form-address').attr('data-id'),
+                                'designation': $('#edit-address-designation').val(),
+                                'title': $('input[name="edit-address-title"]:checked').val(),
+                                'lastname': $('#edit-address-lastname').val(),
+                                'firstname': $('#edit-address-firstname').val(),
+                                'address': $('#edit-address').val(),
+                                'complement': $('#edit-address-complement').val(),
+                                'zip_code': $('#edit-address-zip-code').val(),
+                                'city': $('#edit-address-city').val(),
+                                'country': $('#edit-address-country').val(),
+                                'instruction': $('#edit-address-instruction').val(),
+                            };
+
+                            button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                            remove_errors();
+
+                            $.ajax({
+                                url: '{{ path('user_update_address') }}',
+                                data: dataToSend,
+                            }).done(function () {
+
+                                location.reload();
+
+                            }).fail(function () {
+
+                                button.html('{{ translation.page_order_address_save|raw }}');
+
+                                errors.html('{{ translation.page_errors_fire|raw }}');
+                                errors.addClass('active');
+
+
+                            });
+
+                        }
+                    });
+
+                    function remove_errors() {
+                        var errors = $('#edit-address-errors');
+
+                        errors.removeClass('active');
+                        errors.html('');
+                    }
+
+                }).fail(function () {
+
+                });
+
+            });
+
+            $(document).on('click', '.btn-address-return', function (event) {
+                event.preventDefault();
+
+                $('#address-form').remove();
+            })
+
+            $('#btn-address-submit').on('click', function (event) {
+                event.preventDefault();
+
+                let delivery = $('input[name="order_delivery_address"]:checked').val();
+                let button = $('#btn-address-submit');
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>  {{ translation.page_order_loading|raw }}').prop('disabled', true);
+                ;
+
+                let dataToSend = {
+                    'address_id': delivery,
+                }
+
+                $.ajax({
+                    url: "{{ path('shopping_choose_address_delivery') }}",
+                    data: dataToSend,
+                }).done(function (event) {
+
+                    let invoice = $('input[name="order_invoice_address"]:checked').val();
+
+                    let dataToSend = {
+                        'address_id': invoice,
+                    };
+
+                    $.ajax({
+                        url: "{{ path('shopping_choose_address_invoice') }}",
+                        data: dataToSend,
+                    }).done(function (event) {
+
+                        let address = $('#btn-collaspe-address');
+                        let payment = $('#btn-collapse-payment');
+
+                        address.addClass('active');
+                        payment.addClass('active').trigger('click');
+
+                        button.html('{{ translation.page_order_use_delivery_method|raw }}').prop('disabled', false);
+
+                    }).fail(function (event) {
+
+                    });
+
+                }).fail(function (event) {
+
+                });
+
+            });
+
+            $('#btn-payment-submit').on('click', function (event) {
+                event.preventDefault();
+
+                let payment = $('#btn-collapse-payment');
+                let check = $('#btn-collapse-check');
+
+
+                payment.addClass('active');
+                check.addClass('active').trigger('click');
+
+            });
+
+
+            $.each($('input[name="delivery_method"]'), function () {
+                if ($(this).is(":checked")) {
+                    setDeliveryMethod($(this));
+                }
+            });
+
+            $(document).on('change', 'input[name="delivery_method"]', function (event) {
+                event.preventDefault();
+
+                if ($(this).is(':checked')) {
+                    setDeliveryMethod($(this));
+                }
+            });
+
+            function setDeliveryMethod(input) {
+                let delivery = input.closest('.delivery');
+                let content = delivery.find('.delivery-content');
+                let errors = $('#delivery_errors');
+                let button = $('#btn-address-submit');
+
+                let delivery_price = $('#delivery-price');
+                let amount_total_ttc = $('#order-total-ttc');
+                let card_total_ttc = $('#cart_total_ttc');
+
+                let dataToSend = {
+                    'delivery_id': delivery.attr('data-delivery')
+                };
+
+                content.html('');
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>  {{ translation.page_order_loading|raw }}');
+
+                $.ajax({
+                    url: '{{ path('shopping_choose_delivery_method') }}',
+                    data: dataToSend,
+                }).done(function (data) {
+
+                    content.html(data['content']['template']);
+                    button.html('{{ translation.page_order_use_delivery_method|raw }}').prop('disabled', false);
+
+                    let price = data['content']['order']['delivery_price'];
+                    if (price == 0) {
+                        delivery_price.html('{{ translation.page_order_free|raw }}');
+
+                    } else {
+                        delivery_price.html(price + ' &euro;');
+                    }
+
+
+                    amount_total_ttc.html(data['content']['order']['amount_total_ttc']);
+                    card_total_ttc.html(data['content']['order']['amount_total_ttc']);
+
+
+                    $('#btn-address-create').insertAfter($('#btn-address-submit'));
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                    errors.html('{{ translation.page_errors_fire|raw }}');
+
+                });
+            }
+
+
+            $.each($('input[name="payment_method"]'), function () {
+                if ($(this).is(":checked")) {
+                    setPaymentMethod($(this));
+                }
+            });
+
+            $(document).on('click', '.address .btn-choose', function (event) {
+                event.preventDefault();
+
+                $(this).closest('.address').find('.order_address_input').trigger('click');
+            });
+
+            $(document).on('change', 'input[name="payment_method"]', function (event) {
+                event.preventDefault();
+
+                if ($(this).is(':checked')) {
+                    setPaymentMethod($(this));
+                }
+            });
+
+            function setPaymentMethod(input) {
+                let payment = input.closest('.payment');
+                let errors = $('#payment_errors');
+                let button = $('#btn-payment-submit');
+                let payment_form = $('#payment-form');
+
+                let dataToSend = {
+                    'payment_id': payment.attr('data-payment')
+                };
+
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i> {{ translation.page_order_loading|raw }}');
+                $.ajax({
+                    url: '{{ path('shopping_choose_payment_method') }}',
+                    data: dataToSend,
+                }).done(function (data) {
+
+                    button.html('{{ translation.page_order_use_payment_method|raw }}').prop('disabled', false);
+                    payment_form.html(data['content']['template']);
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                    errors.html('{{ translation.page_errors_fire|raw }}');
+
+                });
+            }
+
+
+            /**
+             * Soumission d'une commande
+             */
+            $(document).on('click', '#cart_pay', function (event) {
+                event.preventDefault();
+
+
+                let legal_age = false;
+                let read_cgv = false;
+
+
+                if ($('#legal_check_birthday').is(':checked')) {
+
+                    legal_age = true;
+
+                    $('.legal_check_birthday').removeClass('is_required');
+
+
+                } else {
+
+                    legal_age = false;
+
+                    if (!$('.legal_check_birthday').hasClass('is_required')) {
+                        $('.legal_check_birthday').addClass('is_required');
+                    }
+                }
+
+                if ($('#legal_check_cgv').is(':checked')) {
+
+                    read_cgv = true;
+
+                    $('.legal_check_cgv').removeClass('is_required');
+
+
+                } else {
+
+                    read_cgv = false;
+
+                    if (!$('.legal_check_cgv').hasClass('is_required')) {
+                        $('.legal_check_cgv').addClass('is_required');
+                    }
+
+                }
+
+                if (legal_age && read_cgv) {
+
+                    let button = $('#cart_pay');
+                    let errors = $('#cart-pay-errors');
+
+
+                    let dataToSend = {};
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+
+                    $.ajax({
+                        url: "{{ path('shopping_order_save') }}",
+                        data: dataToSend
+                    }).done(function (event) {
+
+                        $('#payment_submit').trigger('click');
+
+                    }).fail(function () {
+
+                        button.html('Acheter');
+                        errors.html('{{ translation.page_errors_fire|raw }}');
+
+                    });
+                }
+
+            });
+
+
+            /**
+             * Nettoie l'affichage des erreurs
+             */
+            function remove_errors(errors) {
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+            $('.legal_check_birdthay_label').on('click', function () {
+
+                if ($('#legal_check_birthday').is(':checked'))
+                    $('#legal_check_birthday_error').removeClass('active');
+            });
+
+            $('.legal_check_cgv_label').on('click', function () {
+
+                if ($('#legal_check_cgv').is(':checked'))
+                    $('#legal_check_cgv_error').removeClass('active');
+            });
+
+        });
+
+    </script>
+{% endblock %}

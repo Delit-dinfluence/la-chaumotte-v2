@@ -1,0 +1,59 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block topbar_right %}
+    <select name="" id="select-languages">
+        {% for language in languages %}
+            <option value="{{ language.id }}">{{ language.designation }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form_entity) }}
+
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#informations">Informations</a></li>
+        <li><a data-toggle="tab" href="#conditions">Conditions</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="informations" class="tab-pane fade in active show">
+
+            {{ form_row(form_entity.is_enabled) }}
+
+            {{ a2lixTranslations.partialTranslations(form_entity.translations, ['designation' ], 1) }}
+            {{ a2lixTranslations.partialTranslations(form_entity.translations, ['description' ], 2) }}
+
+            {{ form_row(form_entity.value) }}
+            {{ form_row(form_entity.type) }}
+
+        </div>
+        <div id="conditions" class="tab-pane fade">
+
+            {{ form_row(form_entity.use_timer) }}
+            {{ form_row(form_entity.available_from) }}
+            {{ form_row(form_entity.available_to) }}
+            {{ form_row(form_entity.starting_at) }}
+
+            {{ form_row(form_entity.groups) }}
+            {{ form_row(form_entity.customers) }}
+
+        </div>
+
+    </div>
+
+    {{ form_end(form_entity) }}
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+
+
+{% endblock %}

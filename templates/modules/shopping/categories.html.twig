@@ -1,0 +1,22 @@
+{% extends '@core/base.html.twig' %}
+
+{% block base_stylesheets %}{% endblock %}
+
+
+{% block base_content %}
+
+    {% include '@app/navigation.html.twig' %}
+
+    <div class="page page-categories">
+
+        {% for category in categories %}
+            {% include '@shopping/includes/category.html.twig' with {'category' : category} %}
+        {% endfor %}
+
+        {% include '@app/footer.html.twig' %}
+    </div>
+
+{% endblock %}
+
+
+{% block base_javascripts %}{% endblock %}

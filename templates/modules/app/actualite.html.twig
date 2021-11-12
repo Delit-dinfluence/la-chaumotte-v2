@@ -1,0 +1,84 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div class="page page-actualite">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <header class="page-header">
+
+            <div class="figure">
+                <img src="{{ asset('assets/media/images/' ~ actualite.image) }}" alt="">
+            </div>
+
+        </header>
+
+        <section class="actualite">
+
+            <h1 class="actualite-title">{{ actualite.designation }}</h1>
+
+
+            <div class="columns">
+                <div class="column column-images" id="columns-images">
+
+                    <a href="{{ asset('assets/media/images/' ~ actualite.picture) }}">
+                        <img src="{{ images['5cd0221d0ca12'].slug }}" alt="" class="img-search">
+                        <img src="{{ asset('assets/media/images/' ~ actualite.picture) }}" alt="">
+                    </a>
+
+                    {#<a href="{{ asset('assets/media/images/' ~ actualite.image) }}">#}
+                        {#<img src="{{ asset('assets/media/images/' ~ actualite.image) }}" alt="">#}
+                    {#</a>#}
+
+                    {#<a href="{{ asset('assets/media/images/' ~ actualite.image) }}">#}
+                        {#<img src="{{ asset('assets/media/images/' ~ actualite.image) }}" alt="">#}
+                    {#</a>#}
+
+                    {#<a href="{{ asset('assets/media/images/' ~ actualite.image) }}">#}
+                        {#<img src="{{ asset('assets/media/images/' ~ actualite.image) }}" alt="">#}
+                    {#</a>#}
+
+                    {#<a href="{{ asset('assets/media/images/' ~ actualite.image) }}">#}
+                        {#<img src="{{ asset('assets/media/images/' ~ actualite.image) }}" alt="">#}
+                    {#</a>#}
+
+                    {#<a href="{{ asset('assets/media/images/' ~ actualite.image) }}">#}
+                        {#<img src="{{ asset('assets/media/images/' ~ actualite.image) }}" alt="">#}
+                    {#</a>#}
+
+                </div>
+
+                <div class="column column-texts">
+                    <div class="description">
+                        {% if actualite.descriptionLong == '' %}
+                            {{ actualite.descriptionShort }}
+                        {% else %}
+                            {{ actualite.descriptionLong|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section> {# /.actualite #}
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function () {
+
+
+            $('#columns-images').lightGallery({
+                thumbnail: true
+            });
+
+        });
+
+    </script>
+{% endblock %}

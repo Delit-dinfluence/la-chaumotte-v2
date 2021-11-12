@@ -1,0 +1,30 @@
+{# Affichage d'un produit - Version miniature #}
+
+<a href="{{ item.slug }}" class="product product-thumb">
+    <div class="product-wrapper">
+        <div class="product-header">
+            <figure>
+                {% if item.cover != null %}
+                    <img src="{{ item.cover.image|imagine_filter('image_cover_thumb') }}" alt=""
+                         class="product-image">
+                {% else %}
+                    <img src="{{ asset('assets/media/images/no_image.jpeg') }}" alt="{{ translation.other_image_empty }}"
+                         class="product-image">
+                {% endif %}
+            </figure>
+        </div> {# /.product-header #}
+
+        <div class="product-content">
+            <h2 class="product-title">{{ item.designation }}</h2>
+            <div class="product-description">{{ item.descriptionShort|raw }}</div>
+        </div>{# /.product-content #}
+
+        <div class="product-footer">
+            <div class="product-price">{{ item.priceHt }} &euro;</div>
+            <div class="product-controls">
+                <button class="btn btn-submit">{{ translation.button_discover }}</button>
+            </div>{# /.product-controls #}
+        </div>{# /.product-footer #}
+
+    </div>{# /.product-wrapper #}
+</a> {# /.product-thumb #}

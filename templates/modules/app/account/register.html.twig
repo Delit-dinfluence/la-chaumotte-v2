@@ -1,0 +1,188 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div class="page page-customer page-register">
+
+    {# NAVIGATION #}
+    {% include '@app/includes/navigation.html.twig' %}
+
+    <div class="page-content">
+        <div class="page-container">
+
+            <h1 class="page-title">{{ translation.page_register_title }}</h1>
+
+            <form id="register-form" class="form form-register">
+
+                <div class="row row-split">
+                    <div class="form-group form-radio">
+                        <input type="radio" name="register-title" value="0" checked id="register-title-mr">
+                        <label for="register-title-mr">{{ translation.page_register_title_mr }}</label>
+                    </div>
+
+                    <div class="form-group form-radio">
+                        <input type="radio" name="register-title" value="1" id="register-title-mrs">
+                        <label for="register-title-mrs">{{ translation.page_register_title_mrs }}</label>
+                    </div> {# /.form-group #}
+                </div> {# /.row #}
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="register-lastname">{{ translation.page_register_lastname }}</label>
+                        <input type="text" id="register-lastname" name="register_lastname" required>
+                    </div> {# /.form-group #}
+                </div> {# /.row #}
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="register-firstname">{{ translation.page_register_firstname }}</label>
+                        <input type="text" id="register-firstname" name="register_firstname" required>
+                    </div> {# /.form-group #}
+                </div> {# /.row #}
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="register-email">{{ translation.page_register_email }}</label>
+                        <input type="email" id="register-email" name="register_email" required>
+                    </div> {# /.form-group #}
+                </div> {# /.row #}
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="register-password">{{ translation.page_register_password }}</label>
+                        <input type="password" id="register-password" name="register_password" required>
+                    </div> {# /.form-group #}
+                </div> {# /.row #}
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="register-password-repeat">{{ translation.page_register_password_repeat }}</label>
+                        <input type="password" id="register-password-repeat" name="register_password_confirm"
+                               required>
+                    </div> {# /.form-group #}
+                </div> {# /.row #}
+
+                <div class="row">
+                    <div class="controls">
+                        <p id="register-errors"></p>
+                        <button id="register-submit"
+                                class="btn-submit">{{ translation.page_register_save }}</button>
+                    </div>
+                </div> {# /.row #}
+
+            </form>
+
+
+            <p class="info-connect">
+                {{ translation.page_register_redirect_connect_content }}
+                <a href="{{ '/' ~ locale ~  pages.connect.translate(locale).uri }}">{{ translation.page_register_redirect_connect }}</a>
+            </p>
+
+        </div> {# /.page-container #}
+    </div>  {# /.page-content #}
+
+    {# PAGE FOOTER #}
+    {% include '@app/includes/footer.html.twig' %}
+
+    </div>{# /.page #}
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script>
+
+        $(document).ready(function () {
+
+            /**
+             * Keyup sur le formulaire de connection
+             * **/
+            $('#register-form input').on('keyup', remove_errors());
+
+            /**
+             * Soumission d'une inscription
+             */
+            $('#register-form').validate({
+                rules: {
+                    register_lastname: {
+                        required: true,
+                    },
+                    register_firstname: {
+                        required: true,
+                    },
+                    register_email: {
+                        required: true,
+                        email: true
+                    },
+                    register_password: {
+                        required: true,
+                    },
+                    register_password_confirm: {
+                        required: true,
+                        equalTo: "#register-password"
+                    }
+                },
+                messages: {
+                    register_lastname: "{{ translation.page_errors_invalid_lastname|raw }}",
+                    register_firstname: "{{ translation.page_errors_invalid_firstname|raw }}",
+                    register_email: "{{ translation.page_errors_invalid_email|raw }}",
+                    register_password: "{{ translation.page_errors_invalid_password|raw }}",
+                    register_password_confirm: "{{ translation.page_errors_invalid_password_confirm|raw }}",
+                },
+
+                submitHandler: function (form) {
+
+                    var button = $('#register-submit');
+                    var errors = $('#register-errors');
+
+                    var dataToSend = {
+                        'title': $('input[name="register-title"]:checked').val(),
+                        'firstname': $('#register-lastname').val(),
+                        'lastname': $('#register-lastname').val(),
+                        'email': $('#register-email').val(),
+                        'password': $('#register-password').val(),
+                        'password_confirm': $('#register-password-repeat').val(),
+                    };
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                    remove_errors();
+
+                    $.ajax({
+                        url: '{{ path('user_register') }}',
+                        data: dataToSend,
+                    }).done(function (data) {
+
+                        window.location.replace("{{ pages.account.uri }}");
+
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                        button.html("{{ translation.page_register_save }}");
+
+                        if (jqXHR.status == 422) {
+                            errors.html('{{ translation.page_errors_invalid_form|raw }}');
+                        } else if (jqXHR.status == 403) {
+                            errors.html('{{ translation.page_errors_user_already_exist|raw }}');
+                        } else {
+                            errors.html('{{ translation.page_errors_fire|raw }}');
+                        }
+
+                        errors.addClass('active');
+
+                    });
+                }
+            });
+
+            /**
+             * Nettoie l'affichage des erreurs
+             */
+            function remove_errors() {
+                var errors = $('#register-errors');
+
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+        });
+
+    </script>
+
+{% endblock %}

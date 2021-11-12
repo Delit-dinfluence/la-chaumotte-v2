@@ -1,0 +1,40 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block content %}
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Référence</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        {% if entities|length > 0 %}
+            {% for entity in entities %}
+                <tr>
+                    <td class="row">{{ loop.index }}</td>
+                    <td>{{ entity.reference }}</td>
+
+                    <td>
+                        <a href="{{ path('shopping_admin_cart_product_form', {'id' : entity.id}) }}"
+                           class="btn btn-primary">Modifier</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune page disponible</td>
+            </tr>
+        {% endif %}
+    </table>
+{% endblock %}
+
+{% block footer_right %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('shopping_admin_cart_product_form', {'id' : -1 }) }}" class="btn btn-success">
+            <i class="fas fa-plus"></i>Nouveau
+        </a>
+    {% endif %}
+{% endblock %}
+

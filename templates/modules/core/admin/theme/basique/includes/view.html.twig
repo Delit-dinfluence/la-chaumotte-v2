@@ -1,0 +1,54 @@
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% set content %}
+
+    <div class="form">
+        {% for item in admin_entity_settings.view.fields %}
+
+            {% if item.type == 'datetime' %}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{ item.label }} :
+                        </div>
+
+                        <div class="col-md-9">
+                            {{ attribute(entity, item.property)|date('d-m-Y h:i') }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{ item.label }} :
+                        </div>
+
+                        <div class="col-md-9">
+                            {{ attribute(entity, item.property) }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endset %}
+
+{% set controls %}
+
+    <div class="column">
+        <a class="btn btn-default" href="{{ links.return|default('') }}">
+            <i class="material-icons">list</i> Retour
+        </a>
+    </div>
+
+{% endset %}
+
+{% include '@core/admin/theme/basique/includes/card.html.twig' with {
+    title: title|default(''),
+    icon: icon|default(''),
+    content: content,
+    controls : controls,
+    select_language : select_language|default(true)
+} %}

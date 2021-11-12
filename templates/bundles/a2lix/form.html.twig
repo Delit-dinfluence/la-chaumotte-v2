@@ -1,0 +1,46 @@
+{% block a2lix_translations_widget %}
+
+    {% if form.vars.action == 'use_translations' %}
+
+        {{ form_errors(form) }}
+
+        <div class="a2lix_translations">
+            {% if  form|length > 1 %}
+                <ul class="a2lix_translationsLocales nav nav-tabs" role="tablist">
+                    {% for translationsFields in form %}
+                        {% if loop.first %}{% set active = ' active ' %}{% else %}{% set active = '' %}{% endif %}
+                        {% set locale = translationsFields.vars.name %}
+
+                        <li class="nav-item">
+                            <a href="#{{ translationsFields.vars.id }}_a2lix_translations-fields"
+                               class="nav-link {{ active }}" data-toggle="tab" role="tab">
+                                {{ translationsFields.vars.label|default(locale|humanize)|trans }}
+                                {% if translationsFields.vars.required %}*{% endif %}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="a2lix_translationsFields tab-content">
+                {% for translationsFields in form %}
+                    {% if loop.first %}{% set active = ' active ' %}{% else %}{% set active = '' %}{% endif %}
+                    {% set locale = translationsFields.vars.name %}
+
+                    <div id="{{ translationsFields.vars.id }}_a2lix_translations-fields"
+                         class="tab-pane {{ active }} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}"
+                         role="tabpanel">
+                        {{ form_errors(translationsFields) }}
+                        {{ form_widget(translationsFields) }}
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block a2lix_translationsForms_widget %}
+    {{ block('a2lix_translations_widget') }}
+{% endblock %}

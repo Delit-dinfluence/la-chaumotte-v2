@@ -1,0 +1,61 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block topbar_right %}
+    <select name="" id="select-languages">
+        {% for language in languages %}
+            <option value="{{ language.id }}">{{ language.designation }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+
+{% block header %}
+
+    <div class="breadcrumb">
+        <a href="{{ path('core_admin_dashboard') }}">
+            <i class="fas fa-home"></i>
+        </a>
+        <span class="slash">/</span>
+        <span>Magasin</span>
+        <span class="slash">/</span>
+        <span>Catalogue</span>
+
+
+    </div>
+    <h1 class="page-title">Promotions && Réductions</h1>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#promotions">Promotions</a></li>
+        <li><a data-toggle="tab" href="#reductions">Code de réductions</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="promotions" class="tab-pane fade in active show">
+
+
+
+        </div>
+        <div id="reductions" class="tab-pane fade">
+
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+
+{% block javascripts %}
+
+
+{% endblock %}

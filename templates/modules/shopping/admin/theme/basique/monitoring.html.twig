@@ -1,0 +1,40 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block header %}
+
+    <div class="breadcrumb">
+        <a href="{{ path('core_admin_dashboard') }}">
+            <i class="fas fa-home"></i>
+        </a>
+        <span class="slash">/</span>
+        <span>Magasin</span>
+        <span class="slash">/</span>
+        <span>Catalogue</span>
+
+
+    </div>
+    <h1 class="page-title">Suivi</h1>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <h2>Liste des catégories vides</h2>
+
+    <h2>Liste des produits sans catégories</h2>
+
+    <h2>Liste des produits sans images</h2>
+
+    <h2>Liste des produits sans description</h2>
+
+    <h2>Liste des produits non disponibles à la vente</h2>
+    {% for product in unavailable %}
+        {{ product.id }}
+    {% endfor %}
+
+
+
+{% endblock %}

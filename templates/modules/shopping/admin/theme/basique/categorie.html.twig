@@ -1,0 +1,33 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+
+    {{ form_start(form_entity) }}
+    {{ form_row(form_entity) }}
+    {{ form_end(form_entity) }}
+
+
+{% endblock %}
+
+{% block footer_left %}
+    {% include '@core/admin/theme/basique/includes/btn_remove.html.twig' with ({
+        'entity_path' : 'shopping_admin_categorie_remove',
+        'form_entity' : form_entity
+    }) %}
+
+    <a href="{{ path('shopping_admin_categorie_list') }}" class="btn btn-default">
+        <i class="fas fa-bars"></i>Liste des catégories
+    </a>
+{% endblock %}
+
+{% block footer_right %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

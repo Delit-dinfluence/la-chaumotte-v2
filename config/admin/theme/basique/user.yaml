@@ -1,0 +1,85 @@
+user:
+  disabled_actions: ['view']
+
+  list:
+
+    title: 'Liste des utilisateurs'
+    icon: 'person'
+    fields:
+      - { property: 'identity',label: "Identité" }
+      - { property: 'email',  label: "Adresse email" }
+      - { property: 'userGroups', label: 'Groupe(s)', type: 'collection', collection_module: 'user', collection_entity: 'UserGroup' }
+      - { property: 'isEnabled', type: 'toggle', label: "Statut" }
+      - { property: 'updatedAt', type: 'datetime',  label: "Dernière connexion" }
+
+  form:
+    title: 'Utilisateur'
+    icon: 'person_add'
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: "En ligne" }
+      - { property: 'firstname', type: 'text', label: 'Prénom' }
+      - { property: 'lastname', type: 'text', label: 'Nom' }
+      - { property: 'email', type: 'text', label: 'Adresse email' }
+      - { property: 'password', type: 'password', label: 'Mot de passe' }
+      - { property: 'userGroups',type: 'select', class: 'select-multiple', label: 'Groupes' }
+
+group:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Liste des groupes utilisateurs'
+    icon: 'group'
+    fields:
+      - { property: 'designation', label: "Désignation" }
+
+  form:
+    icon: 'group_add'
+    title: 'Groupe utilisateur'
+    fields:
+      - { property: 'designation', type: 'translation', label: "Désignation" }
+      - { property: 'users', type: 'select', class: 'select-multiple' }
+
+authorization:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Liste des permissions'
+    icon: 'playlist_add_check'
+    fields:
+      - { property: 'designation', label: "Désignation" }
+      - { property: 'parent', label: 'Parent', type: 'entity', module: 'user', entity: 'Authorization' }
+      - { property: 'devKey', label: 'Clé de permission' }
+
+  form:
+    title: 'Permission'
+    icon: 'playlist_add'
+
+    fields:
+      - { property: 'designation', type: 'text', label: "Désignation" }
+      - { property: 'parent', type: 'select', label: 'Parent' }
+      - { property: 'dev_key', type: 'text', label: 'Clé' }
+
+authorization_group:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Liste des groupes utilisateurs'
+    icon: 'group'
+    fields:
+      - { property: 'authorization', type: 'entity', module: 'user',  entity: 'Authorization', label: 'Authorisation' }
+      - { property: 'team', type: 'entity', module: 'user',  entity: 'UserGroup', label: 'Groupe' }
+      - { property: 'enableView', type: 'toggle',label: "Voir" }
+      - { property: 'enableAdd', type: 'toggle', label: "Ajouter" }
+      - { property: 'enableEdit',type: 'toggle', label: "Modifier" }
+      - { property: 'enableDelete',type: 'toggle', label: "Supprimer" }
+
+  form:
+    icon: 'group_add'
+    title: 'Groupe utilisateur'
+    fields:
+      - { property: 'authorization', type: 'select',label: "Authorisation" }
+      - { property: 'team', type: 'select',label: "Groupe" }
+      - { property: 'enable_view',type: 'checkbox', label: "Voir" }
+      - { property: 'enable_add',type: 'checkbox', label: "Ajouter" }
+      - { property: 'enable_edit',type: 'checkbox', label: "Modifier" }
+      - { property: 'enable_delete', type: 'checkbox', label: "Supprimer" }

@@ -1,0 +1,452 @@
+/*region Variables */
+
+:root {
+  --color-background-white: rgb(255, 255, 255);
+
+  --color-black: rgb(0, 0, 0);
+  --color-white: rgb(255, 255, 255);
+  --color-pink: rgb(239, 166, 166);
+  /*--color-blue: rgb(77, 90, 124);*/
+  --color-blue: #01004e;
+  --color-yellow: rgb(229, 175, 10);
+  --color-green: rgb(202, 211, 54);
+  --color-grey: rgb(50, 50, 50);
+  --color-grey-light: rgb(93, 93, 93);
+  --color-grey-thin: rgb(244, 244, 244);
+  --color-mauve: rgb(159, 147, 163);
+  --color-bordeaux: rgb(168, 69, 88);
+
+  --font-size-navigation: 18px;
+  --font-size-footer-title: 14px;
+  --font-size-footer-content: 12px;
+
+  --font-size-home-category-title: 20px;
+  --font-size-home-category-content-small: 29px;
+  --font-size-home-category-content: 36px;
+  --font-size-home-category-content-big: 60px;
+
+  --font-size-products-introduction: 22px;
+  --font-size-products-products-length: 35px;
+
+  --font-size-product-thumb-category-big: 17px;
+  --font-size-product-thumb-category-small: 17px;
+  --font-size-product-thumb-product-title: 22px;
+  --font-size-product-thumb-button: 20px;
+
+  --font-size-product-family: 45px;
+  --font-size-product-category-big: 20px;
+  --font-size-product-category-small: 20px;
+  --font-size-product-price: 40px;
+  --font-size-product-price-help: 14px;
+  --font-size-product-title: 40px;
+
+  --font-size-random-title: 35px;
+
+  --font-size-home-informations: 17px;
+  --font-size-home-informations-title: 40px;
+  --font-size-home-informations-title-big: 80px;
+  --font-size-home-informations-title-date: 60px;
+
+  --font-size-page-header-small: 38px;
+  --font-size-page-header-big: 75px;
+  --font-size-page-header-black: 50px;
+
+  --font-size-actualites-actualite-title: 25px;
+  --font-size-actualites-actualite-content: 15px;
+  --font-size-actualites-actualite-btn: 20px;
+
+  --font-size-actualite-title: 45px;
+  --font-size-actualite-description: 21px;
+
+  --font-size-research-title: 28px;
+  --font-size-research-product-title: 25px;
+  --font-size-research-product-content: 20px;
+
+  --font-size-category-small: 24px;
+  --font-size-category-big: 55px;
+
+  --font-size-home-product-description: 22px;
+  --font-size-home-product: 17px;
+
+  --font-size-history-title: 40px;
+  --font-size-history-title-big: 80px;
+  --font-size-history-title-date: 60px;
+
+  --text-shadow: 0px 0px 2px #000000;
+
+}
+
+/*endregion*/
+
+/*#region Surcharge/Généralisation des composants */
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+a:hover, .link:hover {
+  text-decoration: none;
+  outline: none;
+}
+
+button, .btn {
+  outline: none;
+  box-shadow: none;
+}
+
+p, .paragraph {
+  margin: 0;
+  padding: 0;
+}
+
+form .form-group:active, form .form-group:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+form .form-group:active input, form .form-group:active textarea, form .form-group:focus input, form .form-group:focus textarea {
+  outline: none;
+  box-shadow: none;
+}
+
+form input, form textarea {
+  outline: none;
+  box-shadow: none;
+}
+
+form input:active, form input:focus, form textarea:active, form textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+form input.is-error {
+  border: 1px solid red;
+}
+
+
+.row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/*#endregion*/
+
+/*region Réinitialisation du CSS */
+
+[type=reset], [type=submit], button, html [type=button] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button, input, textarea {
+  outline: none;
+  box-shadow: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+
+}
+
+b, strong {
+  font-weight: 700;
+}
+
+button {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+ul {
+  list-style: none;
+
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+  }
+
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+button, .btn {
+  background: none;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+
+/*endregion*/
+
+/*#region Gestionnaire de Cookies */
+
+#tarteaucitronAlertBig {
+  background: var(--color-black) !important;
+}
+
+#tarteaucitronPersonalize {
+  border: 2px solid var(--color-green) !important;
+  background: var(--color-green) !important;
+  color: var(--color-white) !important;
+}
+
+#tarteaucitronPersonalize:hover {
+  background: var(--color-white) !important;
+  color: var(--color-green) !important;
+}
+
+#tarteaucitronCloseAlert {
+  border: 2px solid var(--color-white) !important;
+  background: var(--color-white) !important;
+  color: var(--color-black) !important;
+}
+
+#tarteaucitronCloseAlert:hover {
+  background: var(--color-black) !important;
+  color: var(--color-white) !important;
+}
+
+#tarteaucitronPrivacyUrl {
+  color: var(--color-white) !important;
+}
+
+#tarteaucitronPercentage {
+  background: var(--color-green) !important;
+  box-shadow: none !important;
+}
+
+/*#endregion*/
+
+/*#region ReCaptcha */
+
+.grecaptcha-badge {
+  visibility: collapse !important;
+}
+
+@media(max-width: 500px) {
+  #rc-imageselect, .g-recaptcha {
+    transform: scale(0.77);
+    transform-origin: 0;
+    transform: scale(0.77);
+    transform-origin: 0 0;
+    -webkit-transform: scale(0.77);
+    transform: scale(0.77);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+  }
+}
+
+
+/*#endregion*/
+
+/*#region Générale */
+
+html, body {
+  font-family: 'Lato', sans-serif;
+}
+
+.page {
+  width: 100%;
+  margin: 0;
+}
+
+/*#endregion*/
+
+.modal-cancel-wrapper {
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: none;
+  z-index: 999999;
+
+}
+
+
+.modal-cancel {
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999999;
+
+  background: rgba(0, 0, 0, .8);
+
+}
+
+
+.modal-cancel .modal-content {
+  border: none;
+
+  width: calc(100% - 40px);
+  max-width: 650px;
+  margin: 0 auto;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+.modal-cancel .modal-content a {
+  text-decoration: underline;
+}
+
+.modal-cancel .modal-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  border: none;
+  background: none;
+
+  svg {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+
+    path, rect {
+      fill: #000;
+
+      -webkit-transition: linear .3s;
+      -moz-transition: linear .3s;
+      -ms-transition: linear .3s;
+      -o-transition: linear .3s;
+      transition: linear .3s;
+    }
+  }
+
+  &:hover {
+    svg {
+      path, rect {
+
+      }
+    }
+  }
+}
+
+@media all and (max-width: 500px) {
+  .modal-cancel .modal-content {
+    padding: 25px;
+    max-width: 100%;
+  }
+}
+
+
+.modal-cancel-wrapper {
+
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.3s ease 0s;
+
+  .container {
+    width: 100%;
+    max-width: 664px;
+    padding: 32px 30px;
+    box-sizing: border-box;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    position: relative;
+    max-height: 100%;
+    overflow-y: auto;
+    //@include background_gradient;
+  }
+
+  .modal-header {
+
+  }
+
+  .btn-close {
+    position: absolute;
+    right: 16px;
+    top: 18px;
+    display: block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    //background: url("/assets/images/button-close.svg") no-repeat scroll center center transparent;
+    background-size: 22px;
+  }
+
+  .modal-title {
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+    text-transform: uppercase;
+  }
+
+  .modal-text {
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 21px;
+    line-height: 27px;
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}

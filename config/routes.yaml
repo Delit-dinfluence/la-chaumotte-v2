@@ -1,0 +1,12 @@
+sitemap:
+    path: '/sitemap.xml'
+    controller: Core\Controller\SitemapController::sitemap
+    defaults: { _format: 'xml' }
+
+
+router:
+    path: /{controller}
+    controller: Core\Controller\PageController::router
+    requirements:
+        controller:  '(.)*'
+

@@ -1,0 +1,184 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div class="page page-contact">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <h1 class="page-title">
+            {{ translation.page_contact_title|striptags }}
+        </h1>
+
+        <form id="contact-form" class="form form-contact">
+
+            <div class="row row-split">
+
+                <div class="form-group">
+                    <label for="contact_lastname">{{ translation.page_contact_form_lastname|striptags }}</label>
+                    <input type="text" name="contact_lastname" id="contact_lastname" class="input-field" required>
+                </div> {# /.form-group #}
+
+                <div class="form-group">
+                    <label for="contact_firstname">{{ translation.page_contact_form_firstname }}</label>
+                    <input type="text" name="contact_firstname" id="contact_firstname" class="input-field" required>
+                </div> {# /.form-group #}
+
+            </div> {# /.row-split #}
+
+            <div class="row row-split">
+
+                <div class="form-group">
+                    <label for="contact_email">{{ translation.page_contact_form_email|striptags }}</label>
+                    <input type="email" name="contact_email" id="contact_email" class="input-field" required>
+                </div>{# /.form-group #}
+
+                <div class="form-group">
+                    <label for="contact_phone">{{ translation.page_contact_form_phone|striptags }}</label>
+                    <input type="text" name="contact_phone" id="contact_phone" class="input-field" required>
+                </div>{# /.form-group #}
+
+            </div>{# /.row-split #}
+
+            <div class="row row-split">
+
+                <div class="form-group">
+                    <label for="contact_subject">{{ translation.page_contact_form_subject|striptags }}</label>
+                    <input id="contact_subject" type="text" name="contact_subject" class="input-field" required>
+                </div> {# /.form-group #}
+
+                <div class="form-group">
+                    <label for="contac_-message">{{ translation.page_contact_form_message|striptags }}</label>
+                    <textarea id="contact_message" name="contact_message" class="textarea-field" required></textarea>
+                </div> {# /.form-group #}
+
+            </div> {# /.row #}
+
+            {% if cookie_configuration.reCaptchaVersion == '2' %}
+                <div class="row row-recaptcha">
+                    <div id="contact_recaptcha" class="g-recaptcha" data-sitekey="{{ cookie_configuration.reCaptchaClient }}"></div>
+                </div> {# /.row-recaptcha #}
+            {% endif %}
+
+            <div class="row row-controls">
+
+                <div id="contact-infos" class="contact-infos"></div>
+
+                <div class="form-controls">
+                    <button id="contact-submit"
+                            class="btn btn-submit">{{ translation.page_contact_form_submit|striptags }}</button>
+                </div> {# /.controls-group #}
+
+            </div> {# /.row-controls #}
+
+
+        </form> {# /.form-contact #}
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        $(document).ready(function () {
+
+            /**
+             * Soumission d'une demande de contact
+             */
+            $('#contact-form').validate({
+                rules: {
+                    "contact_firstname": {
+                        required: true,
+                    },
+                    "contact_lastname": {
+                        required: true,
+                    },
+                    "contact_email": {
+                        required: true,
+                        email: true,
+                    },
+                    "contact_phone": {
+                        required: true,
+                    },
+                    "contact_subject": {
+                        required: true,
+                    },
+                    "contact_message": {
+                        required: true,
+                    },
+                },
+                messages: {
+                    "contact_firstname": "{{ translation.page_contact_form_firstname_invalid|raw }}",
+                    "contact_lastname": "{{ translation.page_contact_form_lastname_invalid|raw }}",
+                    "contact_email": "{{ translation.page_contact_form_email_invalid|raw }}",
+                    "contact_phone": "{{ translation.page_contact_form_phone_invalid|raw }}",
+                    "contact_subject": "{{ translation.page_contact_form_subject_invalid|raw }}",
+                    "contact_message": "{{ translation.page_contact_form_message_invalid|raw }}",
+                },
+
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+
+                    let $button = $('#contact-submit');
+                    let $infos = $('#contact-infos');
+
+                    let dataToSend = {
+                        'contact_firstname': $('#contact_firstname').val(),
+                        'contact_lastname': $('#contact_lastname').val(),
+                        'contact_email': $('#contact_email').val(),
+                        'contact_phone': $('#contact_phone').val(),
+                        'contact_subject': $('#contact_subject').val(),
+                        'contact_message': $('#contact_message').val(),
+                        'contact_token': $('#recaptcha-token').val(),
+                    };
+
+                    {# reCAPTCHA - Version n°2 #}
+                    {% if cookie_configuration.reCaptchaVersion == '2' %}
+                    dataToSend['contact_token'] = grecaptcha.getResponse();
+                    {% endif %}
+
+                    $.ajax({
+                        url: "{{ path('app_ajax_contact') }}",
+                        method: 'POST',
+                        data: dataToSend,
+                        beforeSend: function () {
+                            $button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                            remove_form_infos($infos);
+                        },
+                        success: function (data) {
+                            $button.html("{{ translation.page_contact_form_submit|striptags }}");
+
+                            $('.input-field, .textarea-field').val('');
+
+                            $infos.html('{{ translation.page_contact_form_info_sent|striptags }}');
+                            remove_form_infos($infos, true);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            $button.html("{{ translation.page_contact_form_submit|striptags }}");
+
+                            let data = jqXHR.responseJSON;
+
+                            $.each(data['content']['errors'], function (key, value) {
+                                $('#' + value['key']).addClass('is-error');
+                            });
+
+                            $infos.html('{{ translation.form_error_fire|raw }}');
+                            remove_form_infos($infos, true);
+                        }
+
+                    }); /* $.ajax */
+
+                }
+
+            });/* $('#contact-form').validate() */
+
+        }); /* $(document).ready() */
+
+    </script>
+
+{% endblock %}

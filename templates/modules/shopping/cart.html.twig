@@ -1,0 +1,222 @@
+{% extends '@core/base.html.twig' %}
+
+{% block base_content %}
+
+    {% include '@app/navigation.html.twig' %}
+
+    <div class="page page-cart">
+
+        <h1 id="page-breadcrumb" class="row page-breadcrumb">
+            Panier
+        </h1> {# /#page-breadcrumb #}
+
+        <div class="page-content">
+            <div class="page-container">
+                {{ form_start(form_address) }}
+
+
+                {% if shopping_cart.products|length > 0 %}
+
+
+                    <div class="row">
+                        <h2 class="cart-subtitle">Récapitulatif de la commande</h2>
+
+
+                        <div class="col-md-6 col-sm-12">
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.delivery_lastname) }}
+                                <label for="">Nom</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.delivery_firstname) }}
+                                <label for="">Prénom</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.delivery_code_postal) }}
+                                <label for="">Code postal</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.delivery_city) }}
+                                <label for="">Ville</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.delivery_address) }}
+                                <label for="">Adresse</label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-12">
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.invoice_lastname) }}
+                                <label for="">Nom</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.invoice_firstname) }}
+                                <label for="">Prénom</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.invoice_code_postal) }}
+                                <label for="">Code postal</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.invoice_city) }}
+                                <label for="">Ville</label>
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_widget(form_address.invoice_address) }}
+                                <label for="">Adresse</label>
+                            </div>
+
+                        </div>
+
+
+                        <p class="delivery-date">Date de livraison prévue : <span id="delivery-date"></span></p>
+
+                        <table>
+                            <tr>
+                                <th>articles:</th>
+                                <td><span id="totalHT"></span></td>
+                            </tr>
+                            <tr>
+                                <th>articles:</th>
+                                <td><span id="delivery"></span></td>
+                            </tr>
+                            <tr>
+                                <th>tva:</th>
+                                <td><span id="tva"></span></td>
+                            </tr>
+                            <tr>
+                                <th>bon de réduction: <input type="text"> <a href="" class="btn-promo">ok</a></th>
+                                <td><span id="promotion"></span></td>
+                            </tr>
+                            <tr>
+                                <th>total:</th>
+                                <td><span id="totalTTC"></span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+                    <div class="cart">
+                        <h2 class="cart-subtitle">détail du panier</h2>
+                        {% for cart_product in shopping_cart.products %}
+                            {% set product = cart_product.product %}
+
+                            <div class="row product">
+                                <div class="col-sm-6">
+                                    <figure class="product-image">
+                                        {% set image = product.image %}
+                                        {% if image == '' %}
+                                            <img src="{{ asset('assets/media/images/no_image.jpeg'  ) }}" alt="">
+                                        {% else %}
+                                            <img src="{{ asset('assets/media/images/' ~ image ) }}" alt="">
+                                        {% endif %}
+                                    </figure>
+                                </div>
+                                <div class="col-sm-6 product-content">
+                                    {{ product.designation }}
+
+                                    <div class="product-quantity">
+                                        Quantité
+                                        {{ cart_product.quantity }}
+                                    </div>
+
+                                    <a href="{{ path('shopping_cart_remove', {'product' : product.id, 'method' : 'post'}) }}"
+                                       class="btn-remove">
+                                        Supprimer
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="row payments">
+
+                        <h2 class="cart-subtitle">Mode de paiement</h2>
+
+                        <div class="group-choice">
+
+                            <div class="choice-content">
+                                <img src="{{ asset('assets/media/images/payment_paypal.png') }}" alt="">
+                            </div>
+
+                            <div class="choice-input" style="display: none;">
+                                {{ form_widget(form_address.payment_method.0) }}
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row controls">
+                        {{ form_row(form_address.submit, {'attr' : {'class' : 'btn btn-submit'}}) }}
+
+                        <a href="" class="btn-return">
+                            Retour
+                        </a>
+
+                    </div>
+
+                {% else %}
+                    <p>Votre panier est vide</p>
+                {% endif %}
+
+
+
+                {{ form_end(form_address) }}
+
+            </div>
+        </div>
+
+
+        {% include '@app/footer.html.twig' %}
+    </div>
+
+{% endblock %}
+
+
+{% block base_javascripts %}
+
+    <script>
+        $.each($('.group-choice input'), function () {
+            set_payment_design(this);
+        });
+
+        $('.choice-content').on('click', function () {
+            $(this).closest('.group-choice').find('.choice-input input').trigger('click')
+        });
+
+        $('.group-choice input').on('change', function () {
+            set_payment_design(this);
+        });
+
+
+        function set_payment_design(input) {
+            if ($(input).is(':checked')) {
+
+                $(input).closest('.group-choice')
+                    .addClass('active')
+                    .append('<div class="icon-check"><i class="fa fa-check"></i></div>');
+
+            } else {
+                $(input).closest('.group-choice')
+                    .removeClass('active')
+                    .find('.icon-check').remove();
+            }
+        }
+    </script>
+{% endblock %}

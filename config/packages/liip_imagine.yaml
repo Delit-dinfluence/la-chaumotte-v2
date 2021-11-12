@@ -1,0 +1,102 @@
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "gd"
+
+    resolvers:
+        my_resolver:
+            web_path:
+                # use %kernel.project_dir%/web for Symfony prior to 4.0.0
+                web_root: "%kernel.project_dir%/public"
+                cache_prefix: "assets/media/cache"
+# define your filter sets under this option
+    filter_sets:
+
+        page_header:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [1400, 600] }
+
+        page_product_image_thumb:
+            cache: my_resolver
+            filters:
+                scale:
+                    dim: [100, 100 ]
+
+        page_product_medal:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [100, 100]}
+
+        page_product_image:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [300, 800]}
+
+        product_thumb:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [300, 600]}
+
+        category_thumb:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [450, 370]}
+
+
+
+        actualite_thumb:
+            cache: my_resolver
+            filters:
+                thumbnail: { mode: 'inset', size: [294, 294]}
+
+
+
+        thumbnail:
+            cache: my_resolver
+
+            filters:
+                thumbnail: { size: [140, 140]}
+
+        header:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [640, 330] }
+
+        image:
+            cache: my_resolver
+            filters:
+                thumbnail: { size: [634, 421]}
+
+        image_cover:
+            cache: my_resolver
+            filters:
+                relative_resize: { widen: 450 }
+
+        image_cover_thumb:
+            cache: my_resolver
+            filters:
+                relative_resize: { widen: 300 }
+
+        social_networks:
+            cache: my_resolver
+            filters:
+                relative_resize: { widen: 150 }
+
+        flag:
+            cache: my_resolver
+            filters:
+                relative_resize: { widen: 50 }
+
+        icon:
+            cache: my_resolver
+            filters:
+                relative_resize: { widen: 100 }
+
+
+
+    loaders:
+        default:
+            filesystem:
+                bundle_resources:
+                    enabled: true
+                data_root: "%kernel.project_dir%/public/assets/media/images/"

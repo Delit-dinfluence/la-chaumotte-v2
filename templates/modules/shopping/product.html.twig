@@ -1,0 +1,42 @@
+{% extends '@core/base.html.twig' %}
+
+{% block base_stylesheets %}{% endblock %}
+
+
+{% block base_content %}
+
+    {% include '@app/navigation.html.twig' %}
+
+    <div class="page page-product">
+        <div class="page-wrapper">
+
+            <figure class="product-image">
+                {% set image = product.image %}
+                {% if image == '' %}
+                    <img src="{{ asset('assets/media/images/no_image.jpeg'  ) }}" alt="">
+                {% else %}
+                    <img src="{{ asset('assets/media/images/' ~ image ) }}" alt="">
+                {% endif %}
+            </figure>
+
+            <div class="product-content">
+                <h1 class="product-title">{{ product.designation }}</h1>
+                <div class="product-description">{{ product.descriptionLong }}</div>
+
+                <div class="block-price">
+                    <div class="product-price">{{ product.priceHt }} &euro;</div>
+                    <p class="product-delivery">Livraison frais de douane compris</p>
+                </div>
+
+                <a href="{{ path('shopping_cart_add', {'product' : product.id, 'method' : 'post'}) }}" class="btn">
+                    Ajouter au panier
+                </a>
+            </div>
+        </div>
+        {% include '@app/footer.html.twig' %}
+    </div>
+
+{% endblock %}
+
+
+{% block base_javascripts %}{% endblock %}

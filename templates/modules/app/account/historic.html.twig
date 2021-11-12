@@ -1,0 +1,138 @@
+{% extends '@app/account/base.html.twig' %}
+
+{% block account_title %}
+    {{ translation.page_account_historic_title }}
+{% endblock %}
+
+{% block account_content %}
+
+    <div class="historic">
+        <div class="ariane">
+            <a href="{{ '/' ~ locale ~  pages.account.translate(locale).uri }}">{{ translation.page_account_ariane_home }} </a>
+            - {{ translation.page_account_historic_title }}
+        </div>
+
+        {% if orders|length > 0 %}
+            {% for order in orders %}
+                <div class="order">
+                    <div class="order-header">
+                        <div class="column">
+                            <div class="column-block">
+                                <p class="text-title">
+                                    {{ translation.page_account_historic_date }}
+                                <p>
+                                <p class="text-content">{{ order.createdAt|date('d-m-Y - H:i') }}</p>
+                            </div>
+
+                            <div class="column-block">
+                                <p class="text-title">{{ translation.page_account_historic_total_ttc|raw }}</p>
+                                <p class="text-content">{{ order.totalTTC }} &euro;</p>
+                            </div>
+
+                            <div class="column-block">
+                                <p class="text-title">{{ translation.page_account_historic_total_number|raw }}</p>
+                                <p class="text-content">{{ order.cart.products|length }} </p>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="column-block">
+                                <p class="text-title">{{ translation.page_account_historic_number|raw }}</p>
+                                <p class="text-content">{{ order.reference }}</p>
+
+                                <a href="/compte/historique-des-commandes/{{ order.reference }}"
+                                   class="text-link">{{ translation.page_account_historic_details|raw }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-content">
+
+                        <div class="order-status">
+                            {% set status = order.status %}
+
+                            <p  data-status="{{ status }}">
+                                {% if status == 0 %}
+                                    {{ translation.page_account_historic_status_1|raw }}
+                                {% elseif status == 1 %}
+                                    {{ translation.page_account_historic_status_2|raw }}
+                                {% elseif status == 2 %}
+                                    {{ translation.page_account_historic_status_3|raw }}
+                                {% elseif status == 3 %}
+                                    {{ translation.page_account_historic_status_4|raw }}
+                                {% elseif status == 4 %}
+                                    {{ translation.page_account_historic_status_5|raw }}
+                                {% elseif status == 5 %}
+                                    {{ translation.page_account_historic_status_6|raw }}
+                                {% elseif status == 5 %}
+                                    {{ translation.page_account_historic_status_7|raw }}
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="products">
+                            {% for object in order.cart.products %}
+                                {% if loop.index <= 2 %}
+                                    <div class="product">
+                                        <div class="figure">
+                                            {% if object.product.cover != '' and object.product.cover != false %}
+                                                <img src="{{ asset('assets/media/images/' ~ object.product.cover.image) }}"
+                                                     alt="">
+                                            {% else %}
+                                                <img src="{{ images['5ccbebe46b80d'].slug }}" alt="">
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="product-content">
+                                            <p class="category-big">
+                                                {% for item in object.product.categories %}
+                                                    {% if loop.index > 1 %},{% endif %}
+
+                                                    {% if item.designationOrder == 0 %}
+                                                        <span class="category-designation">{{ item.designationBig ~ ' ' ~ item.designationSmall }}</span>
+                                                    {% else %}
+                                                        <span class="category-designation">{{ item.designationSmall ~ ' ' ~ item.designationBig }}</span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </p>
+
+                                            <a class="product-link"
+                                               href="{{ pages.category.uri ~ object.product.slug }}">
+                                                <h3 class="product-title">{{ object.product.designation }}</h3>
+                                            </a>
+
+                                            {% for feature in object.product.productFeatures %}
+                                                <p class="product-feature">{{ feature.featureGroup.designation ~ ' : ' ~ feature.feature.designation }}</p>
+                                            {% endfor %}
+
+                                            <p class="price-unit">{{ translation.page_account_historic_unit_price ~ ' ' ~ object.product.priceHt|number_format(2, '.', ' ') }}
+                                                &euro;</p>
+
+                                            <p class="product-quantity">{{ translation.page_account_historic_quantity ~ ' ' ~ object.quantity }}</p>
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+
+                            {% endfor %}
+
+                            {% if order.cart.products|length > 2 %}
+                                <a href="/compte/historique-des-commandes/{{ order.reference }}">En voir plus</a>
+                            {% endif %}
+
+                            <div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>{{ translation.page_account_historic_empty|raw }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

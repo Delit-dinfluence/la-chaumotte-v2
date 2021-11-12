@@ -1,0 +1,38 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+
+    {{ entity.reference }}
+    {{ entity.order }}
+
+
+    <p>Liste des produits </p>
+    {% for product in entity.cartProducts %}
+       Référence:  {{ product.reference }}
+    {% endfor %}
+
+{% endblock %}
+
+{% block footer_left %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('shopping_admin_cart_form', {'id' : entity.id}) }}"
+           class="btn btn-primary">Modifier</a>
+    {% endif %}
+
+
+    <a href="{{ path('shopping_admin_order_view', {'id' : entity.order.id}) }}" class="btn btn-default">
+        <i class="fas fa-bars"></i> Voir la commande
+    </a>
+{% endblock %}
+
+{% block footer_right %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}

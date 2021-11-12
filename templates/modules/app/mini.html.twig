@@ -1,0 +1,976 @@
+{% extends '@app/base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('build/mini.min.css') }}">
+    <link type="text/css" rel="stylesheet"
+          href="{{ asset('assets/vendors/animated-hamburger-1.1.3/css/hamburgers.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/slick-1.8.1/css/slick.css') }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="page page-mini">
+
+        <div class="navigation" id="navigation">
+
+            <div class="container">
+
+                {% if images['MINI_LOGO'] is defined and images['MINI_LOGO'].image != '' %}
+                    <div class="column">
+                        <a class="logo" href="#">
+                            {% if images['MINI_LOGO'] is defined and images['MINI_LOGO'].image != '' %}
+                                <img src="{{ images['MINI_LOGO'].slug }}" alt="{{ images['MINI_LOGO'].alt }}">
+                            {% else %}
+                                <img src="{{ images['NO_IMAGE'].slug }}" alt="{{ images['NO_IMAGE'].alt }}">
+                            {% endif %}
+                        </a>
+                    </div> {# /.column #}
+                {% endif %}
+
+                <div class="column column-navigation">
+
+                    <nav id="nav" class="nav">
+
+                        <ul class="nav-list">
+
+                            {% if translation.page_mini_navigation_link_1 is defined %}
+                                <li class="nav-item">
+                                    <a href="#about" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_navigation_link_1|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_navigation_link_2 is defined %}
+                                <li class="nav-item">
+                                    <a href="#lesProduits" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_navigation_link_2|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_navigation_link_3 is defined %}
+                                <li class="nav-item">
+                                    <a href="#lesPointsDeVente" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_navigation_link_3|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_navigation_link_4 is defined %}
+                                <li class="nav-item">
+                                    <a href="#passerCommande" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_navigation_link_4|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_navigation_link_5 is defined %}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        {{ translation.page_mini_navigation_link_5|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                        </ul> {# /.nav-list #}
+
+                    </nav> {# /.nav #}
+
+                </div> {# /.column #}
+
+                <div class="column column-hamburger">
+
+                    <div class="open-modal">
+
+                        <button class="hamburger burger hamburger--squeeze" type="button" id="modal-command">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+
+                    </div> {# /.open-modal #}
+
+                </div> {# /.column #}
+
+            </div> {# /.container #}
+
+        </div> {# /.navigation #}
+
+        <header id="page-header" class="page-header"
+                style="background-image:url({{ images['BG_HEADER'].slug }})">
+
+            <div class="container">
+
+                <h1 id="page-title" class="page-title"><img src="{{ images['PAGE_TITLE'].slug }}"
+                                                            alt="{{ images['PAGE_TITLE'].alt }}"></h1>
+
+            </div> {# /.container #}
+
+        </header> {# /.page-header #}
+
+        <main id="page-main" class="page-main">
+
+
+            <section id="about" class="section section-split section-about">
+
+                <div class="container-fluid">
+
+                    <div class="row ">
+
+                        <div class="column column-left">
+
+                            <div class="block-image">
+
+                                <img src="{{ images['POLA_1'].slug }}" alt="{{ images['POLA_1'].alt }}">
+
+                            </div> {# /.block-image #}
+
+                        </div> {# /.column #}
+
+                        <div class="column column-right">
+
+                            <div class="block-content">
+
+                                <h2 class="block-title">{{ translation.page_mini_section_title_1|striptags }}</h2>
+
+                                <div class="block-text">{{ translation.page_mini_section_content_1|raw }}</div>
+
+                            </div> {# /.block-content #}
+
+                        </div> {# /.column #}
+
+
+                    </div> {# /.row #}
+
+                </div> {# /#container-fluid #}
+
+            </section> {# /.section-full section-about #}
+
+            <section class="section section-columns section-picto" data-col-count="3">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="column">
+
+                            <div class="block-column">
+
+                                <div class="img-container">
+                                    <img src="{{ images['ELEVAGE_1'].slug }}" alt="{{ images['ELEVAGE_1'].alt }}">
+                                </div>
+
+                                <div class="block-content">
+
+                                    <h3 class="block-title">{{ translation.page_mini_section_picto_column_title_1|raw }}</h3>
+
+                                </div> {# /.block-content #}
+
+                            </div> {# /.block-column #}
+
+                        </div> {# /.column #}
+                        <div class="column">
+
+                            <div class="block-column">
+
+                                <div class="img-container">
+                                    <img src="{{ images['ALIMENTATION_1'].slug }}"
+                                         alt="{{ images['ALIMENTATION_1'].alt }}">
+                                </div>
+
+                                <div class="block-content">
+
+                                    <h3 class="block-title">{{ translation.page_mini_section_picto_column_title_2|raw }}</h3>
+
+                                </div> {# /.block-content #}
+
+                            </div> {# /.block-column #}
+
+                        </div> {# /.column #}
+                        <div class="column">
+
+                            <div class="block-column">
+
+                                <div class="img-container">
+                                    <img src="{{ images['VOLAILLES_1'].slug }}" alt="{{ images['VOLAILLES_1'].alt }}">
+                                </div>
+
+                                <div class="block-content">
+
+                                    <h3 class="block-title">{{ translation.page_mini_section_picto_column_title_3|raw }}</h3>
+
+                                </div> {# /.block-content #}
+
+                            </div> {# /.block-column #}
+
+                        </div> {# /.column #}
+
+                    </div> {# /.row #}
+
+                </div>{# /.container #}
+
+            </section> {# /#section-columns section-picto #}
+
+            <section id="lesProduits" class="section section-split section-produits">
+
+                <div class="container-fluid">
+
+                    <div class="row-reverse ">
+
+                        <div class="column column-left">
+
+                            <div class="block-slide">
+
+
+                                <div class="single-item">
+                                    {% for item in slides %}
+                                        <img src="{{ asset('assets/media/images/' ~item.image ) }}"
+                                             alt="{{ item.imageAlt }}">
+                                    {% endfor %}
+                                </div>
+
+
+                            </div> {# /.block-slide #}
+
+                        </div> {# /.column #}
+
+                        <div class="column column-right">
+
+                            <div class="block-content">
+
+                                <h2 class="block-title">{{ translation.page_mini_section_produits_title|striptags }}</h2>
+
+                                <div class="block-text">{{ translation.page_mini_section_produits_content|raw }}</div>
+
+                                <div class="block-controls">
+                                    <a class="button button-type1 t" data-type="1" href="{{ files['PRODUCTS'].slug }}"
+                                       download="{{ files['PRODUCTS'].designation }}" target="_blank" rel="noopener">
+                                        {{ translation.page_mini_section_produits_link|raw }}
+                                    </a>
+                                </div>
+
+                            </div> {# /.block-content #}
+
+                        </div> {# /.column #}
+
+                    </div> {# /.row #}
+
+                </div> {# /#container-fluid #}
+
+            </section> {# /.section-full section-produits #}
+
+
+            <div class="container-points-de-vente"
+                 style="background-image: url({{ asset('assets/media/images/core/bg-motif-epi.jpg') }})">
+
+                <section id="lesPointsDeVente" class="section section-map section-map">
+
+                    <div class="row">
+
+                        <div class="container-fluid">
+
+                            <div class="column">
+
+                                <div class="block-content">
+
+                                    <h2 class="block-title">{{ translation.page_mini_section_map_title|striptags }}</h2>
+
+                                </div> {# /.block-content #}
+
+                                <div class="block-map">
+                                    <div class="map" id="map"></div>
+                                </div> {# /.block-image #}
+
+                            </div> {# /.column #}
+
+                        </div> {# /.container-fluid #}
+
+                    </div> {# /.row #}
+
+                </section> {# /#section section-image section-map #}
+
+                <section class="section section-columns section-vendeurs" data-col-count="3">
+
+                    <div class="container">
+
+                        <div class="row">
+
+                            <div class="column">
+
+                                <div class="block-column" id="block-column1">
+
+                                    <div class="block-content">
+
+
+                                        <div class="block-header">
+
+                                            <h3 class="block-title">
+                                                {{ translation.page_mini_section_vendeurs_1_content_title|striptags }}
+                                            </h3>
+
+                                        </div>{# /.block-header #}
+
+                                        <div class="block-horaires">
+
+                                            <p class="block-subtitle">
+                                                {{ translation.page_mini_section_vendeurs_1_content_horaires_subtitle|striptags }}
+                                            </p>
+                                            <div class="block-text">
+                                                {{ translation.page_mini_section_vendeurs_1_content_horaires_text|raw }}
+                                            </div>
+
+                                        </div>{# /.block-horaires #}
+
+                                        <div class="block-adresse">
+
+                                            <p class="block-subtitle">
+                                                {{ translation.page_mini_section_vendeurs_1_content_adresse_subtitle|striptags }}
+                                            </p>
+                                            <div class="block-text">
+                                                {{ translation.page_mini_section_vendeurs_1_content_adresse_text|raw }}
+                                            </div>
+
+                                        </div>{# /.block-adresse #}
+
+                                    </div> {# /.block-content #}
+
+                                </div> {# /.block-column #}
+
+                            </div> {# /.column #}
+
+                            <div class="column">
+
+                                <div class="block-column active" id="block-column2">
+
+                                    <div class="block-content">
+
+
+                                        <div class="block-header">
+
+                                            <h3 class="block-title">
+                                                {{ translation.page_mini_section_vendeurs_2_content_title|striptags }}
+                                            </h3>
+
+                                        </div>{# /.block-header #}
+
+                                        <div class="block-horaires">
+
+                                            <p class="block-subtitle">
+                                                {{ translation.page_mini_section_vendeurs_2_content_horaires_subtitle|raw }}
+                                            </p>
+                                            <div class="block-text">
+                                                {{ translation.page_mini_section_vendeurs_2_content_horaires_text|raw }}
+                                            </div>
+
+                                        </div>{# /.block-horaires #}
+
+                                        <div class="block-adresse">
+
+                                            <p class="block-subtitle">
+                                                {{ translation.page_mini_section_vendeurs_2_content_adresse_subtitle|striptags }}
+                                            </p>
+                                            <div class="block-text">
+                                                {{ translation.page_mini_section_vendeurs_2_content_adresse_text|raw }}
+                                            </div>
+
+                                        </div>{# /.block-adresse #}
+
+                                    </div> {# /.block-content #}
+
+                                </div> {# /.block-column #}
+
+                            </div> {# /.column #}
+
+                            <div class="column">
+
+                                <div class="block-column" id="block-column3">
+
+                                    <div class="block-content">
+
+
+                                        <div class="block-header">
+
+                                            <h3 class="block-title">
+                                                {{ translation.page_mini_section_vendeurs_3_content_title|striptags }}
+                                            </h3>
+
+                                        </div>{# /.block-header #}
+
+                                        <div class="block-horaires">
+
+                                            <p class="block-subtitle">
+                                                {{ translation.page_mini_section_vendeurs_3_content_horaires_subtitle|striptags }}
+                                            </p>
+                                            <div class="block-text">
+                                                {{ translation.page_mini_section_vendeurs_3_content_horaires_text|raw }}
+                                            </div>
+
+                                        </div>{# /.block-horaires #}
+
+                                        <div class="block-adresse">
+
+                                            <p class="block-subtitle">
+                                                {{ translation.page_mini_section_vendeurs_3_content_adresse_subtitle|striptags }}
+                                            </p>
+                                            <div class="block-text">
+                                                {{ translation.page_mini_section_vendeurs_3_content_adresse_text|raw }}
+                                            </div>
+
+                                        </div>{# /.block-adresse #}
+
+                                    </div> {# /.block-content #}
+
+                                </div> {# /.block-column #}
+
+                            </div> {# /.column #}
+
+                        </div> {# /.row #}
+
+                    </div>{# /.container #}
+
+                </section> {# /#section-columns section-vendeurs #}
+            </div>
+
+
+            <section id="passerCommande" class="section section-split section-contact">
+
+                <div class="container-fluid">
+
+                    <div class="row ">
+
+                        <div class="column column-left">
+
+                            <div class="block-image">
+                                <img src="{{ images['POULE_ORDER'].slug }}" alt="{{ images['POULE_ORDER'].alt }}">
+                            </div> {# /.block-image #}
+
+                        </div> {# /.column #}
+
+                        <div class="column column-right">
+
+                            <div class="block-content">
+
+                                <h2 class="block-title">{{ translation.page_mini_section_contact_title_1|raw }}</h2>
+
+                                <p class="block-text">{{ translation.page_mini_section_contact_content_1|raw }}</p>
+
+                                <p class="block-text">{{ translation.page_mini_section_contact_content_2|raw }}</p>
+
+                                <p class="block-email">{{ translation.page_mini_section_contact_email|raw }}</p>
+
+                                <p class="block-text">{{ translation.page_mini_section_contact_content_3|raw }}</p>
+
+                                <p class="block-telephone">{{ translation.page_mini_section_contact_telephone|raw }}</p>
+
+                            </div> {# /.block-content #}
+
+                        </div> {# /.column #}
+
+
+                    </div> {# /.row #}
+
+                </div> {# /#container-fluid #}
+
+            </section> {# /.section-split section-contact #}
+
+            <div class="section section-full section-adresse">
+
+                <div class="container-fluid">
+
+                    <div class="row ">
+
+                        <ul class="adresse-list">
+
+                            <li class="list-item">{{ translation.page_mini_section_adresse_item_1|raw }}</li>
+                            <li class="list-item">{{ translation.page_mini_section_adresse_item_2|raw }}</li>
+                            <li class="list-item">{{ translation.page_mini_section_adresse_item_3|raw }}</li>
+                            <li class="list-item">{{ translation.page_mini_section_adresse_item_4|raw }}</li>
+
+
+                        </ul> {# /#adresse-list #}
+
+                    </div> {# /.row #}
+
+                </div> {# /#container-fluid #}
+
+            </div> {# /.section-full section-adresse #}
+
+        </main> {# /.page-main #}
+
+        <footer id="page-footer" class="page-footer" itemscope itemtype="http://schema.org/Organization">
+
+            <link itemprop="url" href="https://www.la-chaumotte.fr">
+
+            <div class="row row-bottom">
+
+                <div class="container">
+
+                    <div class="column">
+
+                        <ul class="footer-nav">
+
+                            {% if translation.page_mini_footer_link_1 is defined %}
+                                <li class="nav-item">
+                                    <a href="#about" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_footer_link_1|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_footer_link_2 is defined %}
+                                <li class="nav-item">
+                                    <a href="#lesProduits" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_footer_link_2|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_footer_link_3 is defined %}
+                                <li class="nav-item">
+                                    <a href="#lesPointsDeVente" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_footer_link_3|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_footer_link_4 is defined %}
+                                <li class="nav-item">
+                                    <a href="#passerCommande" class="nav-link js-scrollTo">
+                                        {{ translation.page_mini_footer_link_4|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if translation.page_mini_footer_link_5 is defined %}
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" data-toggle="modal" data-target="#modalMentions">
+                                        {{ translation.page_mini_footer_link_5|striptags }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                        </ul> {# /#footer-nav #}
+
+                    </div> {# /#column #}
+
+                </div> {# /#container #}
+
+            </div> {# /#row #}
+
+        </footer> {# /.page-footer #}
+
+        {# MODALS #}
+        <div class="modal modal-navigation" id="modal-navigation">
+
+            <div class="container">
+
+                <div class="modal-header">
+
+                </div> {# /.modal-header #}
+
+                <div class="modal-body">
+                    <ul class="modal-nav">
+
+                        {% if translation.page_mini_navigation_link_1 is defined %}
+                            <li class="nav-item">
+                                <a href="#about" class="nav-link js-scrollTo">
+                                    {{ translation.page_mini_navigation_link_1|striptags }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if translation.page_mini_navigation_link_2 is defined %}
+                            <li class="nav-item">
+                                <a href="#lesProduits" class="nav-link js-scrollTo">
+                                    {{ translation.page_mini_navigation_link_2|striptags }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if translation.page_mini_navigation_link_3 is defined %}
+                            <li class="nav-item">
+                                <a href="#lesPointsDeVente" class="nav-link js-scrollTo">
+                                    {{ translation.page_mini_navigation_link_3|striptags }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if translation.page_mini_navigation_link_4 is defined %}
+                            <li class="nav-item">
+                                <a href="#passerCommande" class="nav-link js-scrollTo">
+                                    {{ translation.page_mini_navigation_link_4|striptags }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% if translation.page_mini_navigation_link_5 is defined %}
+                            <li class="nav-item">
+                                <a href="#" class="nav-link js-scrollTo">
+                                    {{ translation.page_mini_navigation_link_5|striptags }}
+                                </a>
+                            </li>
+                        {% endif %}
+
+
+                    </ul> <!--modal-nav-->
+                </div> {# /.modal-body #}
+
+                <div class="modal-footer">
+
+                </div> {# /.modal-footer #}
+
+            </div> {# /.container #}
+
+        </div> {# /.page-modal #}
+
+        <div class="modal fade" id="modalMentions" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ translation.page_legal_notices_title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-text">
+                            {{ translation.page_legal_notices_content|raw }}
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> {# /.page #}
+
+{#    <div id="modal-cancel" class="modal modal-cancel-wrapper " style="display: none;">#}
+{#        <div class="modal-cancel" style="width:100%;">#}
+
+{#            <div class="modal-container" style="width:100%;">#}
+{#                <div class="modal-content" style="width:600px;max-width: 80%;padding:0;min-width:250px;">#}
+
+{#                    <button id="modal-clsoe" class="modal-close">#}
+{#                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas"#}
+{#                             data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" viewBox="0 0 352 512">#}
+{#                            <path fill="currentColor"#}
+{#                                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"/>#}
+{#                        </svg>#}
+{#                    </button>#}
+
+{#                    <a href="https://m.facebook.com/PouletdelaChaumotte-100215048550122/" target="_blank">#}
+{#                        <img style="width:100%;"#}
+{#                             src="https://www.la-chaumotte.fr/assets/media/modals/volailles-festives.jpg"#}
+{#                             alt="Découvrez nos volailles festives">#}
+{#                    </a>#}
+
+{#                </div>#}
+{#            </div>#}
+
+{#        </div>#}
+{#    </div>#}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/vendors/jquery-3.3.1/js/jquery.min.js') }}"></script>
+
+    <script src="{{ asset('assets/vendors/slick-1.8.1/js/slick.min.js') }}"></script>
+
+    <script>
+
+        // setTimeout(function () {
+        //     $('#modal-cancel').fadeIn('fade').addClass('active');
+        // }, 1750);
+        //
+        // $('#modal-clsoe').on('click', function (event) {
+        //     event.preventDefault();
+        //
+        //     $('#modal-cancel').fadeOut('fade').removeClass('active');
+        // });
+
+
+        var map;
+
+        function initMap() {
+            var myLatLng = {lat: 47.204926, lng: 2.410242};
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                zoom: 9
+            });
+
+
+            var infowindow = [];
+
+
+            var contentString = '<a href="#" class="infoWindow-link"><div id="content">' +
+                '<p id="producteurName" class="producteur-name">{{ translation.page_mini_section_vendeurs_1_content_title|striptags }}</p>' +
+                '<p id="producteurAdress" class="producteur-adress">{{ translation.pop_up_map_adresse1|raw }}</p></a>';
+
+
+            infowindow[0] = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 200
+            });
+
+
+            var contentString = '<a href="#" class="infoWindow-link"><div id="content">' +
+                '<p id="producteurName" class="producteur-name">{{ translation.page_mini_section_vendeurs_2_content_title|striptags }}</p>' +
+                '<p id="producteurAdress" class="producteur-adress">{{ translation.pop_up_map_adresse2|raw }}</p></a>';
+
+            infowindow[1] = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 200
+            });
+
+
+            var contentString = '<a href="#" class="infoWindow-link"><div id="content">' +
+                '<p id="producteurName" class="producteur-name">{{ translation.page_mini_section_vendeurs_3_content_title|striptags }}</p>' +
+                '<p id="producteurAdress" class="producteur-adress">{{ translation.pop_up_map_adresse3|raw }}</p></a>';
+
+
+            infowindow[2] = new google.maps.InfoWindow({
+                content: contentString,
+                maxWidth: 200
+            });
+
+
+            var latlng1 = {lat: 47.136456, lng: 2.4303764};
+            var marker1 = new google.maps.Marker({
+                position: latlng1,
+                map: map,
+                title: 'producteur1',
+
+            });
+
+            marker1.addListener('mouseover', function () {
+                infowindow[0].open(map, marker1);
+            });
+
+            marker1.addListener('mouseout', function () {
+                infowindow[0].close(map, marker1);
+            });
+
+            marker1.addListener('click', function () {
+
+                var element = document.getElementById("block-column1");
+                var element2 = document.getElementById("block-column2");
+                var element3 = document.getElementById("block-column3");
+
+                if (element2.classList.contains("active")) {
+                    element.classList.add("active");
+                    element2.classList.remove("active");
+                    element.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+                } else if ((element3.classList.contains("active"))) {
+                    element.classList.add("active");
+                    element3.classList.remove("active");
+                    element.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+                } else if ((element.classList.contains("active"))) {
+                    element2.classList.remove("active");
+                    element.classList.add("active");
+                    element.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+                } else {
+                    element.classList.add("active");
+                    element.scrollIntoView({behavior: 'smooth', block: 'end'});
+                }
+
+
+            });
+
+            var latlng2 = {lat: 47.5666661, lng: 1.3709829};
+            var marker2 = new google.maps.Marker({
+                position: latlng2,
+                map: map,
+                title: 'producteur2',
+            });
+
+            marker2.addListener('mouseover', function () {
+                infowindow[1].open(map, marker2);
+            });
+
+            marker2.addListener('mouseout', function () {
+                infowindow[1].close(map, marker2);
+            });
+
+            marker2.addListener('click', function () {
+
+                var element = document.getElementById("block-column1");
+                var element2 = document.getElementById("block-column2");
+                var element3 = document.getElementById("block-column3");
+
+                if (element.classList.contains("active")) {
+                    element2.classList.add("active");
+                    element.classList.remove("active");
+                    element2.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+
+                } else if ((element3.classList.contains("active"))) {
+                    element2.classList.add("active");
+                    element3.classList.remove("active");
+                    element2.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+                } else if ((element2.classList.contains("active"))) {
+                    element2.classList.add("active");
+                    element2.scrollIntoView({behavior: 'smooth', block: 'end'});
+                } else {
+                    element2.classList.add("active");
+                    element2.scrollIntoView({behavior: 'smooth', block: 'end'});
+                }
+
+
+            });
+
+
+            var latlng3 = {lat: 46.9891101, lng: 3.1605527};
+            var marker3 = new google.maps.Marker({
+                position: latlng3,
+                map: map,
+                title: 'producteur2',
+            });
+
+            marker3.addListener('mouseover', function () {
+                infowindow[2].open(map, marker3);
+            });
+
+            marker3.addListener('mouseout', function () {
+                infowindow[2].close(map, marker3);
+            });
+
+            marker3.addListener('click', function () {
+
+                var element = document.getElementById("block-column1");
+                var element2 = document.getElementById("block-column2");
+                var element3 = document.getElementById("block-column3");
+
+                if (element2.classList.contains("active")) {
+                    element3.classList.add("active");
+                    element2.classList.remove("active");
+                    element3.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+
+                } else if ((element.classList.contains("active"))) {
+                    element3.classList.add("active");
+                    element.classList.remove("active");
+                    element3.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+
+                } else if ((element3.classList.contains("active"))) {
+                    element3.classList.remove("active");
+                    element3.classList.add("active");
+                    element3.scrollIntoView({behavior: 'smooth', block: 'end'});
+
+                } else {
+                    element3.classList.add("active");
+                    element3.scrollIntoView({behavior: 'smooth', block: 'end'});
+                }
+
+
+            });
+        }
+
+        $(document).ready(function () {
+
+            $('.single-item').slick({
+                dots: true,
+            });
+
+            /***
+             * Ouverture et fermeture de la modal + déclenchement de l'anim btn hamburger
+             */
+            $('#modal-command').on('click', function (event) {
+                event.preventDefault;
+
+                let $modal = $('#modal-navigation');
+                let $modalCommand = $('#modal-command');
+                let $navigation = $('#navigation');
+
+                if ($modal.hasClass('active')) {
+
+                    $modal.removeClass('active');
+                    $modalCommand.removeClass('is-active');
+                    $modalCommand.css('position', 'inherit');
+                    $navigation.removeClass('indexed');
+
+                } else {
+
+                    $modal.addClass('active');
+                    $modalCommand.addClass('is-active');
+                    $modalCommand.css('position', 'fixed');
+                    $navigation.addClass('indexed');
+                }
+
+            });
+
+            $navigation = $('#navigation');
+
+            $(window).scroll(function () {
+
+                if ($(window).scrollTop() > 40) {
+
+                    if (!$navigation.hasClass('active'))
+                        $navigation.addClass('active');
+                } else {
+                    if ($navigation.hasClass('active'))
+                        $navigation.removeClass('active');
+                }
+            });
+
+            /**
+             * Fermeture de la modal quand l'écran dépasse 900px
+             */
+            $(window).resize(function () {
+
+                let $pageWidth = $(window).width();
+                let $modal = $('#modal-navigation');
+                let $modalCommand = $('#modal-command');
+
+                if ($pageWidth > 900) {
+                    $modal.removeClass('active');
+                    $modalCommand.removeClass('is-active');
+                }
+
+            });
+            /**
+             * Fermeture de la modal quand au click sur la navigation
+             */
+
+            $('#modal-navigation .nav-link').on('click', function (event) {
+                event.preventDefault();
+
+                let $modal = $('#modal-navigation');
+                let $modalCommand = $('#modal-command');
+
+                $modal.removeClass('active');
+                $modalCommand.removeClass('is-active');
+
+            });
+
+            /**
+             * Fonction scroll to au click sur la navigation
+             */
+            $('.js-scrollTo').on('click', function () { // Au clic sur un élément
+                var page = $(this).attr('href'); // Page cible
+                var speed = 750; // Durée de l'animation (en ms)
+                $('html, body').animate({scrollTop: $(page).offset().top - 40}, speed); // Go
+                return false;
+            });
+        });
+
+    </script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async
+            defer></script>
+{% endblock %}

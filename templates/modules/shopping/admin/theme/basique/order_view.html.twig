@@ -1,0 +1,72 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+
+
+    {{ entity.reference }}
+    {{ entity.deliveryLastname }}
+    {{ entity.deliveryFirstname }}
+    {{ entity.paymentMethod }}
+    <a href="{{ path('shopping_admin_cart_view', {'id': entity.cart.id}) }}">Voir le panier</a>
+
+    <div class="dropdown dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Modifier le status
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item btn-status" href="#" data-status="0">En attente de paiement</a>
+            <a class="dropdown-item btn-status" href="#" data-status="1">Payée</a>
+            <a class="dropdown-item btn-status" href="#" data-status="2">En cours de préparation</a>
+            <a class="dropdown-item btn-status" href="#" data-status="3">Expediée</a>
+            <a class="dropdown-item btn-status" href="#" data-status="4">Annulée</a>
+            <a class="dropdown-item btn-status" href="#" data-status="5">Erreur de paiement</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footer_left %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('shopping_admin_order_form', {'id' : entity.id}) }}"
+           class="btn btn-primary">Modifier</a>
+    {% endif %}
+
+
+    <a href="{{ path('shopping_admin_order_list') }}" class="btn btn-default">
+        <i class="fas fa-bars"></i>Liste des commandes
+    </a>
+{% endblock %}
+
+{% block footer_right %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script>
+
+        $('.btn-status').on('click', function(){
+
+            var dataToSend = {
+                'id' : "{{ entity.id }}",
+                'status' : $(this).attr('data-status')
+            };
+
+            $.ajax({
+                url: "{{ path('shopping_admin_order_status') }}",
+                data: dataToSend,
+                method:'post',
+                success: function(data){
+
+                    window.location.replace(data['redirect']);
+                }
+            })
+        });
+
+    </script>
+{% endblock %}

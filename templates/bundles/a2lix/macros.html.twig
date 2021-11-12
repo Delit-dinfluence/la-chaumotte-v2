@@ -1,0 +1,100 @@
+{% macro partialTranslations(form, fieldsNames, tab_id, class, items,entity_settings) %}
+
+    {{ form_errors(form) }}
+
+    <div class="a2lix_translations">
+
+        {% if  form|length > 1 %}
+            <ul class="a2lix_translationsLocales nav nav-tabs" role="tablist">
+                {% for translationsFields in form %}
+                    {% set locale = translationsFields.vars.name %}
+
+                    <li class="nav-item">
+                        <a href="#{{ translationsFields.vars.id }}_a2lix_translations-fields_{{ tab_id }}"
+                           class="nav-link {% if app.request.locale == locale %}active{% endif %}" data-toggle="tab"
+                           role="tab">
+                            {{ translationsFields.vars.label|default(locale|humanize)|trans }}
+                            {% if translationsFields.vars.required %}*{% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="a2lix_translationsFields tab-content">
+            {% for translationsFields in form %}
+                {% set locale = translationsFields.vars.name %}
+
+                <div id="{{ translationsFields.vars.id }}_a2lix_translations-fields_{{ tab_id }}"
+                     class="tab-pane {% if app.request.locale == locale %} active{% endif %} {% if not form.vars.valid %}sonata-ba-field-error{% endif %}"
+                     role="tabpanel">
+                    {% for field in  translationsFields if field.vars.name in fieldsNames %}
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                    <div>
+                                        {% if items[loop.index - 1].required is defined %}
+                                            <span class="required">*</span>
+                                        {% endif %}
+
+                                        {% if items[loop.index - 1].help is defined %}
+                                        <span class="label-tooltip" data-toggle="tooltip" data-html="true"
+                                              title="{{ items[loop.index - 1].help|default('') }}">
+                                                {% endif %}
+
+                                            {% if items[loop.index - 1].label is defined %}
+                                                {{ items[loop.index - 1].label }}
+                                            {% else %}
+
+                                                {% set itemFind = false %}
+                                                {% if entity_settings.form is defined %}
+                                                    {% for item in entity_settings.form.fields %}
+                                                        {% if item.property == field.vars.name  and item.label is defined %}
+
+                                                            <label for="">
+                                                                {% if item.required is defined %}
+                                                                    <span class="required">*</span>
+                                                                {% endif %}
+
+                                                                {% if item.help is defined %}
+                                                                    <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="{{ item.help|default('') }}">
+                                                                {% endif %}
+
+                                                                {% if item.label is defined %}
+                                                                      {{ item.label }}
+                                                                {% endif %}
+
+                                                                {% if item.help is defined %}
+                                                                    </span>
+                                                               {% endif %}
+                                                             </label>
+                                                            {% set itemFind = true %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+
+                                                {% if not itemFind %}
+                                                    {{ form_label(field) }}
+                                                {% endif %}
+
+                                            {% endif %}
+
+                                            {% if items[loop.index - 1].help is defined %}
+                                    </span>
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                                <div class="col-md-9">
+                                    {{ form_widget(field, {'attr' : {'class' : class}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endmacro %}

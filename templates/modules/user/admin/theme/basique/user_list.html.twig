@@ -1,0 +1,52 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block content %}
+    {#<div class="row">#}
+        {#<div class="col-md-4">#}
+            {#{% set footer_left %}#}
+                {#<a href="">En savoir plus</a>#}
+            {#{% endset %}#}
+
+            {#{% include '@core/admin/theme/basique/includes/card.html.twig' with {#}
+                {#title: 'Utilisateurs en ligne',#}
+                {#icon: 'person',#}
+                {#data: count_users,#}
+                {#content: item_content|default(''),#}
+                {#type: 'mini'#}
+            {#} %}#}
+        {#</div>#}
+        {#<div class="col-md-4">#}
+            {#{% set footer_left %}#}
+                {#<a href="{{ attribute(default_team, 'generateURI', ['list'] ) }}">Gestion des groupes</a>#}
+            {#{% endset %}#}
+
+            {#{% include '@core/admin/theme/basique/includes/card.html.twig' with {#}
+                {#title: 'Groupes',#}
+                {#icon: 'group',#}
+                {#data: count_groups,#}
+                {#content: item_content|default(''),#}
+                {#type: 'mini'#}
+            {#} %}#}
+        {#</div>#}
+        {#<div class="col-md-4">#}
+            {#{% set footer_left %}#}
+                {#<a href="{{ attribute(default_authorization, 'generateURI', ['list'] ) }}">Gestion des permissions</a>#}
+            {#{% endset %}#}
+
+            {#{% include '@core/admin/theme/basique/includes/card.html.twig' with {#}
+                {#title: 'Permissions',#}
+                {#icon: 'playlist_add_check',#}
+                {#data: count_authorizations,#}
+                {#content: item_content|default(''),#}
+                {#type: 'mini'#}
+            {#} %}#}
+        {#</div>#}
+    {#</div>#}
+
+    <div class="row">
+        <div class="col-md-12">
+            {% set footer_left  = false %}
+            {% include '@core/admin/theme/basique/includes/table.html.twig' with { 'card_icon': false, 'module' : 'user', 'admin_entity_settings' : blocks_settings , 'entities' : blocks, 'default_entity': block } %}
+        </div>
+    </div>
+{% endblock %}

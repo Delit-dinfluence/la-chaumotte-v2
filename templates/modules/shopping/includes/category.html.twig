@@ -1,0 +1,20 @@
+<a href="{{ path('shopping_page_products', {'category' : category.slug }) }}" class="row category">
+    <div class="category-content">
+        <figure>
+            <img src="{{ asset('assets/media/images/' ~ category.image) }}" alt="">
+        </figure>
+        <h2 class="category-title">{{ category.designation }}</h2>
+        <div class="category-description">
+            <p>
+                nina's paris<br/>
+                reverencieuse<br/>
+                image d'opinal<br/>
+                moissonier<br/>
+            </p>
+        </div>
+    </div>
+
+    <div class="category-footer">
+        <p class="category-link">découvrir</p>
+    </div>
+</a>

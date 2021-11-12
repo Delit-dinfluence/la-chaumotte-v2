@@ -1,0 +1,43 @@
+{% if thumb.productFeatures[0].feature  is defined %}
+    {% set type =  thumb.productFeatures[0].feature %}
+
+    {% set id = type.id %}
+    {% set designation = type.designation %}
+{% else %}
+    {% set id = -1 %}
+    {% set designation = '' %}
+{% endif %}
+
+<div class="product-thumb" data-type="{{ id }}">
+    <div class="product-wrapper">
+        <a href="{{ pages.category.uri ~  '/' ~ thumb.slug }}">
+            <header class="product-header">
+                {% if thumb.cover != null %}
+                    <img src="{{ asset('assets/media/images/' ~ thumb.cover.image) }}" alt=""
+                         class="product-image">
+                {% else %}
+                    <img src="{{ images['5ccbebe46b80d'].slug }}" alt="">
+                {% endif %}
+            </header> {# /.thumb-header #}
+
+            <div class="product-content">
+                {% if random is defined and random != null %}
+                    <p class="btn">
+                        <i class="fas fa-plus"></i>
+                    </p>
+                {% endif %}
+                <p class="category-big">{{ thumb.categories[0].designationBig }}</p>
+                <p class="category-small">{{ designation }}</p>
+
+
+                <p class="product-title">{{ thumb.designation }}</p>
+
+                {% if random is not defined or random is null %}
+                    <button class="btn btn-text">
+                        <i class="fas fa-plus"></i> <span>{{ translation.page_products_more|raw }}</span>
+                    </button>
+                {% endif %}
+            </div> {# /.thumb-content #}
+        </a>
+    </div> {# /.thumb-wrapper #}
+</div> {# /. thumb #}

@@ -1,0 +1,374 @@
+{#
+    Ce module permet de générer automatiquement le design d'un formulaire
+
+    Liste des propriétées utilisable dans le fichier de configuration :
+
+    - property: string
+    - type: string (collection|translation|radio|select|text|image|file|entity|checkbox|masonry)
+    - class: string
+    - label: string
+    - visible: boolean
+#}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% macro label(id, item, label_default) %}
+
+    <label for="{{ id }}">
+        {% if item.required is defined %}
+            <span class="required">*</span>
+        {% endif %}
+
+        {% if item.help is defined %}
+            <span class="label-tooltip" data-toggle="tooltip" data-html="true" title="{{ item.help|default('') }}">
+        {% endif %}
+
+            {% if item.label is defined %}
+                {{ item.label }}
+            {% else %}
+                {{ label_default|striptags }}
+            {% endif %}
+
+        {% if item.help is defined %}
+            </span>
+        {% endif %}
+    </label>
+
+{% endmacro %}
+
+{% set content %}
+
+    {# Définition du titre via le fichier de configuration #}
+    {% if title is not defined or title == '' %}
+
+        {# Titre définis pour le formulaire #}
+        {% if admin_entity_settings.form.title is defined %}
+            {% set title = admin_entity_settings.form.title %}
+        {% endif %}
+
+        {# Titre particulier Edition/Création #}
+        {% if admin_entity_settings.edit.title is defined and id > 0 %}
+            {% set title = admin_entity_settings.edit.title %}
+        {% elseif admin_entity_settings.new.title is defined and id <= 0 %}
+            {% set title = admin_entity_settings.new.title %}
+        {% endif %}
+
+    {% endif %}
+
+    {# Définition de l'icône via le fichier de configuration #}
+    {% if icon is not defined or icon == '' %}
+
+        {# Icône définis pour le formulaire #}
+        {% if admin_entity_settings.form.icon is defined %}
+            {% set icon = admin_entity_settings.form.icon %}
+        {% endif %}
+
+        {# Icône particulier Edition/Création #}
+        {% if admin_entity_settings.edit.icon is defined and id > 0 %}
+            {% set icon = admin_entity_settings.edit.icon %}
+        {% elseif admin_entity_settings.new.icon is defined and id <= 0 %}
+            {% set icon = admin_entity_settings.new.icon %}
+        {% endif %}
+
+    {% endif %}
+
+    <div class="form">
+
+        {# Affichage personnalisé des champs via le fichier de configuration #}
+        {% for item in admin_entity_settings.form.fields %}
+
+            {# Récupère la "visibility" de l'élement #}
+            {% if item.visible is defined and item.visible == 'false' %} {% set visibility = 'display:none;' %} {% endif %}
+
+            <div class="{{ item.class|default('') }}" data-type="{{ item.type }}" style="{{ visibility|default('') }}">
+
+                {% if item.type != 'translation' %}
+                    {% set property = attribute(form_entity, item.property) %}
+                {% endif %}
+
+                {% if item.type == 'collection' %}
+                    <ul class="collection" data-prototype="{{ form_widget(property.vars.prototype)|e('html_attr') }}">
+                        {% for item in property %}
+                            <li>
+                                {{ form_row(item.designation) }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% elseif item.type == 'radio' or  item.type == 'select' %}
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                {# Affichage d'un label prédéfinie via le fichier de configuration #}
+                                {{ _self.label(property.vars.id, item, form_label(property)) }}
+
+                            </div>
+
+                            <div class="col-md-9">
+                                {{ form_widget(property) }}
+                            </div>
+                        </div>
+                    </div>
+
+                {% elseif item.type == 'masonry' %}
+
+                    <div class="form-group form-masonry">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                {# Affichage d'un label prédéfinie via le fichier de configuration #}
+                                {{ _self.label(property.vars.id, item, form_label(property)) }}
+
+                            </div>
+
+                            <div class="col-md-9">
+                                {{ form_widget(property) }}
+
+                                {% set masonry_link = path('core_admin_controller_entity_auto') ~ '?module=Core&entity=Masonry&action=form&id=' %}
+                                <div class="block-masonry">
+                                    <a class="masonry-link btn" data-link="{{ masonry_link }}"
+                                       href="{{ masonry_link ~ property.vars.value }}" target="_blank">Modifier</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% elseif item.type == 'image' %}
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                {# Affichage d'un label prédéfinie via le fichier de configuration #}
+                                {{ _self.label(property.vars.id, item, form_label(property)) }}
+
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="box-image">
+                                    <figure>
+                                        {% set imageName = item.property|split('File') %}
+                                        {% set image = attribute(form_entity.vars.value, imageName[0]) %}
+
+                                        {% if image == '' %}
+
+                                            {# Affichage de l'image "NO-IMAGE" #}
+                                            <img src="{{ asset('assets/media/images/core/no_image.png') }}" alt="">
+                                        {% else %}
+
+                                            <img src="{{ asset('assets/media/images/' ~ image) }}" alt="">
+                                        {% endif %}
+                                    </figure>
+
+                                    <div class="file-input-group">
+                                        <div class="original-input">
+                                            {{ form_widget(property) }}
+                                        </div>
+
+                                        <button data-target="" class="btn"><i class="fas fa-folder-open"></i> Ajouter un
+                                            fichier
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% elseif item.type == 'file' %}
+                    {% set file = attribute(form_entity.vars.value, item.property) %}
+                    <div class="file-box">
+                        {{ form_widget(property) }}
+                    </div>
+
+                {% elseif item.type == 'entity' %}
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                {# Affichage d'un label prédéfinie via le fichier de configuration #}
+                                {{ _self.label(property.vars.id, item, form_label(property)) }}
+
+                            </div>
+
+                            <div class="col-md-9">
+
+                                {{ form_widget(property) }}
+
+                                {% if item.action_label is defined %}
+                                    <a href="{{ path('core_admin_controller_entity_auto') ~ '?module='~ item.module~'&entity='~ item.entity~'&action=form&id=-1' }}"
+                                       target="_blank">
+                                        {% if item.action_icon is defined %}
+                                            <i class="{{ item.action_icon }}"></i>
+                                        {% endif %}
+                                        {{ item.action_label }}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                {% elseif item.type == 'translation' %}
+
+                    {# Définis le nombre de traductions - Obligatoire #}
+                    {% set cpt_translation = cpt_translation|default(0)  + 1 %}
+
+                    {# Champs traduction #}
+                    {{ a2lixTranslations.partialTranslations(form_entity.translations, [ item.property ], cpt_translation, class|default(''), [item]) }}
+
+                {% elseif item.type == 'checkbox' %}
+                    <div class="form-group form-checkbox">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                {# Affichage d'un label prédéfinie via le fichier de configuration #}
+                                {{ _self.label(property.vars.id, item, form_label(property)) }}
+
+                            </div>
+                            <div class="col-md-9">
+
+                                {{ form_widget(property, {'attr' : {'class' : 'form-check-input' }}) }}
+
+                                <div class="shape-checkbox">
+                                    <i class="material-icons">check</i>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                {% else %}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+
+                                {# Affichage d'un label prédéfinie via le fichier de configuration #}
+                                {{ _self.label(property.vars.id, item, form_label(property)) }}
+
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="input-group">
+                                    {{ form_widget(property) }}
+                                    {% if item.label_complement is defined %}
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">{{ item.label_complement }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+
+            </div>
+        {% endfor %}
+
+    </div>
+{% endset %}
+
+
+{% set controls %}
+
+    <div class="column">
+
+        {# BOUTON - Suppression de l'entité #}
+        {% if id > 0 %}
+            {% if 'remove' not in admin_entity_settings.disabled_actions %}
+                <a class="btn  btn-remove" href="{{ attribute(entity, 'generateURI', ['remove'] ) }}">
+
+                    {# Surcharge de l'action "remove" #}
+                    {% if admin_entity_settings.form.actions.remove is defined %}
+
+                        {# Icône #}
+                        {% if admin_entity_settings.form.actions.remove.icon is defined %}
+                            <i class="{{ admin_entity_settings.form.actions.remove.icon }}"></i>
+                        {% endif %}
+
+                        {# Label #}
+                        {% if admin_entity_settings.form.actions.remove.label is defined %}
+                            {{ admin_entity_settings.form.actions.remove.label }}
+                        {% endif %}
+
+                    {% else %}
+
+                        {# Action "remove" par defaut #}
+                        <i class="fas fa-times"></i> Supprimer
+                    {% endif %}
+                </a>
+            {% endif %}
+        {% endif %}
+
+    </div> {# /.column #}
+
+    <div class="column">
+
+        {# BOUTON - Aperçu de l'entité #}
+        {% if id > 0 %}
+            {% if 'view' not in admin_entity_settings.disabled_actions %}
+                <a class="btn btn-default" href="{{ attribute(entity, 'generateURI', ['view'] ) }}">
+
+                    {# Surcharge de l'action "view" #}
+                    {% if admin_entity_settings.form.actions.view is defined %}
+
+                        {# Icône #}
+                        {% if admin_entity_settings.form.actions.view.icon is defined %}
+                            <i class="{{ admin_entity_settings.form.actions.view.icon }}"></i>
+                        {% endif %}
+
+                        {# Label #}
+                        {% if admin_entity_settings.form.actions.view.label is defined %}
+                            {{ admin_entity_settings.form.actions.view.label }}
+                        {% endif %}
+
+                    {% else %}
+
+                        {# Action "view" par defaut #}
+                        <i class="fas fa-eye"></i> Aperçu
+                    {% endif %}
+                </a>
+            {% endif %}
+        {% endif %}
+
+        {# BOUTON - Sauvegarde de l'entité #}
+        {% if 'new' not in admin_entity_settings.disabled_actions %}
+            <button type="submit" name="{{ form_entity.submit.vars.full_name }}" id="{{ form_entity.submit.vars.id }}"
+                    class="btn btn-submit">
+
+                {# Surcharge de l'action "new" #}
+                {% if admin_entity_settings.form.actions.new is defined %}
+
+                    {# Icône #}
+                    {% if admin_entity_settings.form.actions.new.icon is defined %}
+                        <i class="{{ admin_entity_settings.form.actions.new.icon }}"></i>
+                    {% endif %}
+
+                    {# Label #}
+                    {% if admin_entity_settings.form.actions.new.label is defined %}
+                        {{ admin_entity_settings.form.actions.new.label }}
+                    {% endif %}
+
+                {% else %}
+
+                    {# Action "new" par defaut #}
+                    <i class="fas fa-check"></i> Enregistrer
+                {% endif %}
+            </button>
+        {% endif %}
+
+    </div> {# /.column #}
+
+{% endset %}
+
+{% include '@core/admin/theme/basique/includes/card.html.twig' with {
+    title: title|default(''),
+    icon: icon|default(''),
+    content: content,
+    controls : controls,
+    select_language : select_language|default(true)
+} %}

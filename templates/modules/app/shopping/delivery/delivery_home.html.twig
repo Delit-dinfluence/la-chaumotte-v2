@@ -1,0 +1,65 @@
+<div class="addresses">
+    <p class="address-home-title">{{ translation.page_order_addres_select_delivery|raw }}</p>
+
+    <div class="address-list">
+        {% if account.customer.address|length > 0 %}
+            {% for address in account.customer.address %}
+                <div class="address form-group">
+                    <div class="form-input">
+                        <input type="radio" name="order_delivery_address" class="order_address_input" id="order_delivery_address"
+                               value="{{ address.id }}"
+                               {% if loop.index == 1 %}checked{% endif %}>
+                        <label for="order_delivery_address" class="order_address_label"></label>
+                    </div>
+                    <div class="address-content">
+                        <span class="designation">{{ address.designation }}</span>
+                        <span>{{ address.address }}</span>
+                        <span>{{ address.zipCode ~ ' ' ~ address.city }}</span>
+                        <span>{{ address.country }}</span>
+                    </div>
+                    <div class="controls">
+                        <button class="btn btn-edit btn-address-edit" data-address="{{ address.id }}">Modifier</button>
+                        <button class="btn btn-choose">Sélectionner</button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>{{ translation.page_order_addres_select_empty|raw }}</div>
+        {% endif %}
+    </div>
+
+    <p class="address-home-title">{{ translation.page_order_addres_select_invoice|raw }}</p>
+
+    <div class="address-list">
+        {% if account.customer.address|length > 0 %}
+            {% for address in account.customer.address %}
+                <div class="address form-group">
+                    <div class="form-input">
+                        <input type="radio" name="order_invoice_address" class="order_address_input" id="order_invoice_address"
+                               value="{{ address.id }}" {% if loop.index == 1 %}checked{% endif %}>
+                        <label for="order_invoice_address" class="order_address_label"></label>
+                    </div>
+                    <div class="address-content">
+                        <span class="designation">{{ address.designation }}</span>
+                        <span>{{ address.address }}</span>
+                        <span>{{ address.zipCode ~ ' ' ~ address.city }}</span>
+                        <span>{{ address.country }}</span>
+                    </div>
+                    <div class="controls">
+                        <button class="btn btn-edit btn-address-edit" data-address="{{ address.id }}">Modifier</button>
+                        <button class="btn btn-choose">Sélectionner</button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div>{{ translation.page_order_addres_select_empty|raw }}</div>
+        {% endif %}
+    </div>
+
+    <div class="controls">
+        <button id="btn-address-create" class="btn btn-address-create">{{ translation.page_order_addres_select_add|raw }}</button>
+    </div>
+
+</div>
+
+                                           

@@ -1,0 +1,42 @@
+<div id="products_random" class="products_random">
+
+    {% if title is defined and title != null %}
+        <p class="random_title">{{ title }}</p>
+    {% endif %}
+
+    <div class="products_random_gallery">
+        <div id="products_random_gallery">
+
+
+            {% if random_products is defined and random_products|length > 0 %}
+                {% for item in random_products %}
+                    {% include '@app/includes/product_thumb.html.twig' with { 'thumb': item , 'random' : true} %}
+                {% endfor %}
+            {% endif %}
+
+        </div>
+
+        <button class="btn-slider btn-border-fill btn-previous" id="random-previous">
+                <span>
+                    <img src="{{ asset('assets/media/images/5cc1757852768683557961.png') }}" alt="">
+                </span>
+        </button>
+
+        <button class="btn-slider btn-border-fill btn-next" id="random-next">
+                <span>
+                    <img src="{{ asset('assets/media/images/5cc1758347423962248740.png') }}" alt="">
+                </span>
+        </button>
+
+
+    </div>
+
+    <div class="design_top">
+        <div class="top"></div>
+    </div>
+
+    <div class="design_bottom">
+        <div class="bottom"></div>
+    </div>
+
+</div> {# /.products #}

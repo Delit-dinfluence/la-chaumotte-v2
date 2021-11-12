@@ -1,0 +1,361 @@
+{% extends '@app/account/base.html.twig' %}
+
+{% block account_title %}
+    {{ translation.page_account_info_title }}
+{% endblock %}
+
+{% block account_content %}
+
+
+    <div class="informations">
+        <form id="form-info" class="form form-info">
+
+            <div class="ariane">
+                <a href="{{ '/' ~ locale ~  pages.account.translate(locale).uri }}">{{ translation.page_account_ariane_home }} </a> - {{ translation.page_account_info_title }}
+            </div>
+
+            <div class="row row-split">
+                <div class="form-group form-radio">
+                    <input type="radio" name="edit-informations-title" value="0"
+                           {% if account.customer.title == 0 %}checked{% endif %} id="edit-title-mr">
+                    <label for="edit-title-mr">{{ translation.page_account_title_mr }}</label>
+
+                </div>
+                <div class="form-group form-radio">
+
+                    <input type="radio" name="edit-informations-title" value="1"
+                           {% if account.customer.title == 1 %}checked{% endif %} id="edit-title-mrs">
+                    <label for="edit-title-mrs">{{ translation.page_account_title_mrs }}</label>
+                </div> {# /.form-group #}
+            </div> {# /.row #}
+
+            <div class="form-group">
+                <label for="edit-informations-lastname">{{ translation.page_account_lastname }}</label>
+                <input type="text" id="edit-informations-lastname" name="info_lastname" required
+                       value="{{ account.user.lastname }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-informations-firstname">{{ translation.page_account_firstname }}</label>
+                <input type="text" id="edit-informations-firstname" name="info_firstname" required
+                       value="{{ account.user.firstname }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-informations-birthday">{{ translation.page_account_birthday }}</label>
+                <input type="date" id="edit-informations-birthday" name="info_birthday"
+                       value="{{ account.customer.birthday }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-informations-phone">{{ translation.page_account_phone }}</label>
+                <input type="text" id="edit-informations-phone" name="info_phone"
+                       value="{{ account.customer.phone }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-current-password">{{ translation.page_account_actual_password|raw }}</label>
+                <input type="password" id="edit-current-password" name="password_check">
+            </div> {# /.form-group #}
+
+            <div class="controls">
+                <div id="edit-informations-errors"></div>
+                <button id="edit-informations-submit"
+                        class="btn btn-submit">{{ translation.page_account_save }}</button>
+            </div> {# /.controls #}
+
+        </form> {# /.form-info #}
+
+        <form id="form-email" class="form form-email">
+
+            <div class="form-group">
+                <label for="edit-email">{{ translation.page_account_email }}</label>
+                <input type="email" id="edit-email" name="email" value="{{ account.user.email }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-email-confirm">{{ translation.page_account_email_confirm|raw }}</label>
+                <input type="email" id="edit-email-confirm" name="email_confirm">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-actual-password">{{ translation.page_account_actual_password|raw }}</label>
+                <input type="password" id="edit-actual-password" name="password_check">
+            </div> {# /.form-group #}
+
+            <div class="controls">
+                <div id="edit-email-errors"></div>
+                <button id="edit-email-submit" class="btn btn-submit">{{ translation.page_account_save }}</button>
+            </div> {# /.controls #}
+
+        </form> {# /.form-email #}
+
+        <form id="form-password" class="form form-password">
+
+            <div class="form-group">
+                <label for="edit-password">{{ translation.page_account_password }}</label>
+                <input type="password" id="edit-password" name="password">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-password-confirm">{{ translation.page_account_password_repeat }}</label>
+                <input type="password" id="edit-password-confirm" name="password_confirm">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-check-password">{{ translation.page_account_actual_password|raw }}</label>
+                <input type="password" id="edit-check-password" name="password_check">
+            </div> {# /.form-group #}
+
+            <div class="controls">
+                <div id="edit-password-errors"></div>
+                <button id="edit-password-submit" class="btn btn-submit">{{ translation.page_account_save }}</button>
+            </div> {# /.controls #}
+
+        </form> {# /.form-password #}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+
+            /**
+             * Modification des informations générales
+             */
+            $('#form-info').validate({
+                rules: {
+                    password_check: {
+                        required: true,
+                    },
+                    info_lastname: {
+                        required: true,
+                    },
+                    info_firstname: {
+                        required: true,
+                    },
+                    info_birthday: {},
+                    info_phone: {},
+                },
+                messages: {
+                    password_check: "{{ translation.page_errors_invalid_password|raw }}",
+                    info_firstname: "{{ translation.page_errors_invalid_firstname|raw }}",
+                    info_lastname: "{{ translation.page_errors_invalid_lastname|raw }}",
+                    info_birthday: "{{ translation.page_errors_invalid_birthday|raw }}",
+                    info_phone: "{{ translation.page_errors_invalid_phone|raw }}",
+                },
+
+                submitHandler: function (form) {
+
+                    var button = $('#edit-informations-submit');
+                    var errors = $('#edit-informations-errors');
+
+                    var dataToSend = {
+                        'title': $('input[name="edit-informations-title"]:checked').val(),
+                        'firstname': $('#edit-informations-firstname').val(),
+                        'lastname': $('#edit-informations-lastname').val(),
+                        'birthday': $('#edit-informations-birthday').val(),
+                        'phone': $('#edit-informations-phone').val(),
+                        'password_check': $('#edit-current-password').val(),
+                    };
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                    remove_infos_errors();
+
+                    $.ajax({
+                        url: '{{ path('user_update_infos') }}',
+                        data: dataToSend,
+                    }).done(function (data) {
+
+                        button.html("{{ translation.page_account_save|raw }}");
+                        errors.html('{{ translation.page_account_saved|raw }}');
+
+                        setTimeout(function () {
+                            errors.html('');
+                        }, 5000);
+
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                        button.html("{{ translation.page_account_save|raw }}");
+
+                        if (jqXHR.status == 401) {
+                            errors.html('{{ translation.page_errors_invalid_password_check|raw }}');
+                        } else if (jqXHR.status == 422) {
+                            errors.html('{{ translation.page_errors_invalid_form|raw }}');
+                        } else {
+                            errors.html('{{ translation.page_errors_fire|raw }}');
+                        }
+
+                        errors.addClass('active');
+                    });
+                }
+            });
+
+
+            /**
+             *  Modification de l'adresse e-mail
+             */
+            $('#form-email').validate({
+                rules: {
+                    password_check: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    email_confirm: {
+                        required: true,
+                        email: true,
+                        equalTo: "#edit-email"
+                    },
+                },
+                messages: {
+                    password_check: "{{ translation.page_errors_invalid_password|raw }}",
+                    email: "{{ translation.page_errors_invalid_email|raw }}",
+                    email_confirm: "{{ translation.page_errors_invalid_email_confirm|raw }}",
+                },
+
+                submitHandler: function (form) {
+
+                    var button = $('#edit-email-submit');
+                    var errors = $('#edit-email-errors');
+
+                    var dataToSend = {
+                        'password_check': $('#edit-actual-password').val(),
+                        'email': $('#edit-email').val(),
+                        'email_confirm': $('#edit-email-confirm').val(),
+                    };
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                    remove_email_errors();
+
+                    $.ajax({
+                        url: '{{ path('user_update_email') }}',
+                        data: dataToSend,
+                    }).done(function (data) {
+
+                        button.html("{{ translation.page_account_save|raw }}");
+                        errors.html('{{ translation.page_account_saved|raw }}');
+
+                        setTimeout(function () {
+                            errors.html('');
+                        }, 5000);
+
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                        button.html("{{ translation.page_account_save|raw }}");
+
+                        if (jqXHR.status == 401) {
+                            errors.html('{{ translation.page_errors_invalid_password_check|raw }}');
+                        } else if (jqXHR.status == 422) {
+                            errors.html('{{ translation.page_errors_invalid_form|raw }}');
+                        } else {
+                            errors.html('{{ translation.page_errors_fire|raw }}');
+                        }
+
+                        errors.addClass('active');
+                    });
+                }
+            });
+
+            /**
+             *  Modification du mot de passe
+             */
+            $('#form-password').validate({
+                rules: {
+                    password_check: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
+                    password_confirm: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    password_check: "{{ translation.page_errors_invalid_password|raw }}",
+                    password: "{{ translation.page_errors_invalid_password|raw }}",
+                    password_confirm: "{{ translation.page_errors_invalid_password|raw }}",
+                },
+
+                submitHandler: function (form) {
+
+                    var button = $('#edit-password-submit');
+                    var errors = $('#edit-password-errors');
+
+                    var dataToSend = {
+                        'password_check': $('#edit-check-password').val(),
+                        'password': $('#edit-password').val(),
+                        'password_confirm': $('#edit-password-confirm').val(),
+                    };
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                    remove_password_errors();
+
+                    $.ajax({
+                        url: '{{ path('user_update_password') }}',
+                        data: dataToSend,
+                    }).done(function (data) {
+
+                        button.html("{{ translation.page_account_save|raw }}");
+                        errors.html('{{ translation.page_account_saved|raw }}');
+
+
+                        setTimeout(function () {
+                            errors.html('');
+                        }, 5000);
+
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                        button.html("{{ translation.page_account_save|raw }}");
+
+                        if (jqXHR.status == 401) {
+                            errors.html('{{ translation.page_errors_invalid_password_check|raw }}');
+                        } else if (jqXHR.status == 422) {
+                            errors.html('{{ translation.page_errors_invalid_form|raw }}');
+                        } else {
+                            errors.html('{{ translation.page_errors_fire|raw }}');
+                        }
+
+                        errors.addClass('active');
+                    });
+                }
+            });
+
+            /**
+             * Nettoie l'affichage des erreurs d'informations
+             */
+            function remove_infos_errors() {
+                var errors = $('#edit-informations-errors');
+
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+            /**
+             * Nettoie l'affichage des erreurs des emails
+             */
+            function remove_email_errors() {
+                var errors = $('#edit-email-errors');
+
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+            /**
+             * Nettoie l'affichage des erreurs des mots de passe
+             */
+            function remove_password_errors() {
+                var errors = $('#edit-password-errors');
+
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+        });
+    </script>
+{% endblock %}

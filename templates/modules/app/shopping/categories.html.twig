@@ -1,0 +1,68 @@
+{% extends '@app/base.html.twig' %}
+
+
+{% block content %}
+    <div class="page page-categories">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <header class="page-header">
+
+            <div class="figure">
+                <img src="{{ asset('assets/media/images/5cc17cb9cc6c0230709741.png') }}" alt="">
+            </div>
+
+            <div class="content custom-text">
+                <div>
+                    {{ translation.page_category_header_title|raw }}
+                </div>
+            </div>
+        </header>
+
+
+        <div id="categories" class="categories">
+
+            {% for category in categories %}
+
+                <div class="category">
+                    <a href="{{ pages.category.uri }}/{{ category.slug }}" rel="noopener">
+                        <div class="figure">
+                            <img src="{{ category.image|imagine_filter('category_thumb') }}" alt="">
+                        </div>
+
+                        <div class="content custom-text">
+                            {% if category.designationOrder <= 0 %}
+                                {% if   category.designationBig != '' %}
+                                    <div><span class="big">{{ category.designationBig }}</span></div>
+                                {% endif %}
+
+                                {% if   category.designationSmall != '' %}
+                                    <div><span class="small">{{ category.designationSmall }}</span></div>
+                                {% endif %}
+                            {% else %}
+                                {% if   category.designationSmall != '' %}
+                                    <div><span class="small">{{ category.designationSmall }}</span></div>
+                                {% endif %}
+
+                                {% if   category.designationBig != '' %}
+                                    <div><span class="big">{{ category.designationBig }}</span></div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+
+                        <div class="design" style="background:{{ category.color }}">
+
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div> {# /.categories #}
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div>
+{% endblock %}

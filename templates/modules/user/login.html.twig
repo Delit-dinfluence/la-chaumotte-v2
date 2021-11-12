@@ -1,0 +1,48 @@
+
+    <div class="page page-login">
+
+            <div class="block-login">
+                <figure>
+                    <img src="{{ asset('assets/media/images/icon_login.png') }}" alt="">
+                </figure>
+
+
+                <div class="form-login">
+                    {{ form_start(form) }}
+
+                    <div class="form-text">
+                        informations de connexion
+                    </div>
+                    <div class="form-group">
+                        {{ form_widget(form._username) }}
+                        <label for="">{{ translation.login_form_username }}</label>
+                    </div> {# /.form-group #}
+
+                    <div class="form-group">
+                        {{ form_widget(form._password) }}
+                        <label for="">{{ translation.login_form_password }}</label>
+                    </div> {# /.form-group #}
+
+
+                    <div class="controls">
+
+                        {% if errors == 'true' %}
+                            <p class="form-errors">
+                                Les identifiants de connexion sont incorrectes
+                            </p>
+                        {% endif %}
+
+
+                        {{ form_widget(form.submit, {  'label': translation.login_form_submit, 'attr': {'class': 'btn btn-submit'} }) }}
+
+                        {#<a href="/{{ pages.home.uri }}" class="btn-return">{{ translation.login_form_return }}</a>#}
+                        {#<a href="/password-forgotten" class="btn btn-forgotten">{{ translation.login_form_password_forgotten }}</a>#}
+                    </div> {# /.controls#}
+
+                    {{ form_end(form) }}
+                </div> {# /.form-login #}
+            </div>
+
+
+
+    </div> {# /.page #}

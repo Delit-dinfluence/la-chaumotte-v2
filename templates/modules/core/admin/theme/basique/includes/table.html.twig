@@ -1,0 +1,391 @@
+{#
+    Ce module permet de générer automatiquement le design d'un tableau
+
+    Liste des propriétées utilisable dans le fichier de configuration :
+
+    - type: string (choices|price|toggle|datetime|collection|self|sign|images)
+    - class: string
+    - format: twig datetime format (ex: d-m-Y h:i)
+
+    - collection_module
+    - collection_entity
+    - collection_property
+
+
+    Liste des paramètres utilisable dans la barre d'adresse
+
+    - enable: boolean -> Affiche uniquement les entités isEnabled
+    - alternative: boolean -> Redirige vers une autre entité à la place du formulaire
+
+#}
+
+{% set content %}
+
+
+    {# TABLE #}
+    <table class="table table-hover form">
+
+        {# THEAD et TFOOT #}
+        {% for item in 1..2 %}
+
+            {% if loop.first %}
+                <thead>
+            {% else %}
+                {% if entities|length > 10 %}
+                    <tfoot>
+                {% endif %}
+            {% endif %}
+
+            {% if loop.first or entities|length > 10 %}
+                <tr>
+                    <th class="th-checkbox" style="padding: 10px 0;width:30px;"></th>
+                    <th class="th-index" style="width:75px;">ID</th>
+                    {% for item in admin_entity_settings.list.fields %}
+                        <th scope="col">{{ item.label }}</th>
+                    {% endfor %}
+                    {% if 'actions' not in admin_entity_settings.disabled_actions %}
+                        <th scope="col" data-orderable="false" class="th-actions" style="width:125px;">Actions</th>
+                    {% endif %}
+                </tr>
+            {% endif %}
+
+            {% if loop.first %}
+                </thead>
+            {% else %}
+                {% if entities|length > 10 %}
+                    </tfoot>
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+
+        {% if entities|length > 0 %}
+            {% for entity in entities %}
+
+                {% if enable is not defined or enable is null or enable == 'true' and entity.isEnabled == true %}
+                    <tr>
+
+                        {# Checkbox de l'entité #}
+                        <td class="td-checkbox" style="padding:10px 0;">
+                            <div class="form-group">
+                                <div class="form-checkbox">
+                                    <input type="checkbox">
+
+                                    <div class="shape-checkbox">
+                                        <i class="material-icons">check</i>
+                                    </div>
+                                </div>
+                            </div>
+                        </td> {# /.td-checkbox #}
+
+                        {# Index de l'entité #}
+                        <td class="td-index">
+                            {{ loop.index }}
+                        </td> {# /.td-index #}
+
+                        {% if admin_entity_settings.list.fields is defined %}
+                            {% set list = admin_entity_settings.list.fields %}
+                        {% endif %}
+
+                        {# Parcours des entités via le fichier de configuration #}
+                        {% for item in admin_entity_settings.list.fields %}
+                            <td class="{{ item.class|default('') }}">
+                                <div class="case-container">
+
+
+                                    {% if item.type is defined and item.type == 'datetime' %}
+
+                                        {% set time = attribute(entity, item.property) %}
+
+                                        {% if item.format is defined %}
+
+                                            {# Surcharge du format de la date#}
+                                            {{ time|date(item.format) }}
+                                        {% else %}
+
+                                            {# Format de la date par defaut #}
+                                            {{ time|date('d-m-Y h:i') }}
+                                        {% endif %}
+
+                                    {% elseif item.type is defined and item.type == 'collection' %}
+
+                                        {% set property = attribute(entity, item.property) %}
+
+                                        {% if property == null  or property|length == 0 %}
+
+                                            {# Affichage par default de l'entité cible - Aucune entité #}
+                                            <button class="btn btn-black btn-sm">Aucun</button>
+
+                                        {% else %}
+
+                                            {# Lien vers l'entité cible #}
+                                            {% set path = path('core_admin_controller_entity_auto') ~ '?module=' ~ item.collection_module ~ '&entity=' ~ item.collection_entity ~ '&id=' ~ entity.id %}
+
+                                            {% if item.collection_property is defined %}
+                                                {% set path = path ~ '&action=list&property=' ~  item.collection_property %}
+                                            {% else %}
+                                                {% set path = path ~ '&action=form' %}
+                                            {% endif %}
+
+                                            <a href="{{ path }}">
+                                                {% if property is iterable %}
+
+                                                    {# Affichage de la liste d'entités cibles #}
+                                                    {% for prop in property %}
+                                                        {% if not loop.first %}, {% endif %}
+                                                        {{ prop }}
+                                                    {% endfor %}
+
+                                                {% else %}
+
+                                                    {# Entité cible unique #}
+                                                    {{ property }}
+                                                {% endif %}
+                                            </a>
+                                        {% endif %}
+
+                                    {% elseif item.type is defined and item.type == 'entity' %}
+
+                                        {# TODO - Fusionner Collection et Entity #}
+
+                                        {% set property = attribute(entity, item.property) %}
+
+                                        {% if property == null %}
+
+                                            {# Affichage par default de l'entité cible - Aucune entité #}
+                                            <button class="btn btn-black btn-sm">Aucun</button>
+
+                                        {% else %}
+
+                                            <a href="{{ path('core_admin_controller_entity_auto') ~ '?module=' ~ item.module ~ '&entity=' ~ item.entity ~ '&action=form&id=' ~  property.id }}">
+                                                {{ property }}
+                                            </a>
+                                        {% endif %}
+
+                                    {% elseif item.type is defined and item.type == 'self' %}
+
+                                        {% if 'edit' not in admin_entity_settings.disabled_actions %}
+                                            <a class=""
+                                               href="{{ attribute(entity, 'generateURI', ['form'] ) }}">
+                                                {{ attribute(entity, item.property) }}
+                                            </a>
+                                        {% elseif 'view' not in admin_entity_settings.disabled_actions %}
+                                            <a class=""
+                                               href="{{ attribute(entity, 'generateURI', ['view'] ) }}">
+                                                {{ attribute(entity, item.property) }}
+                                            </a>
+                                        {% else %}
+                                            {{ attribute(entity, item.property) }}
+                                        {% endif %}
+
+                                    {% elseif item.type is defined and item.type == 'sign' or  item.type is defined and item.type == 'choices' %}
+
+                                        {% set property  = attribute(entity, item.property) %}
+
+                                        {# Parcours des différents formats de panneaux #}
+                                        {% for format in item.format %}
+                                            {% if format.value == property %}
+                                                {% set class = '' %}
+                                                {% if format.class is defined %}{% set class = format.class %}{% endif %}
+
+                                                {% if format.uri is defined %}
+                                                    <a href="{{ format.uri }}" class="btn btn-sm {{ class }}">
+                                                        {{ format.label }}
+                                                    </a>
+                                                {% else %}
+                                                    <button class="btn btn-sm {{ class }}">
+                                                        {{ format.label }}
+                                                    </button>
+                                                {% endif %}
+
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    {% elseif item.type is defined and item.type == 'price' %}
+
+                                        {{ attribute(entity, item.property)|raw }} &euro;
+
+                                    {% elseif item.type is defined and item.type == 'toggle' %}
+
+                                        <a href="{{ path('core_admin_controller_entity_auto') ~ '?module=' ~ module ~ '&entity=' ~ entity_default ~ '&action=status&id=' ~ entity.id }}">
+
+                                            {% if attribute(entity, item.property) == 1 %}
+                                                <i class="material-icons action-enabled ">check</i>
+                                            {% else %}
+                                                <i class="material-icons action-disabled">clear</i>
+                                            {% endif %}
+                                        </a>
+
+
+                                    {% elseif item.type is defined and item.type == 'image' %}
+
+                                        <div class="lightGallery">
+
+                                            {% set thumbConfig = {"thumbnail": {"size": [90, 90] }} %}
+
+                                            {% if item.property == 'cover' %}
+                                                {% set cover =  entity.cover %}
+                                            {% else %}
+                                                {% set cover =  attribute(entity, item.property) %}
+                                            {% endif %}
+
+                                            {% if cover == '' %}
+
+                                                {# Affichage par defaut d'une image "NO-IMAGE" #}
+                                                <a href="{{ asset('assets/media/images/core/no_image.png') }}">
+                                                    <img src="{{ asset('assets/media/images/core/no_image.png') }}" alt="">
+                                                </a>
+
+                                            {% else %}
+
+                                                {% if item.property == 'cover' %}
+                                                    {% set image = cover.image %}
+                                                {% else %}
+                                                    {% set image = cover %}
+                                                {% endif %}
+
+                                                <a href="{{ asset('assets/media/images/' ~ image) }}">
+                                                    <img src="{{ asset('assets/media/images/'~ image) }}" alt="">
+                                                </a>
+
+                                            {% endif %}
+                                        </div>
+
+                                    {% else %}
+
+                                        {% if item.prefix is defined %}{{ item.prefix }}{% endif %}{{ attribute(entity, item.property)|raw }}{% if item.suffixe is defined %}{{ item.suffixe }}{% endif %}
+                                    {% endif %}
+                                </div>
+                            </td>
+                        {% endfor %}
+
+
+                        {% if 'actions' not in admin_entity_settings.disabled_actions %}
+                            <td>
+                                <div class="btn-list">
+
+                                    {# BOUTTON - Aperçu #}
+                                    {% if 'view' not in admin_entity_settings.disabled_actions %}
+                                        {% set path =  attribute(entity, 'generateURI', ['view']) %}
+
+                                        <a class="btn btn-default" href="{{ path }}">
+                                            <i class="material-icons">search</i>
+                                        </a>
+                                    {% endif %}
+
+                                    {# BOUTTON - Modifier #}
+                                    {% if 'edit' not in admin_entity_settings.disabled_actions %}
+                                        {% set path =  attribute(entity, 'generateURI', ['form']) %}
+
+                                        {% if alternative is defined and  alternative != '' and entity.controllerEntity != '' %}
+                                            {% set path = path('core_admin_controller_entity_auto') ~'?module=' ~ entity.controllerModule ~ '&entity=' ~ entity.controllerEntity ~ '&action=' ~entity.controllerAction %}
+                                            {% if entity.controllerId != '' %}
+                                                {% set path = path ~ '&id=' ~ entity.controllerId %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <a class="btn btn-edit" href="{{ path }}">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    {% endif %}
+
+                                    <div class="dropdown show">
+                                        <a class="btn btn-actions dropdown-toggle" href="#" role="button"
+                                           id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false">
+                                            <i class="material-icons">more_vert</i>
+                                        </a>
+
+                                        <div class="dropdown-actions dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                                            {# BOUTTON - Aperçu #}
+                                            {% if 'view' not in admin_entity_settings.disabled_actions %}
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="material-icons">remove_red_eye</i>Visualiser
+                                                </a>
+                                            {% endif %}
+
+                                            {# BOUTTON - Modifier #}
+                                            {% if 'edit' not in admin_entity_settings.disabled_actions %}
+                                                {% set path =  attribute(entity, 'generateURI', ['form']) %}
+
+                                                {# Redirige vers une autre entité à la place du formulaire - Ex: core_pages #}
+                                                {% if alternative is defined and  alternative != '' and entity.controllerEntity != '' %}
+                                                    {% set path = path('core_admin_controller_entity_auto') ~'?module=' ~ entity.controllerModule ~ '&entity=' ~ entity.controllerEntity ~ '&action=' ~entity.controllerAction %}
+                                                    {% if entity.controllerId != '' %}
+                                                        {% set path = path ~ '&id=' ~ entity.controllerId %}
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                <a class="dropdown-item" href="{{ path }}">
+                                                    <i class="material-icons">edit</i>Modifier
+                                                </a>
+                                            {% endif %}
+
+                                            {# BOUTTON - Dupliquer #}
+                                            {% if 'new' not in admin_entity_settings.disabled_actions %}
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="material-icons">content_copy</i>Dupliquer
+                                                </a>
+                                            {% endif %}
+
+                                            {# BOUTTON - Supprimer #}
+                                            {% if 'remove' not in admin_entity_settings.disabled_actions %}
+                                                {% set path =  attribute(entity, 'generateURI', ['remove']) %}
+                                                <a class="dropdown-item" href="{{ path }}">
+                                                    <i class="material-icons">delete</i>Supprimer
+                                                </a>
+                                            {% endif %}
+
+                                        </div> {# /.dropdown-actions #}
+                                    </div> {# /.dropdown #}
+                                </div> {# /.btn-list #}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </table>
+
+
+
+{% endset %}
+
+{% set controls %}
+
+
+    {# BOUTON - Nouvelle entité #}
+    {% if admin_entity_settings.disabled_actions is not defined or 'new' not in admin_entity_settings.disabled_actions %}
+        <a href="{{ attribute(default_entity, 'generateURI', ['form'] ) }}" class="btn btn-submit">
+
+            {# Surcharge de l'action "new" #}
+            {% if admin_entity_settings.list.actions.new is defined %}
+
+                {# Icône #}
+                {% if admin_entity_settings.list.actions.new.icon is defined %}
+                    <i class="{{ admin_entity_settings.list.actions.new.icon }}"></i>
+                {% endif %}
+
+                {# Label #}
+                {% if admin_entity_settings.list.actions.new.label is defined %}
+                    {{ admin_entity_settings.list.actions.new.label }}
+                {% endif %}
+
+            {% else %}
+
+                {# Action "new" par defaut #}
+                <i class="fas fa-plus"></i> Nouveau
+            {% endif %}
+        </a>
+    {% endif %}
+
+{% endset %}
+
+{% include '@core/admin/theme/basique/includes/card.html.twig' with {
+    title: title|default('')|replace({'##count_total##':entities|length }),
+    icon: icon|default(''),
+    content: content,
+    controls : controls
+} %}

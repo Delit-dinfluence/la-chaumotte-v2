@@ -1,0 +1,523 @@
+configuration:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'sitename', type: 'text', label: 'Nom du site' }
+      - { property: 'domain', type: 'text', label: 'Domaine' }
+      - { property: 'logoFile', type: 'image', label: 'Logo' }
+
+cookie_configuration:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'google_analytics', type: 'text', label: 'Google Analytics' }
+      - { property: 'add_this', type: 'text', label: 'Add This' }
+      - { property: 'pixel_facebook', type: 'text', label: 'Pixel Facebook' }
+      - { property: 'recaptcha_version', type: 'text', label: 'reCAPTCHA - Version' }
+      - { property: 'recaptcha_client', type: 'text', label: 'reCAPTCHA - Client' }
+      - { property: 'recaptcha_server', type: 'text', label: 'reCAPTCHA - Serveur' }
+      - { property: 'recaptcha_hostname', type: 'text', label: 'reCAPTCHA - Hôte' }
+
+google_configuration:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'api_key', type: 'text', label: 'Clé API' }
+      - { property: 'zoom', type: 'text', label: 'Zoom' }
+      - { property: 'latitude', type: 'text', label: 'Latitude' }
+      - { property: 'longitude', type: 'text', label: 'Longitude' }
+
+maintenance_configuration:
+  disabled_actions: ['view', 'remove', 'list']
+  form:
+    title: 'Maintenance'
+    icon: 'report_problem'
+    fields:
+      - { property: 'use_maintenance', type: 'checkbox', label: 'Activer la maintenance' }
+      - { property: 'title',  type: 'translation', label: 'Titre'}
+      - { property: 'content',  type: 'translation', label: 'Contenu', class: 'wysiwyg' }
+  edit:
+    title: "Maintenance"
+
+coming_soon_configuration:
+  disabled_actions: ['view', 'remove', 'list']
+  form:
+    title: "Page d'attente"
+    icon: 'report_problem'
+    fields:
+      - { property: 'use_coming_soon', type: 'checkbox', label: "Activer la page d'attente" }
+      - { property: 'title',  type: 'translation', label: 'Titre'}
+      - { property: 'content',  type: 'translation', label: 'Contenu', class: 'wysiwyg' }
+  edit:
+    title: "Page d'attente"
+
+information:
+  disabled_actions: ['view', 'list', 'remove']
+
+  form:
+    fields:
+      - { property: 'use_module_dashboard', type: 'checkbox', label: "Tableau de bord" }
+      - { property: 'use_module_language', type: 'checkbox', label: "Langues" }
+      - { property: 'use_module_shopping', type: 'checkbox', label: 'ECommerce' }
+      - { property: 'use_module_blog', type: 'checkbox', label: 'Blog' }
+      - { property: 'use_module_library', type: 'checkbox', label: 'Bibliothèque' }
+      - { property: 'use_module_calendar', type: 'checkbox', label: 'Calendrier' }
+      - { property: 'use_module_newsletter', type: 'checkbox', label: 'Newsletter' }
+      - { property: 'use_module_coming_soon', type: 'checkbox', label: "Page d'attente" }
+      - { property: 'use_module_statistics', type: 'checkbox', label: "Statistiques" }
+      - { property: 'use_module_users', type: 'checkbox', label: "Utilisateurs" }
+      - { property: 'use_module_media', type: 'checkbox', label: "Médias" }
+      - { property: 'use_module_reference', type: 'checkbox', label: "Références" }
+      - { property: 'use_module_gallery', type: 'checkbox', label: "Galerie" }
+
+
+
+page:
+  disabled_actions: ['view']
+  list:
+    page_title: 'Pages | Apparence'
+
+    title: "Pages"
+    card_title: "Pages (##count_total##)"
+
+    breadcrumb:
+      - { label: 'Apparence' }
+      - { label: 'Pages' }
+
+    fields:
+      - { property: 'reference', label: 'Désignation' }
+      - { property: 'description', label: 'Description' }
+      - { property: 'categories', label: 'Catégorie(s)', type: 'collection', collection_module: 'core', collection_entity: 'PageCategory' }
+
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Active' }
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'description', type: 'text', label: 'Description' }
+      - { property: 'categories', type: 'entity',  module: 'core', entity: 'PageCategory', action_label: 'Ajouter une catégorie', action_icon: 'fas fa-plus'  }
+      - { property: 'controller_module', type: 'text', label: 'Module' }
+      - { property: 'controller_entity', type: 'text', label: 'Entity' }
+      - { property: 'controller_action', type: 'text', label: 'Action' }
+      - { property: 'controller_id', type: 'text', label: 'ID' }
+      - { property: 'controller', type: 'text', label: 'Controller' }
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+page_category:
+  disabled_actions: ['view']
+  list:
+    #    design: 'card'
+    breadcrumb:
+      - { label: 'Pages' }
+
+    title: "Pages (##count_total##)"
+    fields:
+      - { property: 'designation', label: 'Désignation' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Active' }
+      - { property: 'designation', type: 'text', label: 'Désignation' }
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+social_network:
+  disabled_actions: ['view']
+  list:
+    breadcrumb:
+      - { label: 'Paramètres' }
+      - { label: 'Réseaux sociaux' }
+
+    title: 'Réseaux sociaux'
+    fields:
+      - { property: 'logo', type: 'image', label: 'Image' }
+      - { property: 'designation', label: 'Désignation' }
+      - { property: 'link', label: 'Lien' }
+      - { property: 'isEnabled', label: 'Statut', type: 'toggle' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'En ligne' }
+      - { property: 'designation', type: 'text', label: 'Désignation' }
+      - { property: 'logoFile', type: 'image', label: 'Image' }
+      - { property: 'link', type: 'text', label: 'Lien' }
+
+  edit:
+    title: "Modification d'un réseau sociale"
+
+  new:
+    title: "Nouveau réseau sociale"
+
+reference:
+  disabled_actions: ['view']
+  list:
+    title: 'Références'
+    fields:
+      - { property: 'image', type: 'image', label: 'Image' }
+      - { property: 'reference', label: 'Désignation' }
+
+
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+      - { property: 'alt', type: 'translation', label: 'Texte alternatif'}
+      - { property: 'use_url', type: 'checkbox', label: 'Utiliser un lien' }
+      - { property: 'url', type: 'text', label: 'Lien' }
+
+
+  edit:
+    title: "Référe,ces"
+
+  new:
+    title: "Nouvelle page"
+
+gallery_configuration:
+  disabled_actions: ['view', 'list', 'remove']
+
+  form:
+    fields:
+      - { property: 'columns_number', type: 'text', label: 'Nombre de colonnes' }
+      - { property: 'column_height', type: 'text', label: "Hauteur d'un element" }
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+gallery:
+  disabled_actions: ['view']
+  list:
+    title: 'Galerie'
+    fields:
+      - { property: 'reference', label: 'Désignation' }
+      - { property: 'image', type: 'image', label: 'Image' }
+
+
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+      - { property: 'alt', type: 'translation', label: 'Texte alternatif'}
+      - { property: 'columns', type: 'text', label: 'Colones'}
+      - { property: 'rows', type: 'text', label: 'Lignes'}
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+
+media_file:
+  disabled_actions: ['view']
+
+  list:
+    breadcrumb:
+      - { label: 'Médias'}
+      - { label: 'Fichiers'}
+
+    title: "Fichiers (##count_total##)"
+
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'slug',  label: 'URL' }
+
+  form:
+    breadcrumb:
+      - { label: 'Médias'}
+      - { label: 'Fichiers'}
+
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référencce' }
+      - { property: 'designation', type: 'translation', label: 'Nom du fichier' }
+      - { property: 'documentFile', type: 'image', label: 'Document' }
+      - { property: 'document_alt', type: 'translation', label: 'Texte alternatif' }
+  edit:
+    title: "Modification d'un fichier"
+
+  new:
+    title: "Ajouter un fichier"
+
+
+image:
+  disabled_actions: ['view']
+
+  list:
+    page_title: 'Images | Média'
+
+    title: 'Images'
+    card_title: "Images (##count_total##)"
+
+    breadcrumb:
+      - { label: 'Médias' }
+      - { label: 'Images' }
+
+    fields:
+      - { property: 'image', type: 'image', label: 'Image' }
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'title', type: 'text', label: 'Titre' }
+      - { property: 'slug',  label: 'URL' }
+
+  form:
+    page_title: 'Images | Média'
+    title: 'Images'
+
+    breadcrumb:
+      - { label: 'Médias' }
+      - { label: 'Images' }
+
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'title', type: 'translation', label: 'Titre' }
+      - { property: 'alt', type: 'translation', label: 'Texte alternatif' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+
+
+video:
+  disabled_actions: ['view', 'remove', 'form']
+
+  list:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+
+  form:
+    fields:
+      - { property: 'reference', type: 'checkbox', label: 'ECommerce' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+
+############
+
+
+
+file_format:
+  disabled_actions: ['view']
+  list:
+    title: 'Réseaux sociaux'
+    fields:
+      - { property: 'reference',label: 'Référence' }
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'value', type: 'text', label: 'MIME Type' }
+      - { property: 'extension', type: 'text', label: 'Extension' }
+
+  edit:
+    title: "Modification d'un réseau sociale"
+
+  new:
+    title: "Nouveau réseau sociale"
+
+
+
+
+
+
+
+
+documentation:
+  disabled_actions: ['view', 'remove', 'form']
+
+  list:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'ECommerce' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'ECommerce' }
+
+
+
+
+
+design:
+  disabled_actions: ['view', 'list', 'remove']
+
+  form:
+    fields:
+      - { property: 'logoFile', type: 'image', label: "Logo" }
+      - { property: 'name', type: 'text', label: "Désignation" }
+      - { property: 'theme', type: 'select', label: "Thème d'administration" }
+      - { property: 'font_family', type: 'select', label: "Police" }
+      - { property: 'font_size', type: 'select', label: "Taille du texte" }
+      - { property: 'color_first', type: 'color', label: "Couleur principale (Animations, liens, ...)" }
+      - { property: 'color_second', type: 'color', label: "Couleur seconadaire (Survole, ...)" }
+      - { property: 'text_color', type: 'color', label: "Texte" }
+      - { property: 'background', type: 'color', label: "Fond" }
+      - { property: 'sidebar_background', type: 'color', label: "Fond" }
+      - { property: 'sidebar_color', type: 'color', label: "Texte" }
+      - { property: 'sidebar_width', type: 'text', label: "Largeur" }
+
+
+history:
+  disabled_actions: ['new', 'edit',  'view']
+
+  list:
+    fields:
+      - { property: 'user',  label: 'Utilisateur', type: 'entity', module: 'User', entity: 'User' }
+      - { property: 'type',  label: 'Gravité' }
+      - { property: 'message',  label: 'Message' }
+      - { property: 'code',  label: "Code d'erreur" }
+      - { property: 'updatedAt',  label: 'Date', type: 'datetime' }
+
+history_configuration:
+  disabled_actions: ['view', 'list', 'remove']
+
+  form:
+    fields:
+      - { property: 'use_form_new', type: 'checkbox', label: "Création" }
+      - { property: 'use_form_edit', type: 'checkbox', label: "Modification" }
+      - { property: 'use_form_duplicate', type: 'checkbox', label: 'Duplication' }
+      - { property: 'use_form_statut', type: 'checkbox', label: 'Modification du statut' }
+      - { property: 'use_form_remove', type: 'checkbox', label: 'Suppression' }
+      - { property: 'use_login', type: 'checkbox', label: 'Connexion' }
+      - { property: 'email_level', type: 'select', label: "Niveau d'alerte par email" }
+
+text_group:
+  disabled_actions: ['view']
+
+  list:
+    fields:
+      - { property: 'designation',  label: 'Désignation' }
+      - { property: 'isEnabled',  label: 'Statut', type: 'toggle' }
+      - { property: 'parent', type: 'entity', label: 'Parent', module: 'core', entity: 'TextGroup' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'parent', type: 'select', label: 'Parent' }
+
+
+text:
+  disabled_actions: ['view']
+
+  list:
+    breadcrumb:
+      - { label: 'International' }
+      - { label: 'Traductions' }
+
+    fields:
+      - { property: 'reference', label: 'Référence' }
+      - { property: 'value', label: 'Valeur' }
+      - { property: 'description', label: 'Description' }
+      - { property: 'textGroup', label: 'Catégorie', type: 'entity', module: 'core', entity: 'TextGroup' }
+      - { property: 'isEnabled', label: 'Statut', type: 'toggle' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+      - { property: 'type', type: 'select', label: 'Type' }
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'text_group', type: 'select', label: 'Groupe' }
+      - { property: 'value', type: 'translation', label: 'Valeur' }
+      - { property: 'description',type: 'translation', label: 'Description' }
+      - { property: 'keywords', type: 'translation', label: 'Mot(s) clé(s)' }
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+redirection:
+  disabled_actions: ['view']
+
+  list:
+    breadcrumb:
+      - { label: 'Paramètres' }
+      - { label: 'Redirection' }
+
+    fields:
+      - { property: 'isEnabled', label: 'Statut', type: 'toggle' }
+      - { property: 'type', label: 'Type de redirection',type: 'choices',  format: [ { value: '0',  label: 'Aucune redirection (404)' }, {value: '1', label: 'Temporaire (302)'},{ value: '2',  label: 'Permanente (301)' }]}
+      - { property: 'uriFrom', label: 'De' }
+      - { property: 'uriTo', label: 'Vers' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+      - { property: 'type', type: 'select', label: 'Type' }
+      - { property: 'uri_from', type: 'text', label: 'De' }
+      - { property: 'uri_to', type: 'text', label: 'Vers' }
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+language:
+  disabled_actions: ['view', 'remove']
+
+
+
+  list:
+    breadcrumb:
+      - { label: 'International' }
+      - { label: 'Langues' }
+
+
+    title: 'Langues'
+
+    actions:
+      new:
+        icon: 'fa fa-plus'
+        label: 'Ajouter une langue'
+
+    fields:
+      - { property: 'image', label: 'Drapeau', type: 'image' }
+      - { property: 'designation', label: 'Désignation' }
+      - { property: 'isoCode', label: 'Code ISO' }
+      - { property: 'languageCode', label: 'Code de langue' }
+      - { property: 'dateFormat', label: 'Format de date' }
+      - { property: 'dateFormatFull', label: 'Format de date (complet)' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'En ligne' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' ,required: 'true' }
+      - { property: 'imageFile', type: 'image', label: 'Drapeau' }
+      - { property: 'iso_code', type: 'text', label: 'Code ISO', required: 'true', help: 'Code ISO sur 2 lettres <br />(ex: fr, en, de)' }
+      - { property: 'language_code', type: 'text', label: 'Code de langue',required: 'true', help:  'Code de langue IETF <br />(ex: fr-FR, en-US)' }
+      - { property: 'date_format', type: 'text', label: 'Format de date' ,required: 'true', help: 'Format de date court <br />(ex: d/m/Y)'}
+      - { property: 'date_format_full', type: 'text', label: 'Format de date complète',required: 'true', help: 'Format de date complet <br />(d/m/Y H:i:s)' }
+
+  edit:
+    title: "Modifier la langue"
+
+  new:
+    title: "Nouvelle langue"
+
+
+
+configuration_private:
+  disabled_actions: ['view']
+  list:
+    #    design: 'card'
+    fields:
+      - { property: 'id', label: '#' }
+      - { property: 'pathName', label: 'Nom' }
+      - { property: 'seoTitle', label: 'Titre' }
+      - { property: 'pathUri', label: 'URL' }
+      - { property: 'isEnabled', label: 'Status' }
+
+
+
+

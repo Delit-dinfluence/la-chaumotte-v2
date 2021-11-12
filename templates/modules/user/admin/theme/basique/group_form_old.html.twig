@@ -1,0 +1,237 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% macro authorization(item, cpt, team_authorizations, team_authorizations_number) %}
+    {% import _self as macro %}
+
+    {% if item.children|length > 0 %}
+        {% set class = 'section-title' %}
+    {% endif %}
+
+    {% if item.children|length <= 0 and item.parent is null %}
+        {% set class = 'section-title' %}
+    {% endif %}
+
+    {% if item.parent is not null %}
+        {% set parent = item.parent.id %}
+    {% endif %}
+
+    <tr id="authorization_{{ item.id }}" data-parent="{{ parent|default(0) }}" data-id="{{ item.id }}">
+        <td class="{{ class|default('') }}" style="padding-left:calc({{ cpt - 1 }}px * 20);">
+            {{ item.designation }}
+        </td>
+        <td>
+            <div class="row-check">
+                {% set checked = '' %}
+                {% for key, value in team_authorizations_number %}
+                    {% if value == item.id %}
+                        {% set authorizations = attribute(team_authorizations, item.id) %}
+                        {% if authorizations.enableView %}
+                            {% set checked = 'checked' %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <input type="checkbox" class="input_check_view input_authorization"
+                       id="input_check_view_{{ item.id }}" {{ checked }}>
+                <label for="input_check_view_{{ item.id }}">
+                    <span class="check">
+                        <i class="material-icons form-check-sign">check</i>
+                    </span>
+                </label>
+            </div>
+        </td>
+        <td>
+            <div class="row-check">
+                {% set checked = '' %}
+                {% for key, value in team_authorizations_number %}
+                    {% if value == item.id %}
+                        {% set authorizations = attribute(team_authorizations, item.id) %}
+                        {% if authorizations.enableAdd %}
+                            {% set checked = 'checked' %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <input type="checkbox" class="input_check_new" id="input_check_new_{{ item.id }}" {{ checked }}>
+                <label for="input_check_new_{{ item.id }}">
+                    <span class="check">
+                        <i class="material-icons form-check-sign">check</i>
+                    </span>
+                </label>
+            </div>
+        </td>
+        <td>
+            <div class="row-check">
+                {% set checked = '' %}
+                {% for key, value in team_authorizations_number %}
+                    {% if value == item.id %}
+                        {% set authorizations = attribute(team_authorizations, item.id) %}
+                        {% if authorizations.enableEdit %}
+                            {% set checked = 'checked' %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <input type="checkbox" class="input_check_edit" id="input_check_edit_{{ item.id }}" {{ checked }}>
+                <label for="input_check_edit_{{ item.id }}">
+                    <span class="check">
+                        <i class="material-icons form-check-sign">check</i>
+                    </span>
+                </label>
+            </div>
+        </td>
+        <td>
+            <div class="row-check">
+                {% set checked = '' %}
+                {% for key, value in team_authorizations_number %}
+                    {% if value == item.id %}
+                        {% set authorizations = attribute(team_authorizations, item.id) %}
+                        {% if authorizations.enableDelete %}
+                            {% set checked = 'checked' %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <input type="checkbox" class="input_check_delete" id="input_check_delete_{{ item.id }}" {{ checked }}>
+                <label for="input_check_delete_{{ item.id }}">
+                    <span class="check">
+                        <i class="material-icons form-check-sign">check</i>
+                    </span>
+                </label>
+            </div>
+        </td>
+        <td>
+            {% if item.children|length <= 0 %}
+                <div class="row-check">
+                    <input type="checkbox" class="input_check_all" id="input_check_all_{{ item.id }}">
+                    <label for="input_check_all_{{ item.id }}">
+                    <span class="check">
+                        <i class="material-icons form-check-sign">check</i>
+                    </span>
+                    </label>
+                </div>
+            {% endif %}
+        </td>
+    </tr>
+
+    {% if item.children|length > 0 %}
+        {% for child in item.children %}
+            {{ macro.authorization(child, cpt + 1, team_authorizations, team_authorizations_number) }}
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' %}
+        </div>
+    </div>
+
+    {% if form_entity.vars.value.id != null and form_entity.vars.value.id > 0 %}
+        {% set item_content %}
+            {% import _self as macro %}
+
+            {# Message d'informations #}
+            <div class="alert alert-info alert-with-icon alert-authorizations">
+                <i class="material-icons" data-notify="icon">notifications</i>
+                <div>
+                    <p style="margin-bottom:10px;">Les permissions du groupe permettent d'autoriser (ou non) certaines actions par les membres de ce groupe.</p>
+                </div>
+            </div>
+
+            {# Tableau des permissions #}
+            <table id="table_permission" class="datatable table table-hover">
+                <thead>
+                <tr>
+                    <th style="padding-left:0;">Désignation</th>
+                    <th class="text-center" style="width:150px;">Aperçu</th>
+                    <th class="text-center" style="width:150px;">Création</th>
+                    <th class="text-center" style="width:150px;">Edition</th>
+                    <th class="text-center" style="width:150px;">Suppression</th>
+                    <th class="text-center" style="width:150px;">Tous</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for item in authorizations %}
+                    {{ macro.authorization(item, 1, team_authorizations, team_authorizations_number) }}
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% endset %}
+
+        {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+            title: 'Permissions du groupe',
+            icon: 'playlist_add_check',
+            content: item_content,
+        } %}
+    {% endif %}
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('#table_permission').DataTable().page.len(250).draw();
+
+            $(document).on('click', '.input_check_view', function(){
+                var $input = $(this);
+                if ($(this).is(':checked')) {
+                    var id = $(this).closest('tr').attr('data-id');
+                    $('tr[data-parent="' + id + '"').find('.input_check_view').prop('checked', true);
+                }
+
+                $.ajax({
+                    url: "{{ path('user_admin_authorization_change') }}",
+                    data: {
+                        'type': 0,
+                        'authorization': $input.closest('tr').attr('data-id'),
+                        'team': {{ form_entity.vars.value.id }},
+                        'value': $input.is(':checked')
+
+                    },
+                    method: 'post',
+                    done: function (_data) {
+
+                    }
+
+                })
+            });
+            $('.input_check_new').on('change', function () {
+                if ($(this).is(':checked')) {
+                    var id = $(this).closest('tr').attr('data-id');
+                    $('tr[data-parent="' + id + '"').find('.input_check_new').prop('checked', true);
+                }
+            });
+            $('.input_check_edit').on('change', function () {
+                if ($(this).is(':checked')) {
+                    var id = $(this).closest('tr').attr('data-id');
+                    $('tr[data-parent="' + id + '"').find('.input_check_edit').prop('checked', true);
+                }
+            });
+            $('.input_check_delete').on('change', function () {
+                if ($(this).is(':checked')) {
+                    var id = $(this).closest('tr').attr('data-id');
+                    $('tr[data-parent="' + id + '"').find('.input_check_delete').prop('checked', true);
+                }
+            });
+
+            $('.input_check_all').on('change', function () {
+                if ($(this).is(':checked')) {
+                    var id = $(this).closest('tr').attr('data-id');
+                    $('tr[data-parent="' + id + '"').find('.input_check_all').prop('checked', true);
+                }
+            });
+
+            $('.input_check_all').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $(this).closest('tr').find('input').prop('checked', true);
+                }
+            });
+
+
+        })
+    </script>
+{% endblock %}

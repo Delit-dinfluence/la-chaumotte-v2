@@ -1,0 +1,38 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block content %}
+
+    {% include '@core/admin/theme/basique/includes/form.html.twig' %}
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(function () {
+
+            show_hide_elements();
+
+            $('#attribute_group_print_type').on('change', function () {
+
+                show_hide_elements();
+            });
+
+
+            function show_hide_elements() {
+
+                // Téléchargement de fichiers
+                if ($('#attribute_group_print_type').val() == 2) {
+
+                    $('#attribute_group_formats').closest('.form-group').show();
+                } else {
+                    $('#attribute_group_formats').closest('.form-group').hide();
+                }
+            }
+
+        });
+    </script>
+
+{% endblock %}

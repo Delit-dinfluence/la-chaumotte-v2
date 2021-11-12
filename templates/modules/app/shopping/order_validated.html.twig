@@ -1,0 +1,28 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div class="page page-annexe page-order-validated">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+        <header class="page-header">
+            <h1 class="page-title">{{ translation.order_payment_success_title|raw }}</h1>
+        </header>
+
+        <div class="page-content">
+            <div class="page-container">
+
+                <div>
+                    {{ translation.order_payment_success_content|raw }}
+                    <a href="{{ '/' ~ locale ~  pages.home.translate(locale).uri }}"
+                       class="btn-return">{{ translation.order_payment_success_return|raw }}</a>
+                </div>
+            </div>
+        </div>
+
+        {# PAGE FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div> {# /.page #}
+{% endblock %}

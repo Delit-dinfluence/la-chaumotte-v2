@@ -1,0 +1,432 @@
+{% extends '@app/base.html.twig' %}
+
+
+{% block stylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('assets/vendors/ligthGallery-1.6.11/css/lightgallery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/select2-4.0.5/css/select2.min.css') }}">
+
+{% endblock %}
+{% block content %}
+    <div class="page page-cart">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+        <h1 class="page-title">{{ translation.page_cart_title|raw }}</h1>
+
+        <div class="page-content">
+            <div class="page-container">
+
+
+                <div class="columns">
+                    {% if cart.products|length > 0 %}
+                        <div class="column">
+
+                            <table class="cart">
+
+                                <tr>
+                                    <th class="th-product"
+                                        colspan="2">{{ translation.page_cart_table_title_1|raw }}</th>
+                                    <th class="th-price">{{ translation.page_cart_table_title_2|raw }}</th>
+                                    <th class="th-quantity">{{ translation.page_cart_table_title_3|raw }}</th>
+                                </tr>
+
+                                {% set thumbConfig = {"thumbnail": {"size": [1200, 400] }} %}
+
+                                {% for row in cart.products %}
+
+                                    {% set product = row.product %}
+                                    {% set type =  product.productFeatures[0].feature %}
+
+                                    <tr class="product" data-type="{{ type.id }}" data-id="{{ product.id }}">
+                                        <td>
+                                            <div class="product-cover">
+                                                <a class="product-image" href="{{ pages.category.uri ~ '/' ~ product.slug }}">
+                                                    <figure class="figure">
+                                                        {% if product.cover != '' and product.cover != false %}
+                                                            <img src="{{ asset('assets/media/images/' ~ product.cover.image) }}"
+                                                                 alt="">
+                                                        {% else %}
+                                                            <img src="{{ images['5ccbebe46b80d'].slug }}" alt="">
+                                                        {% endif %}
+                                                    </figure>
+                                                </a>
+                                            </div> {# /.product-cover #}
+                                        </td>
+
+                                        <td>
+                                            <div class="product-informations">
+                                                <p class="category-big">
+                                                    {% for item in product.categories %}
+                                                        {% if loop.index > 1 %},{% endif %}
+
+                                                        {% if item.designationOrder == 0 %}
+                                                            <span class="category-designation">{{ item.designationBig ~ ' ' ~ item.designationSmall }}</span>
+                                                        {% else %}
+                                                            <span class="category-designation">{{ item.designationSmall ~ ' ' ~ item.designationBig }}</span>
+                                                        {% endif %}
+
+                                                    {% endfor %}
+                                                </p>
+
+                                                <a class="product-link" href="{{ pages.category.uri ~ '/' ~ product.slug }}">
+                                                    <h3 class="product-title">{{ product.designation }}</h3>
+                                                </a>
+                                                {% for feature in product.productFeatures %}
+                                                    <p class="product-feature">{{ feature.featureGroup.designation ~ ' : ' ~ feature.feature.designation }}</p>
+                                                {% endfor %}
+
+                                                <p class="price-unit">{{ translation.page_cart_table_unit_price ~  ' : ' ~ (product.priceHT * (1 + (product.tax.rate / 100)))|number_format(2, '.', ' ') }}
+                                                    &euro;</p>
+
+
+                                                <div class="product-remove version-computer">
+                                                    <button class="btn btn-remove">{{ translation.page_cart_table_remove|raw }}</button>
+                                                    <p class="product-errors"></p>
+                                                </div> {# /.product-remove #}
+
+                                            </div> {# /.product-informations #}
+                                        </td>
+
+                                        <td class="version-computer">
+                                            <div class="product-total">
+                                                {{ row.productTotalTTC|number_format(2, '.', ' ') }} &euro;
+                                            </div> {# /.product-total #}
+                                        </td>
+
+                                        <td>
+                                            <div class="product-quantity" data-initial-quantity="{{ row.quantity }}">
+
+                                                <div class="form-group">
+                                                    <div class="controls version-responsive">
+                                                        <button class="btn product_quantity_remove">-</button>
+                                                    </div>
+
+                                                    <input type="number" value="{{ row.quantity }}"
+                                                           id="product_quantity">
+
+                                                    <div class="controls version-responsive">
+                                                        <button class="btn product_quantity_add">+</button>
+                                                    </div>
+
+                                                    <div class="controls version-computer">
+                                                        <button class="btn product_quantity_add">+</button>
+                                                        <button class="btn product_quantity_remove">-</button>
+                                                    </div>
+                                                </div>
+
+                                                <span class="product-update">{{ translation.page_cart_table_update|raw }}</span>
+                                                <div class="product-update-errors"></div>
+                                            </div> {# /.product-quantity #}
+
+
+                                            <div class="version-responsive product-amount">
+                                                {{ translation.page_cart_table_product_total }}
+                                                <span class="product-total">
+                                                    {{ row.productTotalTTC|number_format(2, '.', ' ') }} &euro;
+                                                </span> {# /.product-totla #}
+                                            </div>
+
+                                            <div class="version-responsive">
+                                                <div class="product-remove">
+                                                    <button class="btn btn-remove">{{ translation.page_cart_table_remove|raw }}</button>
+                                                    <p class="product-errors"></p>
+                                                </div> {# /.product-remove #}
+                                            </div>
+                                        </td>
+
+                                    </tr> {# /.product #}
+
+                                {% endfor %}
+                            </table>
+
+                        </div>
+
+                        <div class="column">
+
+                            <div class="cart-aside">
+                                <div class="cart-confirm">
+
+                                    <div id="cart-sub-total">
+                                        {{ translation.page_cart_table_subtotal|raw }}
+                                        ({{ cart.cartTotalProductsCount ~ ' ' ~ translation.page_cart_table_articles|raw }})
+                                        : {{ cart.cartTotalTTC|number_format(2, '.', ' ') }} €
+                                    </div>
+
+                                    <div class="cart-controls">
+                                        <button id="cart-submit" class="btn btn-submit">
+                                            {{ translation.page_cart_table_next|raw }}
+                                        </button>
+                                    </div>
+
+                                    <div id="cart-errors"></div>
+                                </div>
+
+
+                                <div class="cart-infos">
+                                    <p><i class="fas fa-shield-alt"></i> {{ translation.page_cart_table_security|raw }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="cart-empty">{{ translation.page_cart_empty|raw }}</div>
+                    {% endif %}
+                </div>
+
+
+            </div>
+        </div>
+
+        {# PAGE FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div> {# /.page #}
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script src="{{ asset('assets/vendors/ligthGallery-1.6.11/js/lightgallery-all.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/select2-4.0.5/js/select2.full.min.js') }}"></script>
+
+    <script>
+        var object = $('.cart-aside');
+        var objectTop = object.offset().top;
+
+        /**
+         *  Animation du scroll de la page
+         **/
+        $(window).scroll(function () {
+            var currentScroll = $(window).scrollTop();
+
+            if (currentScroll >= objectTop - 50) {
+                object.addClass('fixed');
+            } else {
+                object.removeClass('fixed');
+            }
+
+            console.log('window ' + currentScroll);
+            console.log('object' + objectTop);
+        });
+
+        $(document).ready(function () {
+
+            /**
+             * Suppression du produit du panier
+             **/
+            $('.product-remove').on('click', function (event) {
+                event.preventDefault();
+
+                let button = $(this);
+                let product = button.closest('.product');
+                let errors = product.find('.product-errors');
+                let text = $('#cart-sub-total');
+                let tag = $('#cart-tag');
+
+                let product_id = product.attr('data-id');
+                let quantity = -1;
+
+                let dataToSend = {
+                    'product_id': product_id,
+                    'quantity': quantity
+                };
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                remove_errors(errors);
+
+                $.ajax({
+                    url: "{{ path('shopping_cart_product_remove') }}",
+                    data: dataToSend,
+                }).done(function (data) {
+
+
+                    if ($('table.cart li').length <= 1) {
+                        window.location.reload();
+                    } else {
+                        product.remove();
+                        text.html('Sous-total (' + data['content']['cart']['cartTotalProductsCount'] + ' articles): ' + data['content']['cart']['cartTotalTTC'] + ' &euro;');
+                        tag.html(data['content']['cart']['cartTotalProductsCount']);
+                        $('.navigation-wrapper .cart-tag').html(data['content']['cart']['cartTotalProductsCount']);
+
+                    }
+
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                    button.html('{{ translation.page_cart_table_remove|raw }}');
+
+                    if (jqXHR.status == 401) {
+                        errors.html('{{ translation.page_errors_id|raw }}');
+                    } else {
+                        errors.html('{{ translation.page_errors_fire|raw }}');
+                    }
+
+                    errors.addClass('active');
+
+                });
+
+            });
+
+            /**
+             * Nettoie l'affichage des erreurs
+             */
+            function remove_errors(errors) {
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+            /**
+             * Ajout d'une certaine quantité au panier
+             **/
+            $(document).on('click', '.product_quantity_add', function (event) {
+                event.preventDefault();
+
+                let product = $(this).closest('.product');
+                let button = product.find('.product-quantity input');
+                let quantity = parseInt(button.val());
+
+                quantity += 1;
+                button.val(quantity);
+
+                check_product_update(product);
+            });
+
+            /**
+             * Suppression d'une certaine quantité au panier
+             **/
+            $(document).on('click', '.product_quantity_remove', function (event) {
+                event.preventDefault();
+
+                let product = $(this).closest('.product');
+                let button = product.find('.product-quantity input');
+                let quantity = parseInt(button.val());
+
+                (quantity <= 1 ? quantity = 1 : quantity--);
+
+                button.val(quantity);
+
+                check_product_update(product);
+            });
+
+
+            $(document).on('change', '.product-quantity input', function (event) {
+                event.preventDefault();
+
+                let product = $(this).closest('.product');
+
+                check_product_update(product);
+            });
+
+            /**
+             * Gestion des boutons de quantité
+             **/
+            function check_product_update(product) {
+
+                let active = product.find('.product-update');
+                let initial_quantity = parseInt(product.find('.product-quantity').attr('data-initial-quantity'));
+                let quantity = parseInt(product.find('.product-quantity input').val());
+                let remove = product.find('.product_quantity_remove');
+
+                if (initial_quantity !== quantity) {
+
+                    if (!active.hasClass('active'))
+                        active.addClass('active');
+
+                } else {
+                    active.removeClass('active');
+                }
+
+                if (quantity <= 1) {
+
+                    if (!remove.hasClass('active'))
+                        remove.addClass('active');
+                } else {
+                    remove.removeClass('active');
+                }
+            }
+
+            /**
+             * Mise à jour de la quantité de produit
+             **/
+            $(document).on('click', '.product-update', function (event) {
+                event.preventDefault();
+
+                let button = $(this);
+                let product = button.closest('.product');
+                let errors = product.find('.product-update-errors');
+                let quantity = product.find('.product-quantity input').val();
+                let text = $('#cart-sub-total');
+                let tag = $('#cart-tag');
+
+                let dataToSend = {
+                    'product_id': product.attr('data-id'),
+                    'quantity': quantity,
+                };
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                remove_errors(errors);
+
+                $.ajax({
+                    url: "{{ path('shopping_cart_product_update') }}",
+                    data: dataToSend,
+                }).done(function (data) {
+
+                    button.html('{{ translation.page_cart_table_update|raw }}');
+
+                    product.find('.product-quantity').attr('data-initial-quantity', quantity);
+                    product.find('.product-total').html(data['content']['cartTotalTTC'] + ' &euro;');
+                    button.removeClass('active');
+
+                    text.html('Sous-total (' + data['content']['cart']['cartTotalProductsCount'] + ' articles): ' + data['content']['cart']['cartTotalTTC'].toFixed(2) + ' &euro;');
+                    tag.html(data['content']['cart']['cartTotalProductsCount']);
+
+                    $('.navigation-wrapper .cart-tag').html(data['content']['cart']['cartTotalProductsCount']);
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+
+                    button.html('{{ translation.page_cart_table_update|raw }}');
+
+                    if (jqXHR.status == 401) {
+                        errors.html('{{ translation.page_errors_id|raw }}');
+                    } else {
+                        errors.html('{{ translation.page_errors_fire|raw }}');
+                    }
+
+                    errors.addClass('active');
+
+                });
+            });
+
+            /**
+             * Accès à la partie commande
+             */
+            $(document).on('click', '#cart-submit', function (event) {
+                event.preventDefault();
+
+                let dataToSend = {
+                    'redirect': '{{ pages.order.uri }}'
+                };
+
+                $(this).html('<i class="fas fa-spinner fa-pulse"></i>');
+
+                $.ajax({
+                    url: "{{ path('connect_redirect') }}",
+                    data: dataToSend,
+                }).done(function (data) {
+
+                    window.location.replace("{{ pages.order.uri }}");
+
+                }).fail(function (data) {
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+{% endblock %}
+

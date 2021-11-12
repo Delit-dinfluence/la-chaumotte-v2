@@ -1,0 +1,35 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% block content %}
+
+    <div class="card-list">
+        {% if entities|length > 0 %}
+            {% for entity in entities %}
+                <div class="card">
+                    <div class="card-img">
+                        <img src="{{ asset('assets/media/images/no_image.png') }}" alt="">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">{{ entity.designation }}</h3>
+                        <p class="card-text">{{ entity.descriptionShort }}</p>
+                        <a href="{{ path('shopping_admin_product_form', {'id' : entity.id}) }}"
+                           class="btn btn-primary">Modifier</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">Aucune page disponible</td>
+            </tr>
+        {% endif %}
+    </div>
+
+    <a href="{{ path('shopping_admin_product_form', {'id' : -1 }) }}" class="btn btn-success">
+        <i class="fas fa-plus"></i>Nouveau
+    </a>
+{% endblock %}
+
+{% block footer_right %}
+
+{% endblock %}
+

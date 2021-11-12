@@ -1,0 +1,117 @@
+{% import "bundles/a2lix/macros_text.html.twig" as a2lixTranslations %}
+
+
+<div class="text" data-id="{{ text.id }}">
+
+    {{ form_start(form) }}
+    <div class="text-description">
+        {{ text.description }}
+    </div>
+
+    <div class="text-status">
+
+        <div class="updated">
+            <i class="fas fa-save"></i>
+        </div>
+        <div class="saved">
+            <i class="fas fa-check"></i>
+        </div>
+    </div> {# /.text-status #}
+
+    {{ a2lixTranslations.partialTranslations(form.translations, [ 'value'], 1) }}
+
+
+    <div class="text-footer">
+        <div class="row">
+            <div class="text-breadcrumb">
+                {% for item in breadcrumb|reverse %}
+                    {% if loop.index != 1 %} > {% endif %}{{ item }}
+                {% endfor %}
+            </div>
+
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <button class="btn  btn-link btn-settings" type="button" data-toggle="collapse"
+                    data-target="#collapse_{{ text.id }}"
+                    aria-expanded="false" aria-controls="collapse_{{ text.id }}">
+                <i class="arrow fa fa-cog"></i>
+                <span class="close">Fermer</span>
+            </button>
+        </div>
+        <div class="collapse" id="collapse_{{ text.id }}">
+            <div class="card card-body">
+                <div class="form">
+
+                    <div class="form-group form-checkbox">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">En ligne</label>
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.is_enabled) }}
+
+                                <div class="shape-checkbox">
+                                    <i class="material-icons">check</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Catégorie</label>
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.text_group) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Type d'expression</label>
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.type) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Clé</label>
+                            </div>
+                            <div class="col-md-8">
+                                {{ form_widget(form.reference) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="">Valeur par défaut</label>
+                            </div>
+                            <div class="col-md-8">
+                                {{ a2lixTranslations.partialTranslations(form.translations, [ 'description'], 1) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div style="display: none;">
+                {{ form_row(form) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+    {% endif %}
+
+
+</div>

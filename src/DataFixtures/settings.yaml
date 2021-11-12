@@ -1,0 +1,708 @@
+# Utilisation de la page de maintenance
+maintenance:
+  use: '0'        # 0 / 1
+
+# Utilisation de la page d'attente
+coming_soon:
+  use: '0'        # 0 / 1
+
+# Configuration générale de l'application
+configuration:
+  sitename: ''        # String (Ex: Example)
+  domaine: ''         # String (Ex: example.fr)
+
+# Configuration du BackOffice
+back_office:
+  use_module_shopping: '1'          # 0 / 1
+  use_module_blog: '0'              # 0 / 1
+  use_module_library: '0'           # 0 / 1
+  use_module_calendar: '0'          # 0 / 1
+  use_module_newsletter: '0'        # 0 / 1
+  use_module_coming_soon: '0'       # 0 / 1
+  use_module_language: '1'          # 0 / 1
+  use_module_dashboard: '0'         # 0 / 1
+  use_module_statistics: '0'        # 0 / 1
+  use_module_users: '1'             # 0 / 1
+  use_module_media: '1'             # 0 / 1
+  use_module_reference: '0'         # 0 / 1
+  use_module_gallery: '0'           # 0 / 1
+
+# Gestion des cookies
+cookies:
+  google_analytics: ''                                                      # Clé Google Analytics (Ex: UA-XXXXXXXXX-X)
+  add_this: ''
+  pixel_facebook: ''                                                        # Identifiant du PixelFacebook
+  recaptcha_version: '2'                                                    # Version du ReCaptcha
+  recaptcha_client: '6Lc8tLoUAAAAAHyl7L9PIykOKD4ltEUKgVZCWl_G'              # Clé public du ReCaptcha
+  recaptcha_server: '6Lc8tLoUAAAAAP9MaooMBVIv11R4X2vXwzF8m-A1'              # Clé privée du ReCaptcha
+  recaptcha_hostname: '127.0.0.1'                                           # Domaine de l'application (Ex: example.fr)
+  recaptcha_score: '0.5'                                                    # Domaine de l'application (Ex: example.fr)
+
+# Gestion de la coogle map
+google_map:
+  api_key: ''                       # Clé de l'API GoogleMap
+  zoom: ''                          # Niveau de zoom (Ex: 8)
+  latitude: ''                      # Donnée GPS - Latitude
+  longitude: ''                     # Donnée GPS - Longitude
+
+# Liste des adresses e-mails utilisées
+emails:
+
+  # Liste des adresses e-mails
+  entities:
+    - { id: '1', reference: 'Default', username: 'noreply.delitdinfluence@gmail.com', host: 'smtp.gmail.com', transport: 'smtp', port: '465', encryption: 'ssl', password: 'WrBV3YWiJep36qoLZdH9' }
+
+  # Configuration des envois
+  settings:
+    - { id: '1', reference: 'Contact', subject: 'Demande de contact', sender: "Délit d'influence", key: 'contact', entity: '1' }       # sender: , entity: ID de l'adresse e-mail, key: Clé utilisé en developpement (Ex: contact)
+
+
+# Réseaux sociaux
+social_networks:
+  - { is_enabled: '1', designation: 'Youtube', url: 'http://'}
+  - { is_enabled: '1', designation: 'Facebook', url: 'http://'}
+  - { is_enabled: '0', designation: 'Instagram', url: 'http://'}
+  - { is_enabled: '0', designation: 'LinkedIn', url: 'http://'}
+  - { is_enabled: '0', designation: 'Twitter', url: 'http://'}
+  - { is_enabled: '0', designation: 'WeChat', url: 'http://'}
+  - { is_enabled: '0', designation: 'Youku', url: 'http://'}
+
+# Groupes
+groups:
+  - { id: '1', designations: {fr: 'Super Administrateurs'},       priority: '1' }
+  - { id: '2', designations: {fr: 'Administrateurs'},             priority: '2' }
+  - { id: '3', designations: {fr: 'Membres'},                     priority: '3' }
+  - { id: '4', designations: {fr: 'Visiteurs'},                   priority: '-1' }
+
+# Utilisateurs
+users:
+  - { id: '', is_enabled: '1', title: '', firstname: 'DELIT', lastname: 'INFLUENCE', email: 'william@delit.fr', password: '$2y$13$cKpu7em93KXeq189gfGkleckx.WeeMGTNAwxb2xY5uu1QBW2cFcxK', roles: ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'], groups: ['1', '2', '3', '4' ] }
+
+
+# Pays
+countries:
+  - { id: '1',      designation: 'Europe (EU)',                    is_enabled: '1' }
+  - { id: '2',      designation: 'Amérique du Nord',               is_enabled: '1' }
+  - { id: '3',      designation: 'Asie',                           is_enabled: '1' }
+  - { id: '4',      designation: 'Afrique',                        is_enabled: '1' }
+  - { id: '5',      designation: 'Océanie',                        is_enabled: '1' }
+  - { id: '6',      designation: 'Amérique du Sud',                is_enabled: '1' }
+  - { id: '7',      designation: 'Europe (Hors EU)',               is_enabled: '1' }
+  - { id: '8',      designation: 'Amérique Central/Antilles',      is_enabled: '1' }
+
+# Langues
+languages:
+  - { id: '1',      designations:{fr: 'Français'},                 is_enabled: '1',   language_code: 'fr',       iso_code: 'fr',   date_format: 'd/m/Y',   date_format_full: 'd/m/Y H:i:s' }
+  - { id: '2',      designations:{fr: 'Anglais'},                  is_enabled: '0',   language_code: 'en-gb',    iso_code: 'gb',   date_format: 'Y-m-d',   date_format_full: 'Y-m-d H:i:s' }
+  - { id: '3',      designations:{fr: 'Allemand'},                 is_enabled: '0',   language_code: 'de-de',    iso_code: 'de',   date_format: 'd.m.Y',   date_format_full: 'd.m.Y H:i:s' }
+  - { id: '4',      designations:{fr: 'Espagnol'},                 is_enabled: '0',   language_code: 'es-es',    iso_code: 'es',   date_format: 'd/m/Y',   date_format_full: 'd/m/Y H:i:s' }
+  - { id: '5',      designations:{fr: 'Italien'},                  is_enabled: '0',   language_code: 'it-it',    iso_code: 'it',   date_format: 'd/m/Y',   date_format_full: 'd/m/Y H:i:s' }
+  - { id: '6',      designations:{fr: 'Portugais'},                is_enabled: '0',   language_code: 'pt-pt',    iso_code: 'pt',   date_format: 'Y-m-d',   date_format_full: 'Y-m-d H:i:s' }
+  - { id: '7',      designations:{fr: 'Danois'},                   is_enabled: '0',   language_code: 'da-dk',    iso_code: 'da',   date_format: 'Y-m-d',   date_format_full: 'Y-m-d H:i:s' }
+  - { id: '8',      designations:{fr: 'Néerlandais'},              is_enabled: '0',   language_code: 'nl-nl',    iso_code: 'nl',   date_format: 'd-m-Y',   date_format_full: 'd-m-Y H:i:s' }
+  - { id: '9',      designations:{fr: 'Chinois simplifié'},        is_enabled: '0',   language_code: 'zh-cn',    iso_code: 'zh',   date_format: 'Y-m-d',   date_format_full: 'Y-m-d H:i:s' }
+
+
+taxes:
+  - { is_enabled: '1', designation: 'TVA FR 20%', rate: '20.0' }
+  - { is_enabled: '1', designation: 'TVA FR 10%', rate: '10.0' }
+  - { is_enabled: '1', designation: 'TVA FR 5.5%', rate: '5.5' }
+  - { is_enabled: '1', designation: 'TVA FR 2.1%', rate: '2.1' }
+
+
+# Pages
+pages:
+  - { reference: 'Général',                                             is_enabled: '1', is_indexable: '1', priority: '1',      urls: {fr: 'unknown' } ,                                                                         meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageGeneral',                                                               controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Accueil',                                             is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageHome',                                                                  controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Mini-site',                                           is_enabled: '1', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageMini',                                                                  controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Actualités',                                          is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/actualites'},                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageActualites',                                                            controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Actualité',                                           is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/actualites/'},                                                                      meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageActualite',                                                             controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Rechercher',                                          is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/recherche'} ,                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageResearch',                                                              controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+
+  - { reference: 'Qui sommes nous ?',                                   is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/qui-sommes-nous'} ,                                                               meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAbout',                                                                 controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Contact',                                             is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/contact'} ,                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageContact',                                                               controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Mentions légales',                                    is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/mentions-legales'} ,                                                              meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageNotice',                                                                controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Foire aux questions',                                 is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/foire-aux-questions'},                                                            meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageFaq',                                                                   controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Conditions Générales de Ventes',                      is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/conditions-generales-ventes'},                                                    meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCgv',                                                                   controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Informations de livraison',                           is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/informations-livraison'},                                                         meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageInfoDelivery',                                                          controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Informations de paiements',                           is_enabled: '0', is_indexable: '1', priority: '0.5',      urls: {fr: '/informations-paiement'},                                                          meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageInfoPayment',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+
+  - { reference: 'Page personnalisée n°1',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomOne',                                                             controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°2',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomTwo',                                                             controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°3',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomThree',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°4',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomFour',                                                            controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°5',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomFive',                                                            controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°6',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomSix',                                                             controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°7',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomSeven',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°8',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomEight',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°9',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomNine',                                                            controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Page personnalisée n°10',                             is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/'},                                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCustomTen',                                                             controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Connexion',                                           is_enabled: '1', is_indexable: '0', priority: '0',      urls: {fr: '/connexion'} ,                                                                       meta_title: {fr: 'Connexion'},      meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageConnect',                                                               controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Déconnexion',                                         is_enabled: '1', is_indexable: '0', priority: '0',      urls: {fr: '/deconnexion'},                                                                      meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageDisconnect',                                                            controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Inscription',                                         is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/inscription'} ,                                                                     meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageRegister',                                                              controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Mot de passe oublié',                                 is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/mot-de-passe-oublie'},                                                              meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageForgotPassword',                                                        controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Mot de passe oublié - Réinitialisation',              is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/reinitialisation-du-mot-de-passe?token=([a-zA-Z0-9-_]+)&email=([a-zA-Z0-9-_]+)'},   meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageForgotPasswordReset',                                                   controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Page introuvable',                                    is_enabled: '1', is_indexable: '0', priority: '0',      urls: {fr: '/erreur/404'},                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageError404',                                                              controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Accès refusé',                                        is_enabled: '1', is_indexable: '0', priority: '0',      urls: {fr: '/erreur/403'},                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageError403',                                                              controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Erreur détectée',                                     is_enabled: '1', is_indexable: '0', priority: '0',      urls: {fr: '/erreur/500'},                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageError',                                                                 controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Compte',                                              is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte'},                                                                           meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccount',                                                               controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Compte - Informations',                               is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte/informations'},                                                              meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccountInfo',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Compte - Adresse',                                    is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte/adresse'},                                                                   meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccountAdress',                                                         controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Compte - Historique',                                 is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte/historique-des-commandes'},                                                  meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccountHistoric',                                                       controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Compte - Newsletter',                                 is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte/newsletter'},                                                                meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccountNewsletter',                                                     controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Compte - Historique - Details',                       is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte/historique-des-commandes/([a-zA-Z0-9-_]+)'},                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccountHistoricDetails',                                                controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Compte - Adresse - Formulaire',                       is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/compte/adresse/edition/([-0-9]+)'},                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageAccountAdressForm',                                                     controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Commande',                                            is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/commande'},                                                                         meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageOrder',                                                                 controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Commande payée',                                      is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/commande-validee'},                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageOrderValidated',                                                        controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Commande échouée',                                    is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/commande-echec'},                                                                   meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageOrderFailed',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Coming Soon',                                         is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/coming-soon'},                                                                      meta_title: {fr: 'Bientôt disponible'},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageComingSoon',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Maintenance',                                         is_enabled: '0', is_indexable: '0', priority: '0',      urls: {fr: '/maintenance'},                                                                      meta_title: {fr: 'Maintenance en cours ...'},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageMaintenance',                                                           controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+  - { reference: 'Catégories de produits',                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/categories'},                                                                       meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCategory',                                                              controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Panier',                                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/panier'} ,                                                                          meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageCart',                                                                  controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: 'Liste de produits',                                   is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/([a-zA-Z0-9-_]+)/([a-zA-Z0-9-_]+)'},                                                meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageProducts',                                                              controller_module: 'App', controller_action: 'form', controller_id: '1' }
+  - { reference: "Affichage d'un produit",                              is_enabled: '0', is_indexable: '1', priority: '1',      urls: {fr: '/([a-zA-Z0-9-_]+)'},                                                                 meta_title: {fr: ''},               meta_description: {fr: ''}, controller: 'PageController', controller_entity: 'PageProduct',                                                               controller_module: 'App', controller_action: 'form', controller_id: '1' }
+
+
+
+# Traductions
+translations:
+  groups:
+    - { id: '1',  is_enabled: '1', designations: {fr: 'Front-Office'}, parent: 'null' }
+    - { id: '2',  is_enabled: '1', designations: {fr: 'Back-Office'}, parent: 'null' }
+    - { id: '3',  is_enabled: '1', designations: {fr: 'Navigation'}, parent: 'null' }
+    - { id: '4',  is_enabled: '1', designations: {fr: 'Pied de page'}, parent: 'null' }
+
+    - { id: '100', is_enabled: '1', designations: {fr: 'Pages'}, parent: '1' }
+    - { id: '101', is_enabled: '1', designations: {fr: 'Accueil'}, parent: '100' }
+    - { id: '102', is_enabled: '0', designations: {fr: 'Rechercher'}, parent: '100' }
+    - { id: '103', is_enabled: '0', designations: {fr: 'Actualités'}, parent: '100' }
+    - { id: '104', is_enabled: '0', designations: {fr: 'Actualite'}, parent: '100' }
+
+
+    - { id: '105', is_enabled: '0', designations: {fr: 'Page personnalisée n°1'}, parent: '100' }
+    - { id: '106', is_enabled: '0', designations: {fr: 'Page personnalisée n°2'}, parent: '100' }
+    - { id: '107', is_enabled: '0', designations: {fr: 'Page personnalisée n°3'}, parent: '100' }
+    - { id: '108', is_enabled: '0', designations: {fr: 'Page personnalisée n°4'}, parent: '100' }
+    - { id: '109', is_enabled: '0', designations: {fr: 'Page personnalisée n°5'}, parent: '100' }
+    - { id: '110', is_enabled: '0', designations: {fr: 'Page personnalisée n°6'}, parent: '100' }
+    - { id: '111', is_enabled: '0', designations: {fr: 'Page personnalisée n°7'}, parent: '100' }
+    - { id: '112', is_enabled: '0', designations: {fr: 'Page personnalisée n°8'}, parent: '100' }
+    - { id: '113', is_enabled: '0', designations: {fr: 'Page personnalisée n°9'}, parent: '100' }
+    - { id: '114', is_enabled: '0', designations: {fr: 'Page personnalisée n°10'}, parent: '100' }
+
+    - { id: '200', is_enabled: '0', designations: {fr: 'Magasin'}, parent: '1' }
+    - { id: '201', is_enabled: '0', designations: {fr: 'Catégories'}, parent: '200' }
+    - { id: '202', is_enabled: '0', designations: {fr: 'Produits'}, parent: '200' }
+    - { id: '203', is_enabled: '0', designations: {fr: 'Produit'}, parent: '200' }
+    - { id: '204', is_enabled: '0', designations: {fr: 'Panier'}, parent: '200' }
+    - { id: '205', is_enabled: '0', designations: {fr: 'Livraison'}, parent: '200' }
+    - { id: '206', is_enabled: '0', designations: {fr: 'Paiement'}, parent: '200' }
+    - { id: '207', is_enabled: '0', designations: {fr: 'Commande'}, parent: '200' }
+
+    - { id: '300', is_enabled: '1', designations: {fr: 'Annexes'}, parent: '1' }
+    - { id: '301', is_enabled: '1', designations: {fr: 'Mentions légales'}, parent: '300' }
+    - { id: '302', is_enabled: '0', designations: {fr: 'Foire aux questions'}, parent: '300' }
+    - { id: '303', is_enabled: '0', designations: {fr: 'CGV'}, parent: '300' }
+    - { id: '304', is_enabled: '1', designations: {fr: 'Contact'}, parent: '300' }
+    - { id: '305', is_enabled: '0', designations: {fr: 'Informations de livraison'}, parent: '300' }
+    - { id: '306', is_enabled: '0', designations: {fr: 'Informations de paiement'}, parent: '300' }
+
+    - { id: '400', is_enabled: '0', designations: {fr: 'Compte'}, parent: '1' }
+    - { id: '401', is_enabled: '0', designations: {fr: 'Général'}, parent: '400' }
+    - { id: '402', is_enabled: '0', designations: {fr: 'Connexion / Inscription'}, parent: '400' }
+    - { id: '403', is_enabled: '0', designations: {fr: 'Mot de passe oublié'}, parent: '400' }
+    - { id: '404', is_enabled: '0', designations: {fr: 'Tableau de bord'}, parent: '400' }
+    - { id: '405', is_enabled: '0', designations: {fr: 'Historique des commandes'}, parent: '400' }
+    - { id: '406', is_enabled: '0', designations: {fr: 'Informations'}, parent: '400' }
+    - { id: '407', is_enabled: '0', designations: {fr: 'Adresses'}, parent: '400' }
+    - { id: '408', is_enabled: '0', designations: {fr: 'Newsletter'}, parent: '400' }
+
+    - { id: '5', is_enabled: '1', designations: {fr: 'Erreurs'}, parent: '1' }
+
+  texts:
+    - { is_enabled: '1', values: {fr: 'Mention légales' }, type: '', key: 'footer_copyrights', group: '4' }
+    - { is_enabled: '1', values: {fr: 'Contact' },  type: '', key: 'footer_contact', group: '4' }
+
+    - { is_enabled: '1', values: {fr: 'Connexion' },  type: '', key: 'page_connect_title', group: '402' }
+    - { is_enabled: '1', values: {fr: 'Identifiant' },  type: '', key: 'page_connect_form_username', group: '402' }
+    - { is_enabled: '1', values: {fr: 'Mot de passe' },  type: '', key: 'page_connect_form_password', group: '402' }
+    - { is_enabled: '1', values: {fr: 'Se connecter' },  type: '', key: 'page_connect_form_btn_submit', group: '402' }
+    - { is_enabled: '1', values: {fr: "Vous n'avez pas de compte ?" },  type: '', key: 'page_connect_redirect_register_content', group: '402' }
+    - { is_enabled: '1', values: {fr: "Créer un compte" },  type: '', key: 'page_connect_redirect_register', group: '402' }
+    - { is_enabled: '1', values: {fr: "Mot de passe oublié ?" },  type: '', key: 'page_connect_forgot', group: '402' }
+
+    - { is_enabled: '1', values: {fr: "Une erreur est survenue, veuillez réessayer ultérieurement" },  type: '', key: 'page_errors_id', group: '402' }
+    - { is_enabled: '1', values: {fr: "Une erreur est survenue, veuillez réessayer ultérieurement" },  type: '', key: 'page_errors_fire', group: '402' }
+
+    - { is_enabled: '1', values: {fr: "Mot de passe invalide" },  type: '', key: 'page_errors_invalid_password', group: '300' }
+    - { is_enabled: '1', values: {fr: "Adresse e-mail invalide" },  type: '', key: 'page_errors_invalid_email', group: '300' }
+
+
+    - { key: 'page_legal_notices_title',              group: '402',   is_enabled: '1',    type: '',    values: {fr: "Mentions légales" }  }
+    - { key: 'page_legal_notices_content',            group: '402',   is_enabled: '1',    type: '',    values: {fr: "Contenu des mentions légales" }  }
+
+    - { key: 'page_info_payment_title',               group: '402',   is_enabled: '1',    type: '',    values: {fr: "Informations de paiements" }  }
+    - { key: 'page_info_payment_content',             group: '402',   is_enabled: '1',    type: '',    values: {fr: "Contenu des informations de paiements" }  }
+
+    - { key: 'page_info_delivery_title',              group: '402',   is_enabled: '1',    type: '',    values: {fr: "Informations de livraisons" }  }
+    - { key: 'page_info_delivery_content',            group: '402',   is_enabled: '1',    type: '',    values: {fr: "Contenu des informations de livraisons" }  }
+
+    - { key: 'page_faq_title',                        group: '402',   is_enabled: '1',    type: '',    values: {fr: "Foire aux questions" }  }
+    - { key: 'page_faq_content',                      group: '402',   is_enabled: '1',    type: '',    values: {fr: "Contenu de la Foire aux questions" }  }
+
+    - { key: 'page_cgv_title',                        group: '402',   is_enabled: '1',    type: '',    values: {fr: "Conditions Générales de Ventes" }  }
+    - { key: 'page_cgv_content',                      group: '402',   is_enabled: '1',    type: '',    values: {fr: "Contenu des " }  }
+
+    - { key: 'page_about_title',                      group: '402',   is_enabled: '1',    type: '',    values: {fr: "Qui sommes nous ?" }  }
+    - { key: 'page_about_content',                    group: '402',   is_enabled: '1',    type: '',    values: {fr: "Contenu des Qui sommes nous ?" }  }
+
+
+
+
+
+
+
+    # Textes de la page "CONNEXION"
+
+    - { key: 'login_form_username',                       group: '402',   is_enabled: '1',    type: '',    values: {fr: "Utilisateur" }  }
+    - { key: 'login_form_password',                       group: '402',   is_enabled: '1',    type: '',    values: {fr: "Mot de passe" }  }
+    - { key: 'page_connect_btn_submit',                   group: '402',   is_enabled: '1',    type: '',    values: {fr: "Se connecter" }  }
+
+
+
+
+    # Textes  "ERREURS"
+
+    - { key: 'form_error_fire',                       group: '304',   is_enabled: '1',    type: '',    values: {fr: "Une erreur est survenue" }  }
+
+    - { key: 'page_error_403_title',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Accès refusé" }  }
+    - { key: 'page_error_403_content',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Le contenu nécessite d'être connecté" }  }
+    - { key: 'page_error_403_link',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Retourner sur le site" }  }
+    - { key: 'page_error_403_connect',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Ce connecter" }  }
+
+    - { key: 'page_error_404_title',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Contenu introuvable" }  }
+    - { key: 'page_error_404_content',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Le contenu demandé n'exite pas ou a été déplacé" }  }
+    - { key: 'page_error_404_link',                    group: '5',   is_enabled: '1',    type: '',    values: {fr: "Retourner sur le site" }  }
+
+
+    # Textes de la page "CONTACT" et "MINI-SITE section CONTACT"
+
+    - { key: 'page_contact_title',                    group: '304',   is_enabled: '1',    type: '',    values: {fr: "Contact" }  }
+    - { key: 'page_contact_form_lastname',            group: '304',   is_enabled: '1',    type: '',    values: {fr: "Nom" }  }
+    - { key: 'page_contact_form_firstname',           group: '304',   is_enabled: '1',    type: '',    values: {fr: "Prénom" }  }
+    - { key: 'page_contact_form_email',               group: '304',   is_enabled: '1',    type: '',    values: {fr: "E-mail" }  }
+    - { key: 'page_contact_form_phone',               group: '304',   is_enabled: '1',    type: '',    values: {fr: "Téléphone" }  }
+    - { key: 'page_contact_form_subject',             group: '304',   is_enabled: '1',    type: '',    values: {fr: "Sujet" }  }
+    - { key: 'page_contact_form_message',             group: '304',   is_enabled: '1',    type: '',    values: {fr: "Message" }  }
+    - { key: 'page_contact_form_title_mr',            group: '304',   is_enabled: '1',    type: '',    values: {fr: "Mr" }  }
+    - { key: 'page_contact_form_title_mrs',           group: '304',   is_enabled: '1',    type: '',    values: {fr: "Mme" }  }
+    - { key: 'page_contact_form_submit',              group: '304',   is_enabled: '1',    type: '',    values: {fr: "Envoyer" }  }
+
+    - { key: 'page_contact_form_lastname_invalid',            group: '304',   is_enabled: '1',    type: '',    values: {fr: "Nom" }  }
+    - { key: 'page_contact_form_firstname_invalid',           group: '304',   is_enabled: '1',    type: '',    values: {fr: "Prénom" }  }
+    - { key: 'page_contact_form_email_invalid',               group: '304',   is_enabled: '1',    type: '',    values: {fr: "E-mail" }  }
+    - { key: 'page_contact_form_phone_invalid',               group: '304',   is_enabled: '1',    type: '',    values: {fr: "Téléphone" }  }
+    - { key: 'page_contact_form_subject_invalid',             group: '304',   is_enabled: '1',    type: '',    values: {fr: "Sujet" }  }
+    - { key: 'page_contact_form_message_invalid',             group: '304',   is_enabled: '1',    type: '',    values: {fr: "Message" }  }
+
+    - { key: 'page_contact_form_info_sent',             group: '304',   is_enabled: '1',    type: '',    values: {fr: "Message envoyé !" }  }
+
+
+
+    # Textes d'un "MINI-SITE"
+
+    - { key: 'page_mini_navigation_link_1',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Qui sommes-nous ?" }  }
+    - { key: 'page_mini_navigation_link_2',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Les produits" }  }
+    - { key: 'page_mini_navigation_link_3',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Les points de vente" }  }
+    - { key: 'page_mini_navigation_link_4',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Passer une commande" }  }
+
+    - { key: 'page_mini_page_title',                          group: '101',   is_enabled: '1',    type: '',    values: {fr: "" }  }
+
+    - { key: 'page_mini_section_title_1',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "Qui sommes-nous ?" }  }
+    - { key: 'page_mini_section_content_1',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>La Chaumotte est la ferme au sein de laquelle claire <strong>André</strong> élève avec passion ses volailles.</span><span>Situé à proximité de Villequiers, un petit village à 40 km à l'est de Bourges, les pintades et les poules sont élevés en semi-liberté. Ils gambadent dans les prés durant 4 mois. Ils disposent de beaucoup d'espace pour évoluer au grand air et peuvent s'abriter dans des grandes cabanes en parc-clos.</span><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. </span>" }  }
+
+    - { key: 'page_mini_section_picto_column_title_1',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>élevage en</span><span>semi liberté</span> " }  }
+    - { key: 'page_mini_section_picto_column_title_2',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>alimentation des poulets</span><span> issue de la ferme</span>" }  }
+    - { key: 'page_mini_section_picto_column_title_3',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>volailles et plats</span><span>cuisinés</span>" }  }
+
+    - { key: 'page_mini_section_produits_title',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "Les produits" }  }
+    - { key: 'page_mini_section_produits_content',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>La Chaumotte est la ferme au sein de laquelle claire <strong>André</strong> élève avec passion ses volailles.</span><span>Situé à proximité de Villequiers, un petit village à 40 km à l'est de Bourges, les pintades et les poules sont élevés en semi-liberté. Ils gambadent dans les prés durant 4 mois. Ils disposent de beaucoup d'espace pour évoluer au grand air et peuvent s'abriter dans des grandes cabanes en parc-clos.</span><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. </span>" }  }
+    - { key: 'page_mini_section_produits_link',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Découvrir les produits" }  }
+
+    - { key: 'page_mini_section_map_title',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "Les points de vente" }  }
+
+    - { key: 'page_mini_section_vendeurs_1_content_title',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "Au pré des fermes" }  }
+    - { key: 'page_mini_section_vendeurs_1_content_horaires_subtitle',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Horaires" }  }
+    - { key: 'page_mini_section_vendeurs_1_content_horaires_text',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>Du mardi au vendredi</span><span>de 10h à 13h et de 15h à 19h</span><span>le samedi</span><span>de 10h à 13h et de 15h à 18h</span>" }  }
+    - { key: 'page_mini_section_vendeurs_1_content_adresse_subtitle',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Adressse" }  }
+    - { key: 'page_mini_section_vendeurs_1_content_adresse_text',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>9146 route de Paris - 18110 FUSSY</span><span>Contact : 02 48 24 01 23</span>" }  }
+
+    - { key: 'page_mini_section_vendeurs_2_content_title',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "La ferme" }  }
+    - { key: 'page_mini_section_vendeurs_2_content_horaires_subtitle',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Horaires" }  }
+    - { key: 'page_mini_section_vendeurs_2_content_horaires_text',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>Du mardi au vendredi</span><span>de 10h à 13h et de 15h à 19h</span><span>le samedi</span><span>de 10h à 13h et de 15h à 18h</span>" }  }
+    - { key: 'page_mini_section_vendeurs_2_content_adresse_subtitle',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Adressse" }  }
+    - { key: 'page_mini_section_vendeurs_2_content_adresse_text',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>9146 route de Paris - 18110 FUSSY</span><span>Contact : 02 48 24 01 23</span>" }  }
+
+    - { key: 'page_mini_section_vendeurs_3_content_title',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "Marché carnot" }  }
+    - { key: 'page_mini_section_vendeurs_3_content_horaires_subtitle',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Horaires" }  }
+    - { key: 'page_mini_section_vendeurs_3_content_horaires_text',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>Du mardi au vendredi</span><span>de 10h à 13h et de 15h à 19h</span><span>le samedi</span><span>de 10h à 13h et de 15h à 18h</span>" }  }
+    - { key: 'page_mini_section_vendeurs_3_content_adresse_subtitle',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Adressse" }  }
+    - { key: 'page_mini_section_vendeurs_3_content_adresse_text',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>9146 route de Paris - 18110 FUSSY</span><span>Contact : 02 48 24 01 23</span>" }  }
+
+    - { key: 'page_mini_section_contact_title_1',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>Passer une</span><span>commande</span>" }  }
+    - { key: 'page_mini_section_contact_content_1',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<span>Vous souhaitez passer une commande au tout simplement avoir un renseignement ?</span>" }  }
+    - { key: 'page_mini_section_contact_content_2',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "N'hesitez pas à nous contacter par mail :" }  }
+    - { key: 'page_mini_section_contact_email',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<strong>c.andre713@laposte.net</strong>" }  }
+    - { key: 'page_mini_section_contact_content_3',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Ou par téléphone au :" }  }
+    - { key: 'page_mini_section_contact_telephone',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "<strong>02 48 26 12 24</strong>" }  }
+
+    - { key: 'page_mini_section_adresse_item_1',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "earl la Chaumotte" }  }
+    - { key: 'page_mini_section_adresse_item_2',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "la Chaumotte 18800 Villequiers" }  }
+    - { key: 'page_mini_section_adresse_item_3',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "02 48 26 12 24" }  }
+    - { key: 'page_mini_section_adresse_item_4',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "c.andre713@laposte.net" }  }
+
+
+
+
+
+    - { key: 'page_mini_section_title_3',                     group: '101',   is_enabled: '1',    type: '',    values: {fr: "TITRE" }  }
+    - { key: 'page_mini_section_content_3',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Contenu" }  }
+    - { key: 'page_mini_section_link_3',                   group: '101',   is_enabled: '1',    type: '',    values: {fr: "Contenu" }  }
+
+
+    - { key: 'page_mini_footer_content_1',                    group: '101',   is_enabled: '1',    type: '',    values: {fr: "Copyright ..." }  }
+
+    - { key: 'page_mini_footer_link_1',                       group: '101',   is_enabled: '1',    type: '',    values: {fr: "Qui sommes-nous ?" }  }
+    - { key: 'page_mini_footer_link_2',                       group: '101',   is_enabled: '1',    type: '',    values: {fr: "Les produits" }  }
+    - { key: 'page_mini_footer_link_3',                       group: '101',   is_enabled: '1',    type: '',    values: {fr: "Les points de vente" }  }
+    - { key: 'page_mini_footer_link_4',                       group: '101',   is_enabled: '1',    type: '',    values: {fr: "Passer une commande" }  }
+    - { key: 'page_mini_footer_link_5',                       group: '101',   is_enabled: '1',    type: '',    values: {fr: "Mentions légales" }  }
+
+
+
+images:
+
+  - { is_enabled: '1', reference: 'NO_IMAGE',      image: '', alt: {fr: 'Aucune image disponible' } }
+
+  # Images d'un "MINI-SITE"
+
+  - { is_enabled: '1', reference: 'MINI_LOGO',      image: '', titre: 'Logo', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM01',      image: '', titre: 'Image n°1', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM02',      image: '', titre: 'Image n°2', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM03',      image: '', titre: 'Image n°3', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM04',      image: '', titre: 'Image n°4', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM05',      image: '', titre: 'Image n°5', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM06',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM07',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM08',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM09',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM50',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM51',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+  - { is_enabled: '1', reference: 'MINI_IM52',      image: '', titre: 'Image n°6', alt: {fr: '' } }
+
+files:
+
+  # Fichiers d'un "MINI-SITE"
+
+  - { is_enabled: '1', reference: 'MINI_FI01' }
+  - { is_enabled: '1', reference: 'MINI_FI02' }
+
+
+authorization:
+  group:
+
+    # Gestion des pages
+    - { id: '100', is_enabled: '1', designation: 'Pages',                                                               key: 'null',                                       parent: 'null' }
+
+    - { id: '101', is_enabled: '1', designation: 'Page - Accueil',                                                      key: 'home',                                       parent: '100' }
+    - { id: '102', is_enabled: '1', designation: 'Page - Mini-site',                                                    key: 'mini',                                       parent: '100' }
+
+    - { id: '105', is_enabled: '1', designation: 'Page - Actualités',                                                   key: 'actualites',                                 parent: '100' }
+    - { id: '106', is_enabled: '1', designation: 'Page - Actualité',                                                    key: 'actualite',                                  parent: '100' }
+
+    - { id: '108', is_enabled: '1', designation: 'Page - Rechercher',                                                   key: 'research',                                   parent: '100' }
+
+    - { id: '110', is_enabled: '1', designation: 'Page - Catégories de produits',                                       key: 'category',                                   parent: '100' }
+    - { id: '111', is_enabled: '1', designation: 'Page - Liste de produits',                                            key: 'products',                                   parent: '100' }
+    - { id: '112', is_enabled: '1', designation: "Page - Affichage d'un produit",                                       key: 'product',                                    parent: '100' }
+
+    - { id: '120', is_enabled: '1', designation: 'Page - Qui sommes nous ?',                                            key: 'about',                                      parent: '100' }
+    - { id: '121', is_enabled: '1', designation: 'Page - Contact',                                                      key: 'contact',                                    parent: '100' }
+    - { id: '122', is_enabled: '1', designation: 'Page - Mentions légales',                                             key: 'notice',                                     parent: '100' }
+    - { id: '123', is_enabled: '1', designation: 'Page - Foire aux questions',                                          key: 'faq',                                        parent: '100' }
+    - { id: '124', is_enabled: '1', designation: 'Page - Conditions Générales de Ventes',                               key: 'cgv',                                        parent: '100' }
+    - { id: '125', is_enabled: '1', designation: 'Page - Informations de lirvaison',                                    key: 'infodelivery',                               parent: '100' }
+    - { id: '126', is_enabled: '1', designation: 'Page - Informations de paiement',                                     key: 'infopayment',                                parent: '100' }
+
+    - { id: '140', is_enabled: '1', designation: 'Page - Personnalisée n°1',                                            key: 'customone',                                  parent: '100' }
+    - { id: '141', is_enabled: '1', designation: 'Page - Personnalisée n°2',                                            key: 'customtwo',                                  parent: '100' }
+    - { id: '142', is_enabled: '1', designation: 'Page - Personnalisée n°3',                                            key: 'customthree',                                parent: '100' }
+    - { id: '143', is_enabled: '1', designation: 'Page - Personnalisée n°4',                                            key: 'customfour',                                 parent: '100' }
+    - { id: '144', is_enabled: '1', designation: 'Page - Personnalisée n°5',                                            key: 'customfive',                                 parent: '100' }
+    - { id: '145', is_enabled: '1', designation: 'Page - Personnalisée n°6',                                            key: 'customsix',                                  parent: '100' }
+    - { id: '146', is_enabled: '1', designation: 'Page - Personnalisée n°7',                                            key: 'customseven',                                parent: '100' }
+    - { id: '147', is_enabled: '1', designation: 'Page - Personnalisée n°8',                                            key: 'customeight',                                parent: '100' }
+    - { id: '148', is_enabled: '1', designation: 'Page - Personnalisée n°9',                                            key: 'customnine',                                 parent: '100' }
+    - { id: '149', is_enabled: '1', designation: 'Page - Personnalisée n°10',                                           key: 'customten',                                  parent: '100' }
+
+    - { id: '160', is_enabled: '1', designation: 'Page - Connexion',                                                    key: 'connect',                                    parent: '100' }
+    - { id: '161', is_enabled: '1', designation: 'Page - Déconnexion',                                                  key: 'disconnect',                                 parent: '100' }
+
+    - { id: '170', is_enabled: '1', designation: 'Page - Inscription',                                                  key: 'register',                                   parent: '100' }
+    - { id: '171', is_enabled: '1', designation: 'Page - Mot de passe oublié',                                          key: 'forgotpassword',                             parent: '100' }
+    - { id: '172', is_enabled: '1', designation: 'Page - Mot de passe oublié - Réinitialisation ',                      key: 'forgotpasswordreset',                        parent: '100' }
+
+    - { id: '180', is_enabled: '1', designation: 'Page - Page introuvable',                                             key: 'error404',                                   parent: '100' }
+    - { id: '181', is_enabled: '1', designation: 'Page - Erreur détectée',                                              key: 'error',                                      parent: '100' }
+    - { id: '182', is_enabled: '1', designation: 'Page - Accès refusé',                                                 key: 'error403',                                   parent: '100' }
+
+    - { id: '190', is_enabled: '1', designation: 'Page - Compte',                                                       key: 'account',                                    parent: '100' }
+    - { id: '191', is_enabled: '1', designation: 'Page - Informations',                                                 key: 'accountinfo',                                parent: '100' }
+    - { id: '192', is_enabled: '1', designation: 'Page - Adresses',                                                     key: 'accountadress',                              parent: '100' }
+    - { id: '193', is_enabled: '1', designation: 'Page - Historique',                                                   key: 'accounthistoric',                            parent: '100' }
+    - { id: '194', is_enabled: '1', designation: 'Page - Newsletter',                                                   key: 'accountnewsletter',                          parent: '100' }
+    - { id: '195', is_enabled: '1', designation: 'Page - Historique - Détails',                                         key: 'accounthistoricdetails',                     parent: '100' }
+    - { id: '196', is_enabled: '1', designation: 'Page - Adresses - Formulaire',                                        key: 'accountadressform',                          parent: '100' }
+
+    - { id: '200', is_enabled: '1', designation: 'Page - Commande',                                                     key: 'order',                                      parent: '100' }
+    - { id: '201', is_enabled: '1', designation: 'Page - Commande validée',                                             key: 'ordervalidated',                             parent: '100' }
+    - { id: '202', is_enabled: '1', designation: 'Page - Commande refusée',                                             key: 'orderfailed',                                parent: '100' }
+
+
+    - { id: '300', is_enabled: '1', designation: 'Page - Coming Soon',                                             key: 'comingsoon',                                parent: '100' }
+    - { id: '301', is_enabled: '1', designation: 'Page - Maintenance',                                             key: 'maintenance',                                parent: '100' }
+
+
+    # Gestion des entités
+
+    - { id: '1000', is_enabled: '1', designation: 'Entités',                                                            key: '',                                           parent: 'null' }
+    - { id: '1001', is_enabled: '1', designation: 'Entités - Catalogue',                                                key: 'entity_orders',                              parent: 'null' }
+    - { id: '1002', is_enabled: '1', designation: 'Entités - Catégories',                                               key: 'entity_cart',                                parent: '100' }
+    - { id: '1003', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_products',                            parent: '100' }
+    - { id: '1004', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_categories',                          parent: '100' }
+    - { id: '1005', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_monitoring',                          parent: '100' }
+    - { id: '1006', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_attributes_features',                 parent: '100' }
+    - { id: '1007', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_attributes',                          parent: '100' }
+    - { id: '1008', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_features',                            parent: '100' }
+    - { id: '1009', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_reductions',                          parent: '100' }
+    - { id: '1010', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_stocks',                              parent: '100' }
+    - { id: '1011', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_country',                             parent: '100' }
+    - { id: '1012', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_zones',                               parent: '100' }
+    - { id: '1013', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_taxes',                               parent: '100' }
+    - { id: '1014', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_language',                            parent: '100' }
+    - { id: '1015', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_translations',                        parent: '100' }
+    - { id: '1016', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_user',                                parent: '100' }
+    - { id: '1017', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_usergroup',                           parent: '100' }
+    - { id: '1018', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_authorization',                       parent: '100' }
+    - { id: '1019', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_authorizationgroup',                  parent: '100' }
+    - { id: '1020', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_mediafile',                           parent: '100' }
+    - { id: '1021', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_mediaimage',                          parent: '100' }
+    - { id: '1022', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_mediavideo',                          parent: '100' }
+    - { id: '1023', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_actualites',                          parent: '100' }
+    - { id: '1024', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_actualite',                           parent: '100' }
+    - { id: '1025', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_socialnetwork',                       parent: '100' }
+    - { id: '1026', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_text',                                parent: '100' }
+    - { id: '1027', is_enabled: '1', designation: 'Entités - Produits',                                                 key: 'entity_textgroup',                           parent: '100' }
+
+    - { id: '2000', is_enabled: '1', designation: 'Entités - Pages',                                                    key: 'entity_page',                                parent: '100' }
+    - { id: '2001', is_enabled: '1', designation: 'Entités - Pages - Générale',                                         key: 'entity_pagegeneral',                         parent: '100' }
+
+    - { id: '2010', is_enabled: '1', designation: 'Entités - Pages - Accueil',                                          key: 'entity_pagehome',                            parent: '100' }
+    - { id: '2011', is_enabled: '1', designation: 'Entités - Pages - Mini-site',                                        key: 'entity_pagemini',                            parent: '100' }
+
+    - { id: '2020', is_enabled: '1', designation: 'Entités - Pages - Actualités',                                       key: 'entity_pageactualites',                      parent: '100' }
+    - { id: '2021', is_enabled: '1', designation: 'Entités - Pages - Actualité',                                        key: 'entity_pageactualite',                       parent: '100' }
+
+    - { id: '2030', is_enabled: '1', designation: 'Entités - Pages - Rechercher',                                       key: 'entity_pageresearch',                        parent: '100' }
+
+    - { id: '2040', is_enabled: '1', designation: 'Entités - Pages - Catégories de produits',                           key: 'entity_pagecategory',                        parent: '100' }
+    - { id: '2041', is_enabled: '1', designation: 'Entités - Pages - Liste de produits',                                key: 'entity_pageproducts',                        parent: '100' }
+    - { id: '2042', is_enabled: '1', designation: "Entités - Pages - Affichage d'un produit",                           key: 'entity_pageproduct',                         parent: '100' }
+    - { id: '2043', is_enabled: '1', designation: "Panier",                                                             key: 'entity_pagecart',                            parent: '100' }
+
+    - { id: '2050', is_enabled: '1', designation: 'Entités - Pages - Qui sommes nous ?',                                key: 'entity_pageabout',                           parent: '100' }
+    - { id: '2051', is_enabled: '1', designation: 'Entités - Pages - Contact',                                          key: 'entity_pagecontact',                         parent: '100' }
+    - { id: '2052', is_enabled: '1', designation: 'Entités - Pages - Mentions légales',                                 key: 'entity_pagenotice',                          parent: '100' }
+    - { id: '2053', is_enabled: '1', designation: 'Entités - Pages - Foire aux questions',                              key: 'entity_pagefaq',                             parent: '100' }
+    - { id: '2054', is_enabled: '1', designation: 'Entités - Pages - Conditions Générales de Ventes',                   key: 'entity_pagecgv',                             parent: '100' }
+    - { id: '2055', is_enabled: '1', designation: 'Entités - Pages - Informations de livraison',                        key: 'entity_pageinfodelivery',                    parent: '100' }
+    - { id: '2056', is_enabled: '1', designation: 'Entités - Pages - Informations de paiements',                        key: 'entity_pageinfopayment',                     parent: '100' }
+
+    - { id: '2060', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°1',                                key: 'entity_pagecustomone',                       parent: '100' }
+    - { id: '2061', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°2',                                key: 'entity_pagecustomtwo',                       parent: '100' }
+    - { id: '2062', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°3',                                key: 'entity_pagecustomthree',                     parent: '100' }
+    - { id: '2063', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°4',                                key: 'entity_pagecustomfour',                      parent: '100' }
+    - { id: '2064', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°5',                                key: 'entity_pagecustomfive',                      parent: '100' }
+    - { id: '2065', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°6',                                key: 'entity_pagecustomsix',                       parent: '100' }
+    - { id: '2066', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°7',                                key: 'entity_pagecustomseven',                     parent: '100' }
+    - { id: '2067', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°8',                                key: 'entity_pagecustomeight',                     parent: '100' }
+    - { id: '2068', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°9',                                key: 'entity_pagecustomnine',                      parent: '100' }
+    - { id: '2069', is_enabled: '1', designation: 'Entités - Pages - Personnalisée n°10',                               key: 'entity_pagecustomten',                       parent: '100' }
+
+    - { id: '2070', is_enabled: '1', designation: 'Entités - Pages - Connexion',                                        key: 'entity_pageconnect',                         parent: '100' }
+    - { id: '2071', is_enabled: '1', designation: 'Entités - Pages - Déconnexion',                                      key: 'entity_pageregister',                        parent: '100' }
+
+    - { id: '2080', is_enabled: '1', designation: 'Entités - Pages - Inscription',                                      key: 'entity_pageregister',                        parent: '100' }
+    - { id: '2081', is_enabled: '1', designation: 'Entités - Pages - Mot de passe oublié',                              key: 'entity_pageforgotpassword',                  parent: '100' }
+    - { id: '2082', is_enabled: '1', designation: 'Entités - Pages - Mot de passe oublié - Réinitialisation',           key: 'entity_pageforgotpasswordreset',             parent: '100' }
+
+    - { id: '2090', is_enabled: '1', designation: 'Entités - Pages - Erreur',                                           key: 'entity_pageerror',                           parent: '100' }
+    - { id: '2091', is_enabled: '1', designation: 'Entités - Pages - Erreur - 403',                                     key: 'entity_pageerror403',                        parent: '100' }
+    - { id: '2092', is_enabled: '1', designation: 'Entités - Pages - Erreur - 404 ',                                    key: 'entity_pageerror404',                        parent: '100' }
+
+    - { id: '2100', is_enabled: '1', designation: 'Entités - Pages - Compte',                                           key: 'entity_pageaccount',                         parent: '100' }
+    - { id: '2101', is_enabled: '1', designation: 'Entités - Pages - Compte - Informations',                            key: 'entity_pageaccountinfo',                     parent: '100' }
+    - { id: '2102', is_enabled: '1', designation: 'Entités - Pages - Compte - Adresse',                                 key: 'entity_pageaccountadress',                   parent: '100' }
+    - { id: '2103', is_enabled: '1', designation: 'Entités - Pages - Compte - Historique',                              key: 'entity_pageaccounthistoric',                 parent: '100' }
+    - { id: '2104', is_enabled: '1', designation: 'Entités - Pages - Compte - Newsletter',                              key: 'entity_pageaccountnewsletter',               parent: '100' }
+    - { id: '2105', is_enabled: '1', designation: 'Entités - Pages - Compte - Historique - Détails',                    key: 'entity_pageaccounthistoricdetails',          parent: '100' }
+    - { id: '2106', is_enabled: '1', designation: 'Entités - Pages - Compte - Adresse - Formulaire',                    key: 'entity_pageaccountadressform',               parent: '100' }
+
+  entity:
+    # Administrateurs - Entités
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1000',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1001',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1002',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1003',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1004',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1005',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1006',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1007',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1008',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1009',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1010',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1011',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1012',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1013',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1014',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1015',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1016',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1017',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1018',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1019',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1020',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1021',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1022',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1023',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1024',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1025',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1026',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '1027',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    # Administrateurs - Gestion des pages
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2000',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2001',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2010',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2020',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2021',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2030',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2040',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2041',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2042',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2043',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2050',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2051',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2052',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2053',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2054',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2055',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2056',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2060',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2061',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2062',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2063',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2064',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2065',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2066',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2067',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2068',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2069',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2070',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2071',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2080',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2081',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2082',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2090',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    #- { is_enabled: '1' ,user_group: '2',  authorization: '2091',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2092',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2100',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2101',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2102',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2103',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2104',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2105',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '2106',  enable_view: '1', enable_add: '1', enable_edit: '1', enable_delete: '1' }
+
+
+    # Administrateurs - Pages du site
+    - { is_enabled: '1' ,user_group: '2',  authorization: '300',  enable_view: '1', enable_add: '0', enable_edit: '1', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '2',  authorization: '301',  enable_view: '1', enable_add: '0', enable_edit: '1', enable_delete: '0' }
+
+    # Visiteurs - Pages du site
+    - { is_enabled: '1' ,user_group: '4',  authorization: '101',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '102',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '105',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '106',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '108',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '110',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '111',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '112',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '120',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '121',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '122',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '123',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '124',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '125',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '126',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '140',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '141',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '142',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '143',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '144',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '145',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '146',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '147',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '148',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '149',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '160',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '161',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '170',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '171',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '172',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '180',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '181',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '182',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '190',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '191',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '192',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '193',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '194',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '195',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '196',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '200',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '201',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '202',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '300',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }
+    - { is_enabled: '1' ,user_group: '4',  authorization: '301',  enable_view: '1', enable_add: '0', enable_edit: '0', enable_delete: '0' }

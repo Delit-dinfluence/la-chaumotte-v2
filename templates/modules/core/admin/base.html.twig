@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="{{ locale }}">
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="robots" content="no-index, no-follow"/>
+
+    <meta http-equiv="content-language" content="fr">
+    <meta name="language" content="fr">
+
+    <title>{% block page_title %}{% endblock %}</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('assets/favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="/public/manifest.json">
+
+
+    {#---- STYLESHEETS ----#}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome-5.0.0/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-4.0.0/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-treeview-1.2.0/css/bootstrap-treeview.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/modules/core/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-selectric-1.13.0/css/selectric.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-confirm-3.0.0/css/jquery-confirm.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/ligthGallery-1.6.11/css/lightgallery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables-1.10.0/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-switchery-0.8.2/css/switchery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-colorpicker-2.5.2/css/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/select2-4.0.5/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-summernote-0.8.11/css/summernote.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+
+    {% block base_stylesheets %}{% endblock %}
+</head>
+<body>
+
+{% block base_content %}{% endblock %}
+
+{#---- JAVASCRIPTS ----#}
+<script src="{{ asset('assets/vendors/jquery-3.3.1/js/jquery.min.js') }}"></script>
+<script src="https://unpkg.com/popper.js@1.15.0/dist/umd/popper.min.js"></script>
+<script src="{{ asset('assets/vendors/bootstrap-4.0.0/js/bootstrap.min.js') }}"></script>
+
+<script src="{{ asset('assets/vendors/bootstrap-treeview-1.2.0/js/bootstrap-treeview.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-selectric-1.13.0/js/selectric.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-confirm-3.0.0/js/jquery-confirm.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-validate-1.19.0/js/validate.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-validate-1.19.0/js/localization/messages_fr.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/ligthGallery-1.6.11/js/lightgallery-all.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/datatables-1.10.0/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/jquery-switchery-0.8.2/js/switchery.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/bootstrap-notify-3.1.5/js/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/bootstrap-colorpicker-2.5.2/js/bootstrap-colorpicker.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/select2-4.0.5/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/bootstrap-summernote-0.8.11/js/summernote.min.js') }}"></script>
+
+{% block base_javascripts %}{% endblock %}
+</body>
+</html>

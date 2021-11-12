@@ -1,0 +1,88 @@
+{% extends '@core/base.html.twig' %}
+
+{% block base_stylesheets %}{% endblock %}
+
+
+{% block base_content %}
+
+    {% include '@app/navigation.html.twig' %}
+
+    <div class="page page-products">
+
+        <select name="" id="link-categories">
+            <option value="" selected disabled>catégorie / {{ category.designation|replace({' /': ''}) }}</option>
+            {% for item in link_categories %}
+                <option value="{{ path('shopping_page_products', {'category' : item.slug })}}">{{ item.designation|replace({' /': ''}) }}</option>
+            {% endfor %}
+        </select>
+
+        {% if categories|length > 0 %}
+            {% for item in categories %}
+                {% include '@shopping/includes/category.html.twig' with {'category' : item} %}
+            {% endfor %}
+        {% endif %}
+
+
+        {% if items|length > 0 %}
+            {% for item in items %}
+                <div class="block-artiste">
+                    <p class="artiste">{{ item.artist.designation }}</p>
+                    <div class="products-list">
+                        {% for product in item.products %}
+                            <a href="{{ path('shopping_page_product', {'category' : category.slug , 'product': product.slug}) }}"
+                               class="row product">
+                                <div class="product-wrapper">
+                                    <figure class="product-image">
+                                        {% set image = product.image %}
+                                        {% if image == '' %}
+                                            <img src="{{ asset('assets/media/images/no_image.jpeg'  ) }}" alt="">
+                                        {% else %}
+                                            <img src="{{ asset('assets/media/images/' ~ image ) }}" alt="">
+                                        {% endif %}
+                                    </figure>
+
+                                    <div class="product-content">
+                                        <h2 class="product-title">{{ product.designation }}</h2>
+                                        <div class="product-description">{{ product.descriptionShort }}</div>
+                                    </div>
+
+                                    <div class="product-footer">
+                                        <p class="product-price">{{ product.priceHt }}&euro;</p>
+                                        <p class="product-link btn">découvrir</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if categories|length <=  0 %}
+                <p>Aucun produit disponible</p>
+            {% endif %}
+        {% endif %}
+
+
+        {% include '@app/footer.html.twig' %}
+    </div>
+
+{% endblock %}
+
+
+{% block base_javascripts %}
+
+    <script>
+        var $selectric = $('#link-categories');
+        $selectric.selectric({
+            arrowButtonMarkup : '<b class="button"><i class="fa fa-sort-down"></i></b>',
+        });
+
+        $selectric.on('selectric-change', function (event, element, selectric) {
+            event.preventDefault();
+            window.location.href = $(this).val();
+        });
+
+
+
+    </script>
+{% endblock %}

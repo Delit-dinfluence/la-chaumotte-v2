@@ -1,0 +1,1138 @@
+{% extends '@core/admin/base.html.twig' %}
+
+{% block page_title %}
+
+    {% set page_title = 'Administration' %}
+
+    {% if admin_entity_settings.page_title is defined %}
+        {% set page_title = admin_entity_settings.page_title %}
+    {% endif %}
+
+    {% if action is defined and action == 'list' %}
+
+        {% if admin_entity_settings.list.page_title is defined %}
+            {% set page_title = admin_entity_settings.list.page_title %}
+        {% endif %}
+
+    {% elseif action is defined and action == 'form' %}
+
+        {% if admin_entity_settings.form.page_title is defined %}
+            {% set page_title = admin_entity_settings.form.page_title %}
+        {% endif %}
+
+        {% if id > 0 and admin_entity_settings.edit.page_title is defined %}
+            {% set page_title = admin_entity_settings.edit.page_title %}
+        {% elseif id <= 0 and admin_entity_settings.new.page_title is defined %}
+            {% set page_title = admin_entity_settings.new.page_title %}
+        {% endif %}
+
+    {% elseif action is defined and  action == 'view' %}
+
+        {% if admin_entity_settings.form.page_title is defined %}
+            {% set page_title = admin_entity_settings.form.page_title %}
+        {% endif %}
+
+        {% if admin_entity_settings.view.page_title is defined %}
+            {% set page_title = admin_entity_settings.view.page_title %}
+        {% endif %}
+
+    {% endif %}
+
+    {{ page_title }}
+
+{% endblock %}
+
+{% block base_stylesheets %}
+
+    <style>
+        :root {
+
+            --color-primary: #25b9d7;
+            --color-primary-hover: #3ed2f0;
+
+            --color-second: #25b9d7;
+            --color-second-hover: #d81b60;
+
+            --color-third: #25b9d7;
+            --color-third-hover: #d81b60;
+
+            --color-black: #363a41;
+            --color-white: #fff;
+            --color-grey: #6c868e;
+            --color-grey-light: #c7d6db;
+
+            --color-background-primary: linear-gradient(60deg, #ec407a, #d81b60);
+            --color-background-second: linear-gradient(60deg, #ec407a, #d81b60);
+            --color-background-third: linear-gradient(60deg, #ec407a, #d81b60);
+
+            --color-background-white: #fff;
+        }
+
+        html, body {
+            /*font-family: 'Quattrocento Sans', sans-serif;*/
+            /*font-family: 'Antic Didone', serif;*/
+            font-family: 'Roboto', sans-serif;
+
+            background: #f5f5f5;
+        }
+
+        .note-popover .popover-content .dropdown-menu, .panel-heading.note-toolbar .dropdown-menu {
+            min-width: 175px;
+        }
+
+        .note-toolbar.panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .btn-outline {
+            padding: 5px 10px;
+            font-size: 12px;
+
+            border: 2px solid var(--color-grey-light);
+            border-radius: 3px;
+            color: var(--color-primary);
+        }
+
+        .btn-outline:hover {
+            color: var(--color-primary-hover);
+        }
+
+        .btn-icon {
+            color: var(--color-grey);
+        }
+
+        .btn-icon:hover {
+            background: var(--color-grey-light);
+        }
+
+        .note-editor.note-frame {
+            border: 1px solid var(--color-grey-light);
+        }
+
+        .note-editor.note-frame .note-btn {
+            color: var(--color-grey);
+            font-size: 12px;
+
+        }
+
+        .note-editor.note-frame .note-statusbar {
+            background-color: transparent;
+            border: none;
+        }
+
+        .note-editor.note-frame .note-recent-color {
+            background-color: transparent;
+        }
+
+        .note-editor.note-frame .note-statusbar .note-resizebar .note-icon-bar {
+            border-top: 1px solid var(--color-primary);
+        }
+
+        .note-editor.note-frame .btn-group, .btn-group-vertical {
+            margin-top: 2px;
+        }
+
+        .note-editor.note-frame .note-editing-area .note-editable {
+            font-size: 14px;
+        }
+
+        .page-footer-static {
+            width: calc(100% - 240px);
+            height: 80px;
+
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            z-index: 100;
+
+            background: #fff;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            box-shadow: #363A41 0 0 10px;
+
+            padding: 15px;
+        }
+
+        .card .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .card .help {
+
+            width: 15px;
+            height: 15px;
+
+            border: 1px solid var(--color-primary);
+            border-radius: 2px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+        }
+
+        .card .help:after {
+            content: '';
+
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            background: var(--color-primary);
+            opacity: .1;
+        }
+
+        .card .help i {
+            font-size: 8px;
+        }
+
+        .card .help:hover {
+            border-color: var(--color-primary-hover);
+        }
+
+        .card-tabs {
+            width: 100%;
+
+            padding: 0;
+            margin: 0 0 -15px 0;
+
+            position: relative;
+            border: none;
+
+            z-index: 500;
+        }
+
+        .card-tabs .nav-link {
+            color: var(--color-black);
+            line-height: 10px;
+            font-size: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            padding: 20px 40px;
+
+            position: relative;
+
+        }
+
+        .card-tabs .nav-link:hover {
+            /*border: none;*/
+        }
+
+        .card-tabs .nav-link.active {
+            /*border: 1px solid var(--color-grey-light);*/
+            /*border: none;*/
+        }
+
+        .card-tabs .nav-link.active:before {
+            content: '';
+
+            position: absolute;
+            left: 0;
+            top: -1px;
+
+            width: 100%;
+            height: 3px;
+
+            background: var(--color-primary);
+            z-index: 100;
+
+            border-radius: 0 0 1px 1px;
+        }
+
+        .card-tabs .nav-link.active:after {
+            content: '';
+
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+
+            width: 100%;
+            height: 2px;
+
+            background: var(--color-white);
+            z-index: 100;
+        }
+
+        .card-tabs-content {
+            margin: 0;
+        }
+
+        .card .nav-tabs {
+            margin: 0;
+            padding: 0;
+        }
+
+        .card .nav-tabs .nav-link {
+            padding: 15px 30px;
+            position: relative;
+            border-radius: 0;
+
+
+        }
+
+        .card .nav-tabs .nav-link.active {
+
+            font-weight: 700;
+
+            border: 1px solid var(--color-border-content);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .card .nav-tabs .nav-link.active:before {
+            content: '';
+
+            position: absolute;
+            left: 0;
+            top: -1px;
+
+            width: 100%;
+            height: 3px;
+
+            background: var(--color-primary);
+            z-index: 100;
+
+            border-radius: 0 0 1px 1px;
+        }
+
+        .card .nav-tabs .nav-link.active:after {
+            content: '';
+
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+
+            width: 100%;
+            height: 4px;
+
+            background: var(--color-white);
+            z-index: 100;
+        }
+
+        .card .section-header {
+            margin-bottom: 20px;
+        }
+
+        .card .section-header .section-title {
+            font-size: 18px;
+            font-weight: 700;
+
+            margin: 0;
+            padding: 0;
+        }
+
+        .section-contents .a2lix_translationsFields .col-md-12 {
+            padding: 0;
+        }
+
+        .section-features table {
+            width: 100%;
+        }
+
+        .section-features table label {
+            color: var(--color-grey);
+            font-size: 14px;
+
+            margin: 0 0 5px 0;
+        }
+
+        .section-features table td {
+            width: calc((100% - 50px) / 3);
+        }
+
+        .section-features table td.actions {
+            width: 50px;
+        }
+
+        .section-features table td.actions label {
+            opacity: 0;
+        }
+
+        .section-features table td.actions .btn {
+            height: 35px;
+            width: 35px;
+            font-size: 16px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-features table td > div {
+            padding: 10px 0;
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .section-features table input {
+            width: calc(100% - 20px);
+            height: 35px;
+        }
+
+        .section-features .btn-submit {
+            margin: 10px 0;
+        }
+
+        .select2-container {
+            width: 100%;
+        }
+
+        .select2-container--classic .select2-selection--single .select2-selection__arrow {
+            height: 33px;
+            background: var(--color-background-white);
+            border-left: none;
+        }
+
+        .select2-container--classic .select2-selection--single {
+            height: 35px;
+
+            background: var(--color-background-white);
+            border: 1px solid var(--color-grey-light);
+        }
+
+        .select2-container--classic .select2-selection--single .select2-selection__rendered {
+            height: 35px;
+        }
+
+        .section-features .select2-container {
+            width: calc(100% - 20px) !important;
+        }
+
+    </style>
+
+    {% block stylesheets %}{% endblock %}
+{% endblock %}
+
+{% block base_content %}
+    {% set root_url = '/4DM1n157R4710N' %}
+
+    <div id="wrapper" class="wrapper">
+
+        {# LOADER #}
+        <div id="page-loader-wrapper" class="page-loader-wrapper">
+            <div class="content">
+                <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        {# NAVBAR - SIDEBAR DE NAVIGATION #}
+        <div id="navbar" class="navbar">
+            <div id="navbar-wrapper" class="navbar-wrapper">
+
+                <div class="navbar-background"
+                     style="background-image: url('{{ asset('assets/media/images/bg_sidebar_1.jpg') }}');background-size: cover;background-position: 50%;opacity:.175;">
+                </div>
+
+                <div class="menu-collapse">
+
+                    <div class="nav-arrow" id="nav-arrow">
+                        <i class="fas fa-angle-double-left"></i>
+                    </div>
+
+                </div>
+
+                {# NAVBAR BRAND #}
+                <div id="navbar-brand" class="navbar-brand">
+
+                    {# NAVBAR LINK #}
+                    <div class="nav-item">
+                        <a href="{{ root_url }}" id="navbar-logo-link" class="nav-link">
+                                <span class="logo-text logo-text-mini">
+                                    {{ thumb|default('A') }}
+                                </span>
+                            <span class="logo-text logo-text-normal">{{ design.name|default('Administration') }}</span>
+                        </a> <!-- /#logo-link -->
+                    </div>
+                </div> <!-- /#navbar-brand -->
+
+                {# NAVBAR PROFIL #}
+                <div id="navbar-user" class="user">
+
+                    <div class="nav-item">
+                        <div id="navbar-user-header" class="nav-link navbar-user-header">
+                            {% if app.user.image is defined and app.user.image != '' %}
+
+                                {# Image personnalisé de l'utilisateur #}
+                                <figure id="navbar-user-image" class="user-image user-image-mini">
+                                    <img src="{{ app.user.image }}" alt="">
+                                </figure>
+
+                            {% endif %}
+
+                            <span class="navbar-user-welcome">Bienvenue, </span>
+                            <span id="navbar-user-username">{{ app.user.firstname|default('') ~ ' ' ~ app.user.lastname|default('') }}</span>
+                            {#<i class="fa fa-angle-down icon-category"></i>#}
+                        </div><!-- /#navbar-user-header -->
+                    </div>
+
+                </div> <!-- /#navbar-message -->
+
+                {# NAVBAR NAVIGATION #}
+                <ul id="navbar-navigation" class="navigation">
+                    {% for item in admin_settings.navigation.fields %}
+                        {% include '@core/admin/theme/basique/includes/navigation.html.twig' with { 'item' : item } %}
+                    {% endfor %}
+                </ul><!-- /#navbar-navigation -->
+
+            </div> <!-- /#navbar-wrapper -->
+        </div> <!-- /#navbar -->
+
+        <div id="page-content-wrapper" class="page-content">
+
+            {% if form_entity is defined %}
+                {{ form_start(form_entity) }}
+            {% endif %}
+
+            <div id="page-topbar" class="page-topbar">
+                <div class="page-topbar-wrapper">
+
+                    <div class="colum column-left">
+
+                        <div class="top-bar row row-top">
+                            <div class="topbar-left">
+
+                                <label for="slide-sidebar-smallscreen" class="anim-burger" id="anim-burger">
+                                    <div class="hamburger hamburger-small-screen hamburger--squeeze">
+                                        <div class="hamburger-box">
+                                            <div class="hamburger-inner"></div>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                {% block topbar_left %}{% endblock %}
+
+                            </div> {# /.topbar-left #}
+
+                            <div class="topbar-right">
+
+                                {% block topbar_right %}{% endblock %}
+
+
+                            </div> {# /.topbar-right #}
+                        </div>
+
+                        <div class="top-bar row row-bottom">
+
+                            <div class="topbar-left">
+
+                                {% block header %}
+
+                                    {# Fil d'arinae définis pour la liste  #}
+                                    {% if action is defined and action == 'list' %}
+
+                                        {% if admin_entity_settings.list.breadcrumb is defined %}
+                                            {% set breadcrumb = admin_entity_settings.list.breadcrumb %}
+                                        {% endif %}
+
+                                    {% elseif action is defined and action == 'form' %}
+
+                                        {% if admin_entity_settings.form.breadcrumb is defined %}
+                                            {% set breadcrumb = admin_entity_settings.form.breadcrumb %}
+                                        {% endif %}
+
+                                        {% if id > 0 and admin_entity_settings.edit.breadcrumb is defined %}
+                                            {% set breadcrumb = admin_entity_settings.edit.breadcrumb %}
+                                        {% elseif id <= 0 and admin_entity_settings.new.breadcrumb is defined %}
+                                            {% set breadcrumb = admin_entity_settings.new.breadcrumb %}
+                                        {% endif %}
+
+                                    {% elseif action is defined and  action == 'view' %}
+                                        {% if admin_entity_settings.form.breadcrumb is defined %}
+                                            {% set breadcrumb = admin_entity_settings.form.breadcrumb %}
+                                        {% endif %}
+
+
+                                        {% if id > 0 and admin_entity_settings.view.breadcrumb is defined %}
+                                            {% set breadcrumb = admin_entity_settings.view.breadcrumb %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if breadcrumb is defined %}
+                                        <div class="breadcrumb">
+                                            {% for item in breadcrumb %}
+                                                {% if loop.index == 1 %}
+                                                    <a href="{{ path('core_admin_dashboard') }}">
+                                                        <i class="fas fa-home"></i>
+                                                    </a>
+                                                {% endif %}
+                                                <span class="slash">/</span>
+                                                {% if item.url is defined %}
+                                                    <a href="{{ item.url }}">{{ item.label }}</a>
+                                                {% else %}
+                                                    <span>{{ item.label }}</span>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    {# Titre définis pour la liste  #}
+
+                                    {% if action is defined and action == 'list' %}
+
+                                        {% if admin_entity_settings.list.title is defined %}
+                                            {% set title = admin_entity_settings.list.title %}
+                                        {% endif %}
+
+                                    {% elseif action is defined and  action == 'form' %}
+                                        {% if admin_entity_settings.form.title is defined %}
+                                            {% set title = admin_entity_settings.form.title %}
+                                        {% endif %}
+
+                                        {% if id > 0 and admin_entity_settings.edit.title is defined %}
+                                            {% set title = admin_entity_settings.edit.title %}
+                                        {% elseif id <= 0 and admin_entity_settings.new.title is defined %}
+                                            {% set title = admin_entity_settings.new.title %}
+                                        {% endif %}
+
+                                    {% elseif action is defined and  action == 'view' %}
+
+                                        {% if admin_entity_settings.form.title is defined %}
+                                            {% set title = admin_entity_settings.form.title %}
+                                        {% endif %}
+
+                                        {% if id > 0 and admin_entity_settings.view.title is defined %}
+                                            {% set title = admin_entity_settings.view.title %}
+                                        {% endif %}
+
+                                    {% endif %}
+
+                                    <h1 class="page-title">{{ title|default('')|replace({'##entity_id##':id|default(0),'##count_total##':entities|default([])|length}) }}</h1>
+
+                                {% endblock %}
+
+                            </div> {# /.bottombar-left#}
+
+                            <div class="topbar-right">
+
+                            </div> {# /.bottombar-right #}
+                        </div>
+
+                    </div>
+
+                    <div class="colum column-right">
+
+                        <ul class="icon-list">
+
+                            <li class="list-item">
+                                <div class="dropdown user-dropdown">
+                                    <div class="dropdown-toggle" type="button" id="dropdownMenuButton"
+                                         data-toggle="dropdown">
+                                        Mon compte
+                                    </div> {# /.dropdown-toggle #}
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="/logout">
+                                            Se déconnecter
+                                        </a>
+                                    </div> {# /.dropdown-menu #}
+                                </div>
+
+                            </li>
+
+                            {% if languages|length > 1 %}
+                                <li class="list-item">
+                                    <div class="dropdown language-dropdown">
+
+                                        <div class="dropdown-toggle" type="button" id="language-dropdownMenuButton"
+                                             data-toggle="dropdown">
+
+                                            <img id="language-dropdown-image"
+                                                 class="{% if languages[0].image == '' %}hidden{% endif %}"
+                                                 src="{{ asset('assets/media/images/' ~ languages[0].image ) }}"
+                                                 alt="">
+                                            <span id="language-dropdown-text"
+                                                  class="{% if languages[0].image != '' %}hidden{% endif %}">{{ languages[0].designation }}</span>
+
+                                        </div> {# /.dropdown-toggle #}
+
+                                        <div class="language dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            {% for language in languages %}
+
+                                                <a class="dropdown-item" href="#"
+                                                   data-type="{% if language.image == '' %}0{% else %}1{% endif %}"
+                                                   data-src="{{ asset('assets/media/images/' ~ language.image ) }}"
+                                                   data-text="{{ language.designation }}"
+                                                   data-language="{{ language.id }}">
+                                                    {% if language.image != '' %}
+                                                        <img src="{{ asset('assets/media/images/' ~ language.image ) }}"
+                                                             alt="">
+                                                    {% endif %}
+
+                                                    {{ language.designation }}
+                                                </a>
+
+                                            {% endfor %}
+                                        </div> {# /.dropdown-menu #}
+
+                                    </div> {# /.language-dropdown #}
+                                </li>
+                            {% endif %}
+
+
+                        </ul>
+                        
+                    </div>
+
+                </div>
+
+            </div><!-- /#topbar-wrapper -->
+
+
+            {% block form_header %}{% endblock %}
+
+            <div class="container-fluid">
+                <div id="page-body-wrapper" class="page-body-wrapper">
+
+
+                    {% if action is defined and action == 'list' %}
+
+                        {# Titre définis pour la liste  #}
+                        {% if admin_entity_settings.list.card_title is defined %}
+                            {% set title = admin_entity_settings.list.card_title %}
+                        {% endif %}
+
+                        {# Icône définis pour la liste #}
+                        {% if admin_entity_settings.list.card_icon is defined %}
+                            {% set icon = admin_entity_settings.list.card_icon %}
+                        {% endif %}
+
+                    {% elseif action is defined and  action == 'form' %}
+
+                        {# Titre définis pour le formulaire  #}
+                        {% if admin_entity_settings.form.card_title is defined %}
+                            {% set title = admin_entity_settings.form.card_title %}
+                        {% endif %}
+
+                        {% if id > 0 and admin_entity_settings.edit.card_title is defined %}
+                            {% set page_title = admin_entity_settings.edit.card_title %}
+                        {% elseif id <= 0 and admin_entity_settings.new.card_title is defined %}
+                            {% set page_title = admin_entity_settings.new.card_title %}
+                        {% endif %}
+
+                        {# Icône définis pour le formulaire #}
+                        {% if admin_entity_settings.form.card_icon is defined %}
+                            {% set icon = admin_entity_settings.form.card_icon %}
+                        {% endif %}
+
+                        {% if id > 0 and admin_entity_settings.edit.card_icon is defined %}
+                            {% set page_title = admin_entity_settings.edit.card_icon %}
+                        {% elseif id <= 0 and admin_entity_settings.new.card_icon is defined %}
+                            {% set page_title = admin_entity_settings.new.card_icon %}
+                        {% endif %}
+
+                    {% elseif action is defined and  action == 'view' %}
+
+                        {# Titre définis pour le formulaire  #}
+                        {% if admin_entity_settings.form.card_title is defined %}
+                            {% set title = admin_entity_settings.form.card_title %}
+                        {% endif %}
+
+                        {% if admin_entity_settings.view.card_icon is defined %}
+                            {% set icon = admin_entity_settings.view.card_icon %}
+                        {% endif %}
+
+                        {# Icône définis pour le formulaire #}
+                        {% if admin_entity_settings.form.card_icon is defined %}
+                            {% set icon = admin_entity_settings.form.card_icon %}
+                        {% endif %}
+
+                        {% if admin_entity_settings.view.card_icon is defined %}
+                            {% set icon = admin_entity_settings.view.card_icon %}
+                        {% endif %}
+
+                    {% endif %}
+
+                    {% block content %}{% endblock %}
+                </div> <!-- /#page-body-wrapper -->
+            </div><!-- /.container-fluid -->
+
+            {% block form_footer %}{% endblock %}
+
+            <div class="page-footer-static" id="page-footer-static">
+                {% block page_footer_static %}{% endblock %}
+            </div>
+
+            {% if form_entity is defined %}
+
+                <div style="display: none;">
+                    {{ form_row(form_entity) }}
+                </div>
+                {{ form_end(form_entity) }}
+            {% endif %}
+
+        </div> <!-- /#page-content-wrapper -->
+
+
+    </div> <!-- /#wrapper -->
+{% endblock %}
+
+{% block base_javascripts %}
+
+    <script>
+
+        $(document).ready(function () {
+
+            //#region Boutons
+
+            /**
+             * Effectue un click sur l'input[type="File"] du groupe
+             **/
+            $('.file-input-group .btn').on('click', function (event) {
+                event.preventDefault();
+
+                var container = $(this).closest('.file-input-group');
+
+                var button = container.find('input[type="file"]');
+                button.trigger('click');
+            })
+
+            //endregion
+
+            //#region ToolTip
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: "bottom"
+            });
+
+            $('[data-toggle="tooltip"]').on("mouseenter", function (event) {
+                $(event.target).tooltip("show");
+                console.log('ok');
+            });
+
+
+
+            //#endregion
+
+            //#region ColorPickers
+
+            $('div[data-type="color"] input').colorpicker();
+
+            //#endregion
+
+            //#region Selects
+
+            $(".select-single").select2({
+                theme: "classic"
+            });
+
+            $("select.select-multiple, .select-multiple select").select2({
+                theme: "classic"
+            });
+
+            var $formselects = $('.form select.select   ');
+            $formselects.each(function () {
+                $(this).selectric();
+            });
+
+            var $selectric = $('select#quick-navigation');
+            $selectric.selectric();
+
+            $selectric.on('selectric-change', function (event, element, selectric) {
+                window.location.href = $(this).val();
+            });
+
+
+            //#endregion
+
+            //#region Toogles
+
+            var switchs = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+
+            switchs.forEach(function (html) {
+                var switchery = new Switchery(html);
+            });
+
+            //#endregion
+
+            //#region LightGallery
+
+            $('.lightGallery').lightGallery();
+
+            //#endregion
+
+            //#region Summernote
+
+            $('input.wysiwyg,textarea.wysiwyg, .wysiwyg input, .wysiwyg textarea').summernote({
+                height: 200,
+                fontNames: ["Roboto", "Italianno", 'Antic Didone', "Quattrocento Sans"],
+                fontSizes: ['10', '11', '12', '14', '16', '18', '20', '22', '24', '28'],
+                colors: [
+                    ['#000', '#fff', '#66615d', '#c29b5b',],
+                ],
+                toolbar: [
+                    ['fontname', ['fontname', 'bold', 'italic', 'underline', 'fontsize', 'color', 'paragraph', 'link', 'picture', 'clear']],
+                    ['misc', ['codeview']],
+
+                    // ['height', ['height']]
+                ]
+            });
+
+            $(".note-editable").css("font-size", "16px");
+            $(".note-editable").css("font-family", "Roboto");
+
+            //#endregion
+
+
+            //#region Loaders
+
+            setTimeout(function () {
+                $('#page-loader-wrapper').animate({
+                    'opacity': '0',
+                    'z-index': '-1'
+                }, 500);
+            }, 250);
+
+            //#endregion
+
+            //#region Languages
+
+            var $languages = $('select#select-languages');
+            $languages.selectric();
+            set_languages(1);
+
+            $languages.on('selectric-change', function (event, element, selectric) {
+                set_languages($(this).find(":selected").attr('data-position'));
+            });
+
+            function set_languages(language) {
+                $('.a2lix_translationsFields .tab-pane').removeClass('active');
+                $('.a2lix_translationsFields .tab-pane:nth-child(' + language + ')').addClass('active');
+            }
+
+            var $languagesDrop = $('.language-dropdown .dropdown-item');
+
+            $languagesDrop.on('click', function (event) {
+                event.preventDefault();
+
+                set_languages($(this).attr('data-language'));
+
+                let type = $(this).attr('data-type'); // 0 = Texte / 1 = Image
+                let src = $(this).attr('data-src');
+                let text = $(this).attr('data-text');
+
+                let $image = $('#language-dropdown-image');
+                let $text = $('#language-dropdown-text');
+
+                if (type == 0) { // Pas d'image pour la langue
+
+                    if (!$image.hasClass('hidden'))
+                        $image.addClass('hidden');
+
+                    $text.removeClass('hidden'); // Affiche
+
+                } else {
+
+                    $image.removeClass('hidden');  // Affiche
+
+                    if (!$text.hasClass('hidden'))
+                        $text.addClass('hidden');
+
+
+                }
+
+                $image.attr('src', src);
+                $text.html(text);
+
+            });
+
+            //#endregion
+
+            //#region Tables
+
+            $('.datatable').DataTable({
+                responsive: true,
+
+                "language": {
+                    "searchPlaceholder": "Rechercher..",
+                    "sProcessing": "Traitement en cours...",
+                    "sSearch": "Rechercher&nbsp;:",
+                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                    "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    "sInfoPostFix": "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst": "Premier",
+                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                        "sNext": "Suivant",
+                        "sLast": "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                    },
+                    "select": {
+                        "rows": {
+                            _: "%d lignes séléctionnées",
+                            0: "Aucune ligne séléctionnée",
+                            1: "1 ligne séléctionnée"
+                        }
+                    }
+
+                }
+            });
+
+            /**
+             * Bouton de selection/deselection de toutes les entités du tableau
+             */
+            $('#table-select-all').on('change', function () {
+
+                var card = $(this).closest('.card');
+                var checkbox = card.find('.table .td-checkbox input');
+
+                if ($(this).is(':checked')) {
+
+                    $.each(checkbox, function () {
+                        $(this).prop("checked", true);
+                    })
+
+                } else {
+
+                    $.each(checkbox, function () {
+                        $(this).prop("checked", false);
+                    })
+
+                }
+
+            });
+
+            /**
+             * Coche/Décoche le checkbox de l'entité
+             **/
+            $('.shape-checkbox').on('click', function () {
+                $(this).closest('.form-checkbox').find('input').trigger('click');
+            });
+
+            //#endregion
+
+            //#region Navigation
+
+            /**
+             * Affiche/Masque les sous-menu de la navigation
+             */
+            $('#sidebar-wrapper .sidebar-nav .btn-list').on('click', function (event) {
+                event.preventDefault();
+                $(this).closest('li').toggleClass('active');
+            });
+
+            /**
+             * Effectue une recherche sur le BO
+             */
+            $('#search-submit').on('click', function (event) {
+                event.preventDefault();
+
+                window.location.href = "{{ path('core_admin_search') }}";
+            });
+
+            /**
+             * Affiche/Masque la sidebar en fonction du resize de l'écran
+             */
+            $(window).on('resize', function (event) {
+                let $window = $(this);
+                let $item = $('.navbar');
+                let $animBurger = $('#anim-burger');
+
+
+                if ($window.width() <= 900) {
+
+                    if ($item.hasClass('active')) {
+                        $item.removeClass('active');
+
+                    } else if ($item.hasClass('collapse-responsive')) {
+                        $item.removeClass('collapse-responsive');
+                        $animBurger.removeClass('check');
+                    }
+
+                } else {
+
+                    if (!$item.hasClass('active')) {
+                        $item.removeClass('active');
+
+                    } else if ($item.hasClass('active')) {
+                        $item.removeClass('active');
+                    }
+                }
+
+            });
+
+            /**
+             * Affiche/Masque la sidebar
+             */
+            $('#nav-arrow').on('click', function () {
+                let $item = $('.navbar');
+                let $footer = $('#page-footer-static');
+
+                if ($item.hasClass('active')) {
+                    $item.removeClass('active');
+                    $footer.removeClass('active');
+                } else {
+
+                    if (!$item.hasClass('active')) {
+                        $item.addClass('active');
+                        $footer.addClass('active');
+                    }
+                }
+            });
+
+
+            $('#anim-burger').on('click', function () {
+                let $item = $('.navbar');
+                let $animBurger = $('#anim-burger');
+                let $hamburger = $('.hamburger');
+                let $wrapper = $('#page-content-wrapper');
+                
+                if ($item.hasClass('collapse-responsive')) {
+                    $item.removeClass('collapse-responsive');
+                    $animBurger.removeClass('check');
+                    $hamburger.removeClass('is-active');
+                    $wrapper.removeClass('nav-active');
+
+                } else {
+
+                    if (!$item.hasClass('collapse-responsive')) {
+                        $item.addClass('collapse-responsive');
+                        $animBurger.addClass('check');
+                        $hamburger.addClass('is-active');
+                        $wrapper.addClass('nav-active');
+                    }
+                }
+            });
+
+            //#endregion
+
+        })
+    </script>
+
+    {% block javascripts %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,1890 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros_product.html.twig" as a2lixTranslations %}
+{% import "bundles/a2lix/macros.html.twig" as normala2lixTranslations %}
+
+{% macro service_template(feature) %}
+
+    <td>
+        <div>
+            <label for="">Groupe</label>
+            {{ form_widget(feature.feature_group, {'attr' : {'class' :'js-select-theme-single' }}) }}
+        </div>
+    </td>
+
+    <td>
+        <div>
+            <label for="">Valeur prédéfinie</label>
+            {{ form_widget(feature.feature, {'attr' : {'class' :'js-select-theme-single' }}) }}
+        </div>
+    </td>
+
+    <td>
+        <div>
+            <label for="">Valeur personnalisée</label>
+            <input type="text">
+        </div>
+    </td>
+
+    <td class="actions">
+        <div>
+            <label for="">Actions</label>
+            <button class="btn btn-remove btn-icon"><i class="fa fa-trash"></i></button>
+        </div>
+    </td>
+
+{% endmacro %}
+
+{% macro image_template(item) %}
+    <div class="image_block" data-id="{{ item.id|default('0') }}">
+
+        <div class="image_box">
+            <div class="image">
+                <figure>
+                    {% if item != null %}
+                        <img src="{{ asset('assets/media/images/' ~ item.image) }}" alt="" class="preview">
+                    {% else %}
+                        <img src="{{ 'no_photo.jpeg'|imagine_filter('thumbnail') }}" alt=""
+                             class="preview">
+                    {% endif %}
+
+                </figure>
+
+                <div class="image-input" style="display: none;">
+                    <input type="file" class="input_image js-select-theme-single" id="input_image___name__">
+                    {#{{ form_widget(image.imageFile, {'attr' : {'class' :'js-select-theme-single' }}) }}#}
+                </div>
+            </div> {# /.image #}
+        </div> {# /.image_box #}
+
+        <div class="image_form">
+
+            <button class="btn-close">
+                <i class="fa fa-times"></i>
+            </button>
+
+            <div class="form">
+                <div class="form-group">
+                    <div class="row row-checkbox">
+                        {% if item != null %}
+                            {% set cover = 'checked' %}
+                        {% endif %}
+                        <input type="radio" id="use_as_cover" name="use_as_cover"
+                               class="use_as_cover" {{ cover|default('') }}>
+                        <label for="">Image de couverture</label>
+                        {#{{ form_row(image.use_as_cover) }}#}
+                    </div>
+
+                    <div class="row">
+                        <label for="">Description</label>
+                        <textarea name="" id="" class="description">{{ item.alt|default('') }}</textarea>
+                    </div>
+
+                    <div class="row">
+                        <button class="btn btn-danger btn-remove" data-id="{{ item.id|default(-1) }}"><i
+                                    class="fa fa-trash"></i>Supprimer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro file_template(item, languages) %}
+
+
+    <div class="file_block" data-id="{{ item.id|default('0') }}">
+
+        <div class="form">
+            <div class="form-group">
+
+                <div class="file">
+
+
+                    <div class="inputs">
+
+                        <select name="" id="" class="languages" multiple="multiple">
+                            {% for language in languages %}
+                                <option value="{{ language.isoCode }}"
+                                        {% if item != null and language.id in item.language %}selected{% endif %}>{{ language.designation }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <input type="text" class="reference" placeholder="Désignation du document"
+                               value="{{ item.document|default('') }}">
+
+                        <div class="file-input">
+                            <button class="btn btn-update-file">Modifier</button>
+
+                            <input type="file" class="file_image " id="input_file___name__">
+
+                            {% if item != null %}
+                                <a class="btn btn-submit" href="{{ asset('assets/media/files/' ~ item.document) }}"
+                                   target="_blank">Voir</a>
+                            {% endif %}
+
+                            <button class="btn btn-remove" >Supprimer</button>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% block content %}
+    {% import _self as forms %}
+
+    {{ form_start(form_entity) }}
+    <div class="row">
+
+        <div class="col-md-12">
+            {% set item_content %}
+
+                <div class="form">
+
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="product_is_enabled">En ligne</label>
+                            </div>
+
+                            <div class="col-md-9 form-checkbox">
+                                {{ form_widget(form_entity.is_enabled) }}
+                                <div class="shape-checkbox">
+                                    <i class="material-icons">check</i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="product_is_enabled">Indexer</label>
+                            </div>
+
+                            <div class="col-md-9 form-checkbox">
+                                {{ form_widget(form_entity.is_indexable) }}
+                                <div class="shape-checkbox">
+                                    <i class="material-icons">check</i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label for="product_is_enabled">Priorité</label>
+                            </div>
+
+                            <div class="col-md-9">
+                                {{ form_widget(form_entity.priority) }}
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="product_reference">
+                        <input type="hidden" name="product[id]" id="product_id" value="{{ form_entity.vars.value.id }}">
+                        {{ normala2lixTranslations.partialTranslations(form_entity.translations, ['designation'], 1, '', null, admin_entity_settings ) }}
+                    </div>
+
+                    <div id="product_subtitle">
+                        <input type="hidden" name="product[subtitle]" id="product_subtitle"
+                               value="{{ form_entity.vars.value.id }}">
+                        {{ normala2lixTranslations.partialTranslations(form_entity.translations, ['subtitle' ], 6, '', null, admin_entity_settings ) }}
+                    </div>
+
+                </div>
+            {% endset %}
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                title: "Gestion d'un produit",
+                icon: '',
+                content: item_content,
+                select_language: true,
+            } %}
+        </div>
+    </div>
+
+    <div class="row">
+
+        <ul class="nav nav-tabs card-tabs" id="myTab" role="tablist">
+            {#<li class="nav-item">#}
+            {#<span class="nav-link">#}
+            {#Configuration:#}
+            {#</span>#}
+            {#</li>#}
+            <li class="nav-item">
+                <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basic" role="tab"
+                   aria-controls="basic"
+                   aria-selected="true">Générale</a>
+            </li>
+
+            <li class="nav-item nav-variation" style="display: none;">
+                <a class="nav-link" id="variation-tab" data-toggle="tab" href="#variation" role="tab"
+                   aria-controls="variation"
+                   aria-selected="false">Déclinaisons</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo" role="tab">Référencement - SEO</a>
+            </li>
+
+            {#<li class="nav-item">#}
+            {#<a class="nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other"#}
+            {#aria-selected="false">Autres</a>#}
+            {#</li>#}
+        </ul>
+    </div>
+
+    <div class="tab-content card-tabs-content" id="product" data-id="{{ form_entity.vars.value.id }}">
+
+        <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+
+
+            {% set item_content %}
+                <div class="row">
+
+                    <div class="col-md-9">
+
+
+                        <section class="section-contents" id="section-contents">
+                            <header class="section-header">
+                                <h2 class="section-title">Images & documents</h2>
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_images">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header>
+
+
+                            <ul class="nav nav-tabs" id="files" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="images-tab" data-toggle="tab" href="#images"
+                                       role="tab"
+                                       aria-controls="images" aria-selected="true">Images</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents"
+                                       role="tab"
+                                       aria-controls="documents" aria-selected="false">Documents</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="files-content">
+                                <div class="tab-pane fade show active" id="images" role="tabpanel"
+                                     aria-labelledby="images-tab">
+
+                                    {# SECTION IMAGES #}
+                                    <div class="section-images" id="section-images">
+                                        <ul class="images" data-prototype="{{ forms.image_template()|e('html_attr') }}">
+                                            {% for image in product_images %}
+                                                <li class="item">
+                                                    {{ (forms.image_template(image))|replace({'__name__': loop.index})|raw }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div> {# /.section-images #}
+
+                                </div>
+
+                                <div class="tab-pane fade" id="documents" role="tabpanel"
+                                     aria-labelledby="documents-tab">
+
+                                    {# SECTION DOCUMENTS #}
+                                    <div class="section-files" id="section-files">
+
+                                        <ul class="files"
+                                            data-prototype="{{ forms.file_template(null, languages)|e('html_attr') }}">
+                                            {% for file in product_files %}
+                                                <li class="item">
+                                                    {{ (forms.file_template(file, languages))|replace({'__name__': loop.index})|raw }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div> {# /.section-images #}
+
+                                </div>
+                            </div>
+                        </section>
+
+
+                        {# SECTION CONTENTS #}
+                        <section class="section-contents" id="section-contents">
+                            <header class="section-header">
+                                <h2 class="section-title">Détails & informations</h2>
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_content">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header>
+
+
+                            <ul class="nav nav-tabs" id="texts" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="summary-tab" data-toggle="tab" href="#summary"
+                                       role="tab"
+                                       aria-controls="summary" aria-selected="true">Résumé</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="description-tab" data-toggle="tab" href="#description"
+                                       role="tab"
+                                       aria-controls="description" aria-selected="false">Description</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="research-tab" data-toggle="tab" href="#research"
+                                       role="tab"
+                                       aria-controls="research" aria-selected="false">Recherche</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="medal-tab" data-toggle="tab" href="#medal"
+                                       role="tab"
+                                       aria-controls="medal" aria-selected="false">Médaille</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="texts-content">
+                                <div class="tab-pane fade show active" id="summary" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                    {{ a2lixTranslations.partialTranslations(form_entity.translations, [ 'description_short' ], 2, 'wysiwyg') }}
+                                </div>
+                                <div class="tab-pane fade" id="description" role="tabpanel"
+                                     aria-labelledby="profile-tab">
+                                    {{ a2lixTranslations.partialTranslations(form_entity.translations, [ 'description_long'], 3, 'wysiwyg') }}
+                                </div>
+                                <div class="tab-pane fade" id="research" role="tabpanel"
+                                     aria-labelledby="research-tab">
+                                    {{ a2lixTranslations.partialTranslations(form_entity.translations, [ 'description_research'], 5, 'wysiwyg') }}
+                                </div>
+                                <div class="tab-pane fade" id="medal" role="tabpanel"
+                                     aria-labelledby="medal-tab">
+
+                                    <div class="form">
+                                        <div class="form-group">
+
+                                            <div class="row">
+
+                                                <div class="box-image">
+
+                                                    <figure>
+                                                        {% set image = form_entity.vars.value.medal %}
+                                                        {% if image == '' %}
+                                                            <img src="{{ asset('assets/media/images/core/no_image.png') }}" alt=""
+                                                                 class="file-preview">
+                                                        {% else %}
+                                                            <img src="{{ asset('assets/media/images/' ~ image) }}"
+                                                                 alt=""
+                                                                 class="file-preview">
+                                                        {% endif %}
+                                                    </figure>
+
+                                                    <div class="file-input-group">
+                                                        <div class="original-input">
+                                                            {{ form_widget(form_entity.medalFile) }}
+                                                        </div>
+
+                                                        <button data-target="" class="btn">
+                                                            <i class="fas fa-folder-open"></i> Ajouter une image
+                                                        </button>
+
+                                                        <div class="form-checkbox form-medal-checkbox">
+
+                                                            <input type="checkbox" id="medalFileRemove">
+
+                                                            <div class="shape-checkbox">
+                                                                <i class="material-icons">check</i>
+                                                            </div>
+
+                                                            <label for="medalFileRemove">
+                                                                Supprimer ?
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </section> {# /.section-contents #}
+
+                        {# SECTION FEATURES #}
+                        <section class="section-features" id="section-features">
+
+                            {# SECTION HEADER  #}
+                            <header class="section-header">
+                                <h2 class="section-title">Caractéristiques</h2>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_features">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header> {# /.section-header #}
+
+                            {# SECTION CONTENT #}
+                            <div class="section-content">
+                                <table>
+                                    <thead>
+
+                                    </thead>
+
+                                    <tbody class="features" id="features"
+                                           data-prototype="{{ forms.service_template(form_entity.product_features.vars.prototype)|e('html_attr') }}">
+                                    {% for feature in form_entity.product_features %}
+                                        {{ forms.service_template(feature) }}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+
+                            </div> {# /.section-content #}
+
+                            <div class="section-footer">
+                                <button id="btn_features_add" class="btn btn-submit btn-outline">
+                                    <i class="fas fa-plus"></i> Ajouter
+                                </button>
+                            </div> {# /.section-footer #}
+
+                        </section> {# /.section-features #}
+
+                    </div> {# /.col-* #}
+
+                    <div class="col-md-3">
+
+                        {# SECTION VARIATION #}
+                        <section class="section section-variation" id="section-variation">
+
+                            {# SECTION HEADER #}
+                            <header class="section-header">
+                                <h2 class="section-title">Déclinaisons</h2>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_variation">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header> {# /.section-header #}
+
+
+                            <div class="section-content">
+                                {{ form_widget(form_entity.type) }}
+                            </div>
+                        </section> {# /.section-categories #}
+
+                        {# SECTION REFERENCE #}
+                        <section class="section section-reference" id="section-reference">
+
+                            {# SECTION HEADER #}
+                            <header class="section-header">
+                                <h2 class="section-title">Référence</h2>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_reference">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header> {# /.section-header #}
+
+
+                            <div class="section-content">
+                                {{ form_widget(form_entity.reference) }}
+                            </div>
+                        </section> {# /.section-categories #}
+
+                        {# SECTION PRIX #}
+                        <section class="section section-prix" id="section-prix">
+
+                            {# SECTION HEADER #}
+                            <header class="section-header">
+                                <h2 class="section-title">Prix</h2>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_prix">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header> {# /.section-header #}
+
+
+                            <div class="section-content">
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <label for="product_price_ht" class="form-control-label">HT</label>
+
+                                            <div class="input-group mb-3">
+                                                {{ form_widget(form_entity.price_ht, {'attr' : { 'class': 'form-control'}} ) }}
+
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">&euro;</span>
+                                                </div>
+                                            </div>
+                                        </div> {# /#product_price_ht #}
+
+                                        <div class="col-md-6">
+                                            <label for="product_price_ttc" class="form-control-label">TTC</label>
+
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" id="product_price_ttc">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">&euro;</span>
+                                                </div>
+                                            </div>
+                                        </div> {# /#product_price_ttc #}
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="product_price_tax" class="form-control-label">Règle de
+                                                taxe</label>
+
+                                            {{ form_widget(form_entity.tax) }}
+
+                                        </div> {# /#product_price_ht #}
+                                    </div>
+                                </div>
+
+                            </div> {# /;section-content #}
+
+                        </section> {# /.section-categories #}
+
+                        {# SECTION CATEGORIES #}
+                        <section class="section section-categories" id="section-categories">
+
+                            {# SECTION HEADER #}
+                            <header class="section-header">
+                                <h2 class="section-title">Catégories</h2>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_categories">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header> {# /.section-header #}
+
+
+                            <div class="section-content">
+                                {{ form_widget(form_entity.categories) }}
+                            </div>
+                        </section> {# /.section-categories #}
+
+                    </div> {# /.col-* #}
+
+                </div> {# /.row #}
+
+            {% endset %}
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                content: item_content,
+            } %}
+
+        </div>
+
+        <div class="tab-pane fade tab_variation" id="variation" role="tabpanel" aria-labelledby="variation-tab">
+            <div class="row">
+                <div class="col-md-9">
+
+
+                    {% set item_content %}
+
+                        <table id="table_variation" class="table_variation datatable table table-striped"
+                               data-id="{{ form_entity.vars.value.id }}">
+
+                            <thead>
+                            <tr>
+                                <th style="width:25px;">#</th>
+                                <th style="width:120px;">Image</th>
+                                <th>Déclinaison</th>
+                                <th style="width:150px;">Prix HT</th>
+                                <th style="width:150px;">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tbody id="variations" class="variations">
+                            </tbody>
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <div class="card-help">
+                                Pour ajouter des déclinaisons, sélectionner au préalable les attributs dans la colonne
+                                de droite.
+                            </div>
+
+                            <button id="generate_variations" class="btn btn-submit">Générer les déclinaisons</button>
+                        </div>
+                    {% endset %}
+
+                    {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                        content: item_content,
+                    } %}
+
+
+                </div><!-- /.col-md-8 -->
+
+                <div class="col-md-3">
+                    {% for element in variations %}
+                        <div class="variation-attribute-group">
+
+                            {% set item_content %}
+                                <ul>
+                                    {% for item in element.items %}
+                                        <li class="variation-attribute">
+                                            <div>
+                                                <input type="checkbox"
+                                                       data-group="{{ element.variation.designation }}"
+                                                       data-value="{{ item.designation }}"
+                                                       id="{{ element.variation.id ~ '-'~ item.id }}"
+                                                       name="variation_{{ element.variation.id }}"
+                                                       value="variation_{{ element.variation.id ~ item.id }}">
+                                                <label for="variation_{{ element.variation.id ~'-'~ item.id }}">{{ item.designation }}</label>
+                                            </div>
+
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+                                <a href="" class="variation-group-select-all">Tout (dé)sélectionner</a>
+                            {% endset %}
+
+                            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                                title: element.variation.designation,
+                                content: item_content,
+                            } %}
+
+                        </div>
+                    {% endfor %}
+
+                    {#<a href="/4DM1n157R4710N/shopping/features_attributes">Gestion des attributs</a>#}
+                </div> <!-- /.col-md-4 -->
+            </div><!-- /.row -->
+        </div>
+
+        <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+
+
+            {% set item_content %}
+                <div class="row">
+                    <div class="col-md-9">
+
+                        {# SECTION IMAGES #}
+                        <section class="section-referencement" id="section-referencement">
+                            <header class="section-header">
+                                <h2 class="section-title">Référencement</h2>
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#help_referencement">
+                                    <div class="help">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </button>
+                            </header>
+
+                            <div class="section-content">
+
+
+                                <div class="google_preview">
+
+
+                                    <p>Améliorez votre positionnement et personnaliser votre affichage dans les
+                                        résulstas des moteurs de recherche.<br/> Ci-dessous une prévisualisation du
+                                        rendu de Google.</p>
+
+                                    <div data-v-fca6ee84="" id="serp">
+                                        <div data-v-fca6ee84="" class="serp-preview">
+                                            <div data-v-fca6ee84="" class="serp-title" id="serp-title">
+                                                {#{{ seo_title_default }}#}
+                                            </div>
+
+                                            <div data-v-fca6ee84="" class="serp-url" id="serp-url">
+                                                {#{{ seo_uri_default }}#}
+                                            </div>
+
+                                            <div data-v-fca6ee84="" class="serp-description" id="serp-description">
+                                                {#{{ seo_description_default }}#}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="field_seo_uri">
+                                    <div class="form-group-header">
+                                        <h3 class="title">URL simplifiée</h3>
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#help_referencement">
+                                            <div class="help">
+                                                <i class="fas fa-question"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group-content">
+                                        {{ a2lixTranslations.partialTranslations(form_entity.translations, ['uri' ], 4) }}
+                                    </div>
+
+
+                                </div>
+
+                                <div class="form-group" id="field_seo_title">
+                                    <div class="form-group-header">
+                                        <h3 class="title">Balise titre</h3>
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#help_referencement">
+                                            <div class="help">
+                                                <i class="fas fa-question"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group-content">
+                                        {{ a2lixTranslations.partialTranslations(form_entity.translations, ['seo_title' ], 5) }}
+                                    </div>
+
+                                    <p class="form-group-help">
+                                        0 des 70 caractères utilisés (recommandé)
+                                    </p>
+                                </div>
+
+                                <div class="form-group" id="field_seo_description">
+                                    <div class="form-group-header">
+                                        <h3 class="title">Balise description</h3>
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#help_referencement">
+                                            <div class="help">
+                                                <i class="fas fa-question"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group-content">
+                                        {{ a2lixTranslations.partialTranslations(form_entity.translations, ['seo_description' ], 6) }}
+                                    </div>
+
+                                    <p class="form-group-help">
+                                        0 des 160 caractères utilisés (recommandé)
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-group-header">
+                                        <h3 class="title">Mot(s) clé(s)</h3>
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#help_referencement">
+                                            <div class="help">
+                                                <i class="fas fa-question"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group-content">
+                                        {{ a2lixTranslations.partialTranslations(form_entity.translations, ['seo_keywords' ], 7) }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section> {# /.section-images #}
+
+                        {# SECTION IMAGES #}
+                        {#<section class="section-referencement" id="section-referencement">#}
+                        {#<header class="section-header">#}
+                        {#<h2 class="section-title">Page de redirection</h2>#}
+
+                        {#<button type="button" class="btn btn-primary" data-toggle="modal"#}
+                        {#data-target="#help_referencement">#}
+                        {#<div class="help">#}
+                        {#<i class="fas fa-question"></i>#}
+                        {#</div>#}
+                        {#</button>#}
+                        {#</header>#}
+
+                        {#<div class="section-content">#}
+                        {#{{ form_row(form_entity.redirect) }}#}
+                        {#{{ form_row(form_entity.redirect_link) }}#}
+                        {#</div>#}
+                        {#</section> #}{# /.section-images #}
+
+                    </div>
+                </div>
+            {% endset %}
+
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                content: item_content,
+            } %}
+
+        </div>
+        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+            <div class="row">
+                <div class="col-md-12">
+                    {% set item_content %}
+                        <div>
+                            {{ form_label(form_entity.related_products) }}
+                            {{ form_widget(form_entity.related_products, {'attr' : {'class' :'js-select-theme-multiple' }}) }}
+                        </div>
+                    {% endset %}
+
+                    {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                        title: 'Traductions',
+                        icon: 'list',
+                        content: item_content,
+                    } %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_images',
+        'title' : 'Images & documents',
+        'content' : "
+            Vous pouvez choisir les divers visuels que vous souhaitez intégrer à ce produit, ainsi que les documents en relation à ce dernier.<br /><br />
+            - Une image peut être définie en tant qu'image de couverture.<br />
+            - Il est possible de choisir la langue où le document sera disponible"
+    } %}
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_content',
+        'title' : 'Détails du produits',
+        'content' : "Détails du produit.<br />
+            - Le résumé représente le premier texte (court) visible du produit<br />
+            - La description représente le contenu complet décrivant le produit<br />
+            - La recherche représente le texte décrivant le produit et incitant l'utilisateur à cliquer dessus lors de l'utilisation de l'outils de recherche<br/>
+            - Les Médailles sont représente le(s) prix reçus par le produit"
+    } %}
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_features',
+        'title' : 'Caractéristiques',
+        'content' : "Les caractéristiques représente des détails communs à un ensemble de produits. Ces derniers sont prédéfinis à l'<a href=\"/shopping/features_attributes\" target=\"_blank\">adresse suivante.</a>"
+    } %}
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_variation',
+        'title' : 'Déclinaisons',
+        'content' : ''
+    } %}
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_reference',
+        'title' : 'Référence',
+        'content' : ''
+    } %}
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_prix',
+        'title' : 'Prix',
+        'content' : ''
+    } %}
+
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_categories',
+        'title' : 'Catégories',
+        'content' : "La(les) catégorie(s) qui représente(nt) le mieux ce produit."
+    } %}
+    {% include '@core/admin/theme/basique/includes/help.html.twig' with {
+        'id' : 'help_referencement',
+        'title' : 'Référencement',
+        'content' : ''
+    } %}
+
+
+{% endblock %}
+
+{% block page_footer_static %}
+
+    {{ form_row(form_entity.submit, {'label' : 'Enregistrer', 'attr' : {'class' : 'btn btn-submit'}}) }}
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script src="{{ asset('assets/js/utils/comparator/Comparator.js') }}"></script>
+
+    <script src="{{ asset('assets/js/data-structures/linked-list/LinkedListNode.js') }}"></script>
+    <script src="{{ asset('assets/js/data-structures/linked-list/LinkedList.js') }}"></script>
+
+    <script src="{{ asset('assets/js/data-structures/queue/Queue.js') }}"></script>
+
+    <script src="{{ asset('assets/js/data-structures/graph/Graph.js') }}"></script>
+    <script src="{{ asset('assets/js/data-structures/graph/GraphEdge.js') }}"></script>
+    <script src="{{ asset('assets/js/data-structures/graph/GraphVertex.js') }}"></script>
+
+    <script src="{{ asset('assets/js/algorithms/graph/depth-first-search/depthFirstSearch.js') }}"></script>
+
+
+    <script>
+
+        var $categories = $('select#product_categories');
+        $categories.select2({
+            theme: "classic"
+        });
+
+        var $type = $('select#product_type');
+        $type.selectric();
+
+        var $file_languages = $('.file_block select');
+        $file_languages.selectric();
+
+        // var $tax = $('select#product_price_tax');
+        // $tax.selectric();
+
+
+        var $attributes = $('.attribute_box select');
+        $attributes.select2({
+            theme: "classic"
+        });
+
+        var $taxes = $('#product_tax');
+        $taxes.select2({
+            theme: "classic"
+        });
+
+        var $collection;
+
+        // setup an "add a tag" link
+        var $addTagButton = $('<button type="button" class="add_tag_link">Add a tag</button>');
+        var $newLinkLi = $('<li></li>').append($addTagButton);
+
+        function check_type_product(use_event) {
+            if ($('#product_type option:selected').val() == 0) {
+                set_standard_product(use_event);
+            } else {
+                set_variation_product(use_event);
+            }
+        }
+
+        function set_standard_product(use_event) {
+
+            if (use_event && $('#table_variation tbody tr').length > 0) {
+                $.confirm({
+                    title: 'Attention !',
+                    content: 'Toutes les déclinaisons vont être supprimées. Souhaitez-vous continuer ?',
+                    buttons: {
+                        confirm: {
+                            text: 'Oui',
+                            action: function () {
+                                $('.nav-variation').hide();
+                            },
+                        },
+                        cancel: {
+                            text: 'Non',
+                            action: function () {
+                                $("#product_type option[value=0]").removeAttr('selected');
+                                $("#product_type option[value=1]").attr('selected', true);
+                            }
+                        }
+                    }
+                });
+            } else {
+                $('.nav-variation').hide();
+            }
+
+        }
+
+        function set_variation_product(use_event) {
+            $('.nav-variation').show();
+        }
+
+        jQuery(document).ready(function () {
+
+            check_type_product();
+
+            $('#product_type').on('change', function () {
+                check_type_product(true);
+            });
+
+            $('.variation-group-select-all').on('click', function (event) {
+                event.preventDefault();
+
+                var $inputs = $(this).closest('.variation-attribute-group').find('input[type="checkbox"]');
+
+                $.each($inputs, function (index) {
+                    $(this).trigger('click');
+                });
+            });
+            let $table = $('#table_variation').DataTable();
+
+            {% for variation in product_variations %}
+
+            var str = '';
+            var dataFields = '';
+            {% for obj in variation.attributes %}
+            str += '<div><span class="attribute" data-attribute="{{ obj.attribute.attributeGroup.id ~'-' ~ obj.attribute.id }}">{{ obj.attribute.attributeGroup.designation }} : {{ obj.attribute.designation }}</div>';
+            dataFields += '{{ obj.attribute.attributeGroup.id ~'-' ~ obj.attribute.id }}/';
+            {% endfor %}
+
+
+            $table.row.add([
+                '<input type="checkbox"  class="input-select_row" data-fields="' + dataFields + '">',
+                '       <figure>' +
+                '           <img src="{{ asset('assets/media/images/no_image.jpeg') }}" alt="">' +
+                '       </figure>',
+                str,
+                '<input type="text" class="price" value="{{ variation.variation.priceHt }}">',
+                // '       <button class="btn"><i class="fa fa-pencil-alt"></i></button>' +
+                '       <button class="btn btn-remove-declinaison"><i class="fa fa-trash"></i></button>'
+            ]).draw();
+            {% endfor %}
+
+
+            // Gestion des images
+            var $images_btn = $('<button type="button" class="add_tag_link item"><i class="material-icons">add_a_photo</i></button>');
+            var $newLinkI = $('<li></li>').append($images_btn);
+
+            var $images = $('ul.images');
+
+            setImagesListener();
+
+            $images.append($newLinkI);
+            $images.data('index', $images.find(':input').length);
+
+            $images_btn.on('click', function (e) {
+                addImageTagForm($images, $newLinkI);
+            });
+
+
+            // Gestion des fichiers
+            var $files_btn = $('<button type="button" class="add_tag_link item"><i class="material-icons">add</i> Ajouter un document</button>');
+            var $newFileLink = $('<li></li>').append($files_btn);
+
+            var $files = $('ul.files');
+            setFilesListener();
+
+            $files.append($newFileLink);
+            $files.data('index', $files.find(':input').length);
+
+            $files_btn.on('click', function (e) {
+                addFileTagForm($files, $newFileLink);
+            });
+
+
+            // Gestion des caractéristiques
+            var $features = $('tbody.features');
+
+            addFeatureRemove();
+            addFeatureStyle();
+
+            $features.data('index', $features.find(':input').length);
+
+            $('#btn_features_add').on('click', function (event) {
+                event.preventDefault();
+
+                addFeatureForm($features);
+            });
+
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(input).closest('.image_box').find('.preview').attr('src', e.target.result);
+                    $(input).closest('.item').show();
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+        function setImagesListener() {
+            $('#section-images input[type="file"]').off().on('change', function () {
+                readURL(this);
+            });
+
+            $('.section-images .item .btn-close').on('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                $(this).closest('.image_form').removeClass('active');
+            });
+
+            $('.section-images .image_box').on('click', function (event) {
+                event.preventDefault();
+                $(this).closest('.image_block').find('.image_form').addClass('active');
+            });
+
+            $('.section-images .item .btn-remove').on('click', function (event) {
+                event.preventDefault();
+
+                var item = $(this);
+                var image = item.attr('data-id');
+                var dataToSend = {
+                    'image_id': image
+                };
+
+                if (image > 0) {
+                    $.ajax({
+                        url: "{{ path('shopping_admin_product_collection_remove') }}",
+                        data: dataToSend,
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (_data) {
+                            item.closest('.item').remove();
+                        }
+                    });
+                }
+
+            });
+        }
+
+        function addImageTagForm($collectionHolder, $newLinkLi) {
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            var newForm = prototype;
+            newForm = newForm.replace(/__name__/g, index);
+
+            $collectionHolder.data('index', index + 1);
+
+            var $newFormLi = $('<li class="item" style="display: none;"></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            var $input = $($newFormLi[0]).find('.image-input input');
+            $input.trigger('click');
+            // addTagFormDeleteLink($newFormLi);
+
+            setImagesListener();
+        }
+
+        function setFilesListener() {
+
+            $('#section-files input[type="file"]').off().on('change', function () {
+                $(this).closest('.item').show();
+            });
+
+            $('.section-files .item .btn-remove').on('click', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                var entity_id = $(this).attr('data-entity');
+                var file_id = $(this).closest('.file_block').attr('data-id');
+
+
+                var reference = $(this).closest('.file_block').find('.reference').val();
+                var languages = $(this).closest('.file_block').find('select.languages').val();
+
+
+                var dataToSend = {
+                    'product_id': entity_id,
+                    'file_id': file_id,
+                    'file': '',
+                    'languages': languages,
+                    'reference': reference
+                };
+
+                if(entity_id != null) {
+                    $.ajax({
+                        url: "{{ path('shopping_admin_product_save_file') }}",
+                        data: dataToSend,
+                        dataType: 'json',
+                        method: 'post',
+                        success: function (_data) {
+
+                        }
+                    });
+                }
+
+                $(this).closest('.item').remove();
+            });
+
+        }
+
+        function addFileTagForm($collectionHolder, $newLinkLi) {
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            var newForm = prototype;
+            newForm = newForm.replace(/__name__/g, index);
+
+            $collectionHolder.data('index', index + 1);
+
+            var $newFormLi = $('<li class="item" style="display:none;"></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            var $file_languages = $newFormLi.find('select');
+            $file_languages.selectric();
+
+            var $input = $($newFormLi[0]).find('.file-input input');
+            $input.trigger('click');
+            // addTagFormDeleteLink($newFormLi);
+
+            setFilesListener();
+        }
+
+
+        /**
+         * Ajoute le formulaire d'une nouvelle caractéristique
+         */
+        function addFeatureForm($collectionHolder) {
+
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+
+            var newForm = prototype;
+            newForm = newForm.replace(/__name__/g, index);
+            $collectionHolder.data('index', index + 1);
+
+            var $newFormLi = $('<tr class="attribute_box"></tr>').append(newForm);
+            $('#features').append($newFormLi);
+
+            addFeatureRemove();
+            addFeatureStyle();
+
+
+        }
+
+        /**
+         * Ajoute du style sur les champs d'une caractéristique
+         */
+        function addFeatureStyle() {
+            $('#features select').select2({
+                theme: "classic"
+            });
+        }
+
+        /**
+         * Ajoute le listenner de suppression d'une caractéristique
+         */
+        function addFeatureRemove() {
+            $('.features .btn-remove').off().on('click', function (event) {
+                event.preventDefault();
+
+                $(this).closest('tr').remove();
+            });
+        }
+
+
+        $(function () {
+            var form = $('form');
+            form.validate();
+
+
+            $('#product_submit').on('click', function (event) {
+                event.preventDefault();
+
+                if (form.valid()) {
+
+                    $.ajax({
+                            url: "{{ path('shopping_admin_product_save') }}",
+                            data: form.serialize(),
+                            dataType: 'json',
+                            method: 'post',
+                            beforeSend: function () {
+                                $.notify({
+                                    title: 'Sauvegarde en cours...',
+                                    message: ''
+                                }, {
+                                    type: 'info',
+                                    delay: 2000,
+                                    timer: 1000,
+                                    animate: {
+                                        enter: 'animated fadeInDown',
+                                        exit: 'animated fadeOutUp'
+                                    },
+                                });
+                            },
+                            success: function (_data) {
+                                var entity_id = _data['entity_id'];
+
+                                var id = 'product_medalFile_file';
+
+                                if (document.getElementById(id).files.length > 0) {
+                                    var file = document.getElementById(id).files[0];
+
+                                    var reader = new FileReader();
+                                    reader.onloadend = function () {
+                                        var dataToSend = {
+                                            'product_id': entity_id,
+                                            'medal_file': reader.result,
+                                            'medal_remove': $('#medalFileRemove').prop('checked')
+                                        }
+
+
+                                        $.ajax({
+                                            url: "{{ path('shopping_admin_product_save_medal') }}",
+                                            data: dataToSend,
+                                            dataType: 'json',
+                                            method: 'post',
+                                            success: function (_data) {
+
+                                            }
+                                        });
+
+
+                                    }
+
+                                    reader.readAsDataURL(file);
+                                } else {
+
+                                    if($('#medalFileRemove').prop('checked')){
+
+                                        var dataToSend = {
+                                            'product_id': entity_id,
+                                            'medal_file': '',
+                                            'medal_remove': $('#medalFileRemove').prop('checked')
+                                        }
+
+                                        $.ajax({
+                                            url: "{{ path('shopping_admin_product_save_medal') }}",
+                                            data: dataToSend,
+                                            dataType: 'json',
+                                            method: 'post',
+                                            success: function (_data) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+
+                                var images = $('.images input[type="file"]');
+                                $.each(images, function () {
+
+                                    var id = $(this).attr('id');
+
+                                    if ($(this).closest('.image_block').find('input:radio:checked').length > 0) {
+                                        var cover = '1';
+                                    } else {
+                                        var cover = '0';
+                                    }
+
+                                    var description = $(this).closest('.image_block').find('.description').val();
+                                    var image_id = $(this).closest('.image_block').attr('data-id');
+
+
+                                    if (document.getElementById(id).files.length > 0) {
+                                        var file = document.getElementById(id).files[0];
+
+                                        var reader = new FileReader();
+                                        reader.onloadend = function () {
+
+                                            var dataToSend = {
+                                                'product': entity_id,
+                                                'file': reader.result,
+                                                'cover': cover,
+                                                'description': description,
+                                                'image_id': image_id
+                                            };
+
+                                            $.ajax({
+                                                url: "{{ path('shopping_admin_product_collection_save') }}",
+                                                data: dataToSend,
+                                                dataType: 'json',
+                                                method: 'post',
+                                                success: function (_data) {
+
+                                                    $.notify({
+                                                        title: 'Sauvegardé !',
+                                                        message: ''
+                                                    }, {
+                                                        type: 'success',
+                                                        delay: 2000,
+                                                        timer: 1000,
+                                                        animate: {
+                                                            enter: 'animated fadeInDown',
+                                                            exit: 'animated fadeOutUp'
+                                                        },
+                                                    });
+                                                }
+                                            });
+
+                                        };
+
+                                        reader.readAsDataURL(file);
+
+                                    } else {
+                                        var dataToSend = {
+                                            'product': $('#product').attr('data-id'),
+                                            'cover': cover,
+                                            'description': description,
+                                            'image_id': image_id
+                                        };
+
+                                        $.ajax({
+                                            url: "{{ path('shopping_admin_product_collection_save') }}",
+                                            data: dataToSend,
+                                            dataType: 'json',
+                                            method: 'post',
+                                            success: function (_data) {
+
+                                                $.notify({
+                                                    title: 'Sauvegardé !',
+                                                    message: ''
+                                                }, {
+                                                    type: 'success',
+                                                    delay: 2000,
+                                                    timer: 1000,
+                                                    animate: {
+                                                        enter: 'animated fadeInDown',
+                                                        exit: 'animated fadeOutUp'
+                                                    },
+                                                });
+
+                                            }
+                                        });
+                                    }
+
+
+                                });
+
+
+                                var files = $('.files input[type="file"]');
+                                $.each(files, function () {
+
+                                    var id = $(this).attr('id');
+                                    var file_id = $(this).closest('.file_block').attr('data-id');
+
+
+                                    var reference = $(this).closest('.file_block').find('.reference').val();
+                                    var languages = $(this).closest('.file_block').find('select.languages').val();
+
+                                    if (document.getElementById(id).files.length > 0) {
+                                        var file = document.getElementById(id).files[0];
+
+                                        var reader = new FileReader();
+                                        reader.onloadend = function () {
+
+                                            var dataToSend = {
+                                                'product_id': entity_id,
+                                                'file_id': file_id,
+                                                'file': reader.result,
+                                                'languages': languages,
+                                                'reference': reference
+                                            };
+
+                                            $.ajax({
+                                                url: "{{ path('shopping_admin_product_save_file') }}",
+                                                data: dataToSend,
+                                                dataType: 'json',
+                                                method: 'post',
+                                                success: function (_data) {
+
+                                                }
+                                            });
+
+                                        };
+
+                                        reader.readAsDataURL(file);
+                                    } else {
+
+
+                                    }
+                                });
+
+
+                                var $save_type = false;
+
+                                if ($('#product_type').val() == 1) {
+                                    $('.datatable').DataTable().page.len(10000).draw();
+
+                                    let variations = [];
+                                    $.each($('#table_variation tbody tr'), function (index) {
+                                        let item = {};
+                                        item['attributes'] = [];
+
+                                        $.each($(this).find('.attribute'), function () {
+                                            item['attributes'].push($(this).attr('data-attribute'))
+                                        });
+
+                                        item['price'] = $(this).find('.price').val();
+
+                                        if (item['price'] != null) {
+                                            variations.push(item)
+                                        }
+                                    });
+
+
+                                    $.ajax({
+                                        url: "{{ path('shopping_admin_product_variation_save') }}",
+                                        data: {
+                                            'id': $('#table_variation').attr('data-id'),
+                                            'variations': variations
+                                        },
+                                        method: 'post',
+                                        success: function (_data) {
+                                            $('.datatable').DataTable().page.len(10).draw();
+                                            $save_type = true;
+                                        }
+                                    });
+
+                                } else {
+                                    $save_type = true;
+                                }
+
+                                $('div[data-notify="container"]').remove();
+
+                                // if ($save_type) {
+                                //     $.notify({
+                                //         title: 'Sauvegardé !',
+                                //         message: ''
+                                //     }, {
+                                //         type: 'success',
+                                //         delay: 2000,
+                                //         timer: 1000,
+                                //         animate: {
+                                //             enter: 'animated fadeInDown',
+                                //             exit: 'animated fadeOutUp'
+                                //         },
+                                //     });
+                                // } else {
+                                //     $.notify({
+                                //         title: 'Echec !',
+                                //         message: 'Une erreur est survenue..'
+                                //     }, {
+                                //         type: 'danger',
+                                //         delay: 2000,
+                                //         timer: 1000,
+                                //         animate: {
+                                //             enter: 'animated fadeInDown',
+                                //             exit: 'animated fadeOutUp'
+                                //         },
+                                //     });
+                                // }
+
+
+                            }
+                        }
+                    )
+
+                    // form.submit();
+                } else {
+                    $.notify({
+                        title: 'Echec !',
+                        message: 'Le formulaire invalide',
+
+                        globalPosition: 'top right',
+                    }, {
+                        type: ' notify notify-failed',
+                        delay: 2000,
+                        timer: 1000,
+                        animate: {
+                            enter: 'animated fadeIn',
+                            exit: 'animated fadeOutUp'
+                        },
+                    });
+                }
+            })
+            ;
+
+
+
+
+            let $table = $('#table_variation').DataTable();
+
+            $(document).on('click', '.btn-remove-declinaison', function (event) {
+                event.preventDefault();
+
+                var item = $(this);
+
+                $.confirm({
+                    animation: 'zoom',
+                    closeAnimation: 'scale',
+
+                    title: 'Supprimer la déclinaison',
+                    content: 'Souhaitez-vous supprimer cette déclinaison ?',
+                    buttons: {
+                        confirm: function () {
+                            $table
+                                .row(item.parents('tr'))
+                                .remove()
+                                .draw();
+                        },
+                        cancel: function () {
+                        },
+                    }
+                });
+
+            });
+
+            $('#generate_variations').on('click', function (event) {
+                    event.preventDefault();
+
+                    var matrix = [];
+                        {% for element in variations %}
+                    var $selected = $("input:checkbox[name=variation_{{ element.variation.id }}]:checked");
+                    if ($selected.length > 0) {
+                        let array = [];
+                        $.each($selected, function (index) {
+                            array.push(new GraphVertex($(this).attr('id')));
+                        });
+                        matrix.push(array);
+                    }
+                        {% endfor %}
+
+                    const graph = new Graph(true);
+
+                    for (let index = 0; index < matrix.length; index++) {
+                        if (matrix[index + 1] != null) {
+
+                            for (let current = 0; current < matrix[index].length; current++) {
+                                for (let next = 0; next < matrix[index + 1].length; next++) {
+                                    graph.addEdge(new GraphEdge(matrix[index][current], matrix[index + 1][next]));
+                                }
+                            }
+
+                        }
+                    }
+
+                    let paths = [];
+                    let path = [];
+
+                    const enterVertexCallback = function (item) {
+
+                        if (path.length < matrix.length) {
+                            path.push(item.currentVertex.getKey());
+                        }
+
+                        if (path.length == matrix.length) {
+                            let clone = [];
+                            for (let index = 0; index < path.length; index++) {
+                                clone[index] = path[index];
+                            }
+                            paths.push(clone);
+                        }
+
+                    };
+                    const leaveVertexCallback = function (item) {
+                        if (item.currentVertex == path[path.length - 1]) {
+                            path.pop();
+                        }
+
+                    };
+
+                    $.each(matrix[0], function (index) {
+                        depthFirstSearch(graph, matrix[0][index], {
+                            enterVertex: enterVertexCallback,
+                            leaveVertex: leaveVertexCallback,
+                        });
+                    });
+
+
+                    // Liste les données présentes
+                    var arrayFields = [];
+                    $table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        var data = this.node()
+                        arrayFields.push($(data).find('.input-select_row').attr('data-fields'));
+                    });
+
+
+                    var newFields = [];
+                    $.each(paths, function (index) {
+                        let path = paths[index];
+
+                        var str = '';
+                        var dataFields = '';
+                        $.each(path, function (index) {
+                            var item = $('#' + path[index]);
+                            str += '<div><span class="attribute" data-attribute="' + path[index] + '">' + item.attr('data-group') + ': ' + item.attr('data-value') + '</span></div>';
+                            dataFields += path[index] + '/';
+                        });
+
+                        if ($.inArray(dataFields, arrayFields) < 0) {
+
+                            $table.row.add([
+                                '<input type="checkbox" class="input-select_row" data-fields="' + dataFields + '">',
+                                '       <figure>' +
+                                '           <img src="{{ asset('assets/media/images/no_image.jpeg') }}" alt="">' +
+                                '       </figure>',
+                                str,
+                                '<input type="text" class="price" value="0">',
+                                // '       <button class="btn"><i class="fa fa-pencil-alt"></i></button>' +
+                                '       <button class="btn btn-remove-declinaison"><i class="fa fa-trash"></i></button>'
+                            ]).draw();
+
+                        }
+
+                        newFields.push(dataFields);
+                    });
+
+
+                    $table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                        var data = this.node();
+                        var reference = $(data).find('.input-select_row').attr('data-fields');
+
+                        if ($.inArray(reference, newFields) < 0) {
+                            console.log('remove');
+
+                            $table
+                                .row($(data))
+                                .remove()
+                                .draw();
+                        }
+
+                    });
+
+                }
+            )
+
+
+            set_seo_title($('#field_seo_title .tab-pane.active input').val());
+            set_seo_uri($('#field_seo_uri .tab-pane.active input').val());
+            set_seo_title($('#field_seo_description .tab-pane.active textarea').val());
+
+
+            $('#field_seo_uri .a2lix_translationsFields input').on('keyup', function () {
+                var value = convertToSlug($(this).val());
+
+                $(this).val(value);
+                set_seo_uri(value);
+            });
+
+            $('#field_seo_title .a2lix_translationsFields input').on('keyup', function () {
+                set_seo_title($(this).val());
+            });
+
+            $('#field_seo_description .a2lix_translationsFields input').on('keyup', function () {
+                set_seo_description($(this).val());
+            });
+
+
+            function set_seo_uri(value) {
+
+                var uri = '{{ app.request.getSchemeAndHttpHost() }}/';
+
+                if (value != '') {
+                    $('#serp-url').html(convertToSlug(uri + value));
+                } else {
+                    $('#serp-url').html(convertToSlug(uri + $('#product_reference .tab-pane.active input').val()));
+                }
+
+            }
+
+            function set_seo_title(value) {
+
+                if (value != '') {
+                    $('#serp-title').html(value);
+                } else {
+                    $('#serp-title').html($('#product_reference .tab-pane.active input').val());
+                }
+
+            }
+
+            function set_seo_description(value) {
+
+                if (value != '') {
+                    $('#serp-description').html(value);
+                } else {
+                    $('#serp-description').html('');
+                }
+
+            }
+
+            function convertToSlug(string) {
+                const a = 'àáäâãåăæçèéëêǵḧìíïîḿńǹñòóöôœṕŕßśșțùúüûǘẃẍÿź·_,;';
+                const b = 'aaaaaaaaceeeeghiiiimnnnoooooprssstuuuuuwxyz----';
+
+
+                const p = new RegExp(a.split('').join('|'), 'g')
+                return string.toString().toLowerCase()
+                    .replace(/\s+/g, '-') // Replace spaces with -
+                    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+                    .replace(/&/g, '-and-') // Replace & with ‘and’
+                    // .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+                    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                    .replace(/^-+/, '') // Trim - from start of text
+                    // .replace(/-+$/, '') // Trim - from end of text
+                    .replace(/-\//, '/')
+                    .replace(/\/\-/, '/')
+            }
+
+
+            function roundUp(num, precision) {
+                precision = Math.pow(10, precision);
+                return Math.ceil(num * precision) / precision;
+            }
+
+            let $ht = $('#product_price_ht');
+            let $ttc = $('#product_price_ttc');
+
+            calculateTTC();
+
+            $('#product_price_ht').on('keyup', function () {
+                calculateTTC();
+            });
+
+            $('#product_price_ttc').on('keyup', function () {
+
+                calculateHT();
+            });
+
+            $('#product_tax').on('change', function () {
+
+                calculateTTC();
+
+            });
+
+
+            function calculateHT() {
+                let rate = parseFloat($('#product_tax option:selected').attr('data-rate'));
+
+                $ttc.val($ttc.val().replace(',', '.'));
+                let ttc = parseFloat($ttc.val());
+
+                let ht = ttc / (1 + (rate / 100));
+
+                $ht.val(roundUp(ht, 2));
+            }
+
+            function calculateTTC() {
+                let rate = parseFloat($('#product_tax option:selected').attr('data-rate'));
+
+                $ht.val($ht.val().replace(',', '.'));
+                let ht = parseFloat($ht.val());
+
+                let ttc = ht * (1 + (rate / 100));
+
+                $ttc.val(roundUp(ttc, 2));
+            }
+
+
+            $(document).on('click', '.btn-update-file', function (event) {
+                event.preventDefault();
+
+                let $item = $(this);
+                $item.next('input[type="file"]').trigger('click');
+
+            });
+
+
+        });
+
+
+    </script>
+{% endblock %}

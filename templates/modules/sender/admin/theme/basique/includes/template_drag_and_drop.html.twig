@@ -1,0 +1,87 @@
+<div id="templates-engine" class="templates-engine">
+
+    <div id="templates-formats" class="templates-formats templates-controls controls-top controls-left">
+        <span>Format:</span> <select id="templates_formats">
+            <option value="1">Téléphone</option>
+            <option value="2">Tablette</option>
+            <option value="3">Ordinateur</option>
+            <option value="4" selected>Emailing</option>
+        </select>
+    </div>
+
+    <div class="templates-controls controls-top controls-right">
+        <button type="button" class="btn" data-toggle="modal" data-target="#templates_categories">
+            <i class="fas fa-plus"></i> Ajouter
+        </button>
+
+    </div>
+
+    <div class="templates-controls controls-bottom controls-right">
+
+        <button id="btn-cancel" class="btn btn-cancel">Annuler</button>
+        <button id="btn-save" class="btn btn-save">Sauvegarder</button>
+    </div>
+
+
+    <div id="templates-content" class="templates-content emailing-format">
+
+        <div class="block" data-id="1" data-category="1">
+            <div class="block-container">
+                <div class="preview">
+                    <img src="{{ asset('assets/modules/templates/images/no_preview.jpeg') }}" alt="">
+                </div> {# /.preview #}
+                <div class="content">
+                    <div class="column full">
+                        <h1 class="title">Votre titre</h1>
+                        <p class="subtitle">Un sous-titre complémentaire</p>
+                    </div> {# /.colum full #}
+                </div> {# /.content #}
+            </div>
+        </div>{# /.row #}
+
+        <div class="block" data-id="1" data-category="1">
+            <div class="block-container">
+                <div class="preview">
+                    <img src="{{ asset('assets/modules/templates/images/no_preview.jpeg') }}" alt="">
+                </div> {# /.preview #}
+                <div class="content">
+                    <div class="column full">
+                        <h1 class="title">Votre titre</h1>
+                        <p class="subtitle">Un sous-titre complémentaire</p>
+                    </div> {# /.colum full #}
+                </div> {# /.content #}
+                v
+            </div>{# /.row #}
+
+        </div>
+
+    </div>
+
+
+    <div class="templates-modal fade" id="templates_categories" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <div class="loading-categories"></div>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        {% include '@sender/admin/theme/basique/includes/templates/categories.html.twig' %}
+                    </ul>
+
+                    <button type="button" class="close" data-toggle="modal" data-target="#templates_categories">Fermer
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content" id="myTabContent">
+                        {% include '@sender/admin/theme/basique/includes/templates/snippets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+

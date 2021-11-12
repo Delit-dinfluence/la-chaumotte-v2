@@ -1,0 +1,27 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div class="page page-customer page-register">
+
+    {# NAVIGATION #}
+    {% include '@app/includes/navigation.html.twig' %}
+
+    <div class="page-content">
+        <div class="page-container">
+
+            <h1 class="page-title">
+                {% block account_title %}
+                    {{ translation.page_account_title }}
+                {% endblock %}
+            </h1>
+
+            {% block account_content %}{% endblock %}
+
+        </div> {# /.page-container #}
+    </div>  {# /.page-content #}
+
+    {# PAGE FOOTER #}
+    {% include '@app/includes/footer.html.twig' %}
+
+    </div>{# /.page #}
+{% endblock %}

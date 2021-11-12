@@ -1,0 +1,27 @@
+vich_uploader:
+    db_driver: orm
+    mappings:
+        files:
+            uri_prefix: /assets/media/files
+            upload_destination: '%kernel.project_dir%/public/assets/media/files'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_update: false
+            delete_on_remove: true
+        images:
+            uri_prefix: /assets/media/images
+            upload_destination: '%kernel.project_dir%/public/assets/media/images'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_update: false
+            delete_on_remove: true
+        sounds:
+            uri_prefix: /assets/media/sounds
+            upload_destination: '%kernel.project_dir%/public/assets/media/sounds'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_update: false
+            delete_on_remove: true
+        videos:
+            uri_prefix: /assets/media/videos
+            upload_destination: '%kernel.project_dir%/public/assets/media/videos'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            delete_on_update: false
+            delete_on_remove: true

@@ -1,0 +1,68 @@
+{% extends '@app/base.html.twig' %}
+
+
+
+{% block content %}
+    <div class="page page-actualites">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <header class="page-header">
+
+            <div class="figure">
+                <img src="{{ images['5ccb0b983efdd'].slug }}" alt="">
+            </div>
+
+            <div class="content custom-text">
+                <div>
+                    {{ translation.page_actualites_title|raw }}
+                </div>
+            </div>
+        </header>
+
+
+        <section id="actualites" class="actualites">
+
+            {% set type_count = 1 %}
+
+            {% for actualite in actualites %}
+
+                <div class="actualite" data-type="{{ type_count }}">
+                    <div class="figure">
+                        {% if actualite.image != '' %}
+                            <img src="{{ actualite.image|imagine_filter('actualite_thumb') }}" alt="">
+                        {% else %}
+                            <img src="{{ images['5ccbebe46b80d'].slug }}" alt="">
+                        {% endif %}
+                    </div>
+
+                    <div class="content">
+                        <h2 class="actualite-title">{{ actualite.designation }}</h2>
+                        <div class="actualite-description">
+                            {% set max_length = 200 %}
+                            {{ actualite.descriptionShort |length > max_length ? actualite.descriptionShort |slice(0, max_length) ~ '...' : actualite.descriptionShort }}
+                        </div>
+
+                        <div class="controls">
+                            <a href="{{ pages.actualites.uri ~ '/' ~ actualite.slug }}" class="btn">Lire la suite</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% set type_count = type_count + 1 %}
+                {% if type_count == 7 %}
+                    {% set type_count = 1 %}
+                {% endif %}
+
+            {% endfor %}
+
+        </section> {# /.actualites #}
+
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends '@app/base.html.twig' %}
+
+{% block page_title %}
+    {% if category.designationOrder <= 0 %}
+        {{ category.designationBig ~ ' ' ~ category.designationSmall }}
+    {% else %}
+        {{ category.designationSmall ~ ' ' ~ category.designationBig }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="page page-products">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <header class="page-header">
+
+            <div class="figure">
+{#                <img src="{{ category.image|imagine_filter('page_header') }}" alt="{{ category.designation }}">#}
+                <img src="{{ asset('assets/media/images/' ~ category.image) }}" alt="{{ category.designation }}">
+            </div>
+
+            <div class="content custom-text">
+                {% if category.designationOrder <= 0 %}
+                    <p><b>{{ category.designationBig }}</b></p>
+                    <p>{{ category.designationSmall }}</p>
+                {% else %}
+                    <p>{{ category.designationSmall }}</p>
+                    <p><b>{{ category.designationBig }}</b></p>
+                {% endif %}
+            </div>
+        </header>
+
+        <div class="products">
+            <div class="wrapper">
+                <div class="introduction">
+                    {{ category.description|raw }}
+                </div>
+
+                <p class="products-enabled">
+                    <span>{{ products|length }}</span> {{ translation.page_products_availiables }}</p>
+
+
+                <div class="products-list">
+                    {% set count = 1 %}
+                    {% for product in products %}
+
+                        {% if count == 1 %}
+                            <div class="products-block">
+
+                            <div class="design_top">
+                                <div class="top"></div>
+                            </div>
+
+                            <div class="design_bottom">
+                                <div class="bottom"></div>
+                            </div>
+
+
+                        {% endif %}
+
+                        {% include '@app/includes/product_thumb.html.twig' with {'thumb' : product } %}
+
+                        {% if count == 3 %}
+
+                            </div>
+                        {% endif %}
+
+
+                        {% set count = count + 1 %}
+                        {% if count == 4 %}
+                            {% set count =  1 %}
+
+                        {% endif %}
+                    {% endfor %}
+                </div> {# /.products-list #}
+            </div> {# /.wrapper #}
+        </div> {# /.products #}
+
+
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,172 @@
+inbox:
+  disabled_actions: ['view']
+
+  list:
+    fields:
+      - { property: 'firstname', type: 'text', label: "Identité" }
+      - { property: 'email', type: 'text', label: "Adresse email" }
+      - { property: 'subject', type: 'text', label: "Sujet" }
+  form:
+    fields:
+      - { property: 'firstname', type: 'text', label: "Prénom" }
+      - { property: 'lastname', type: 'text', label: "Nom" }
+      - { property: 'email', type: 'text', label: "Email" }
+      - { property: 'subject', type: 'text', label: "Sujet" }
+      - { property: 'message', type: 'text', label: "Message" }
+
+  edit:
+    title: 'Page "Accueil"'
+
+newsletter:
+  disabled_actions: ['view', 'remove', 'new']
+  list:
+    #    design: 'card'
+    title: 'Emails'
+    fields:
+      - { property: 'reference', label: 'Désignation' }
+      - { property: 'type', label: 'Type' ,  type: 'choices', format: [ { value: '0',  label: 'Email' },{ value: '1',  label: 'SMS' }]}
+      - { property: 'isEnabled', type: 'toggle',  label: 'Status' }
+
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'controller_module', type: 'text', label: 'Module' }
+      - { property: 'controller_entity', type: 'text', label: 'Entity' }
+      - { property: 'controller_action', type: 'text', label: 'Action' }
+      - { property: 'controller_id', type: 'text', label: 'ID' }
+      - { property: 'controller', type: 'text', label: 'Controller' }
+
+  edit:
+    title: "Modification d'une page"
+
+  new:
+    title: "Nouvelle page"
+
+email_sendin_blue:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'account_key', type: 'text', label: "Clé d'accès" }
+
+  edit:
+    title: 'Page "Accueil"'
+
+sms_sendin_blue:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'account_key', type: 'text', label: "Clé d'accès" }
+
+  edit:
+    title: 'Page "Accueil"'
+
+email_mailjet:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'account_key', type: 'text', label: "Clé d'accès" }
+
+  edit:
+    title: 'Page "Accueil"'
+
+sms_mailjet:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'account_key', type: 'text', label: "Clé d'accès" }
+
+  edit:
+    title: 'Page "Accueil"'
+
+sms_mode:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'account_key', type: 'text', label: "Clé d'accès" }
+
+  edit:
+    title: 'Page "Accueil"'
+
+
+email_configuration:
+  disabled_actions: ['view']
+
+  form:
+    breadcrumb:
+      - { label: 'Paramètres' }
+      - { label: 'Emails' }
+
+    fields:
+      - { property: 'is_enabled', type: 'text', label: 'Transport' }
+
+  edit:
+    title: "Configuration de la boutique"
+
+email:
+  disabled_actions: ['view', 'remove', 'new']
+
+  list:
+    fields:
+      - { property: 'reference', label: 'Référence' }
+      - { property: 'username', label: 'Identifiant' }
+      - { property: 'host', label: 'Hôte' }
+      - { property: 'transport', label: 'Transport' }
+      - { property: 'port', label: 'Port' }
+      - { property: 'encryption', label: 'Chiffrage' }
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'transport', type: 'text', label: 'Transport' }
+      - { property: 'username', type: 'text', label: 'Identifiant' }
+      - { property: 'password', type: 'text', label: 'Mot de passe' }
+      - { property: 'host', type: 'text', label: 'Hôte' }
+      - { property: 'port', type: 'text', label: 'Port' }
+      - { property: 'encryption', type: 'text', label: 'Chiffrage' }
+
+  edit:
+    title: "Configuration de la boutique"
+
+email_application:
+  disabled_actions: ['view',  'remove', 'new']
+
+  list:
+    fields:
+      - { property: 'reference', label: 'Référence' }
+      - { property: 'subject', label: 'Sujet' }
+      - { property: 'sender', label: 'Expéditeur' }
+      - { property: 'email', label: 'Paramètres' }
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'dev_key', type: 'text', label: 'Clé' }
+      - { property: 'email', type: 'text', label: 'Configuration' }
+      - { property: 'template', type: 'text', label: 'Mise en page' }
+      - { property: 'subject', type: 'text', label: 'Sujet' }
+      - { property: 'sender', type: 'text', label: 'Expéditeur' }
+
+  edit:
+    title: "Configuration de la boutique"
+
+
+email_template:
+  disabled_actions: ['view']
+
+  list:
+    fields:
+      - { property: 'reference', label: 'Référence' }
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'content', type: 'text', label: 'Clé' }
+
+  edit:
+    title: "Configuration de la boutique"

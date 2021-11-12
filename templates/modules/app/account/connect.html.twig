@@ -1,0 +1,154 @@
+{% extends '@app/base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('build/connect.min.css') }}">
+{% endblock %}
+
+{% block content %}
+
+
+
+    <div class="page page-login">
+
+        <div class="block-container">
+
+            <div class="block-title">
+
+                <h1 class="page-title">Administration<br>Back Office</h1>
+
+            </div>
+
+            <form class="form connection-form" id="form-connect" method="post" action="">
+
+                <input type="email" class="input-connection" name="connect_email" id="connect_email" placeholder="{{ translation.form_connect_email|default('E-MAIL') }}">
+
+                <input type="password" class="input-connection" name="connect_password" id="connect_password" placeholder="{{ translation.form_connect_password|default('MOT DE PASSE') }}">
+
+                <div class="submit-block">
+                    <input type="submit" class="btn-submit" id="connect-submit" value="connexion">
+                    <div class="container-ellipsis" id="container-ellipsis">
+                        <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                </div>
+
+
+            </form>
+
+
+            <div class="row-block">
+
+                {% if pages.forgot_password is  defined %}
+                    <div class="forgot-block">
+                        <a href="{{ pages.forgot_password.translate(locale).uri }}" class="forgot-link">
+                            <i class="fas fa-key"></i>
+                            <p class="forgot-text">Mot de passe oublié?</p>
+                        </a>
+                    </div>
+                {% endif %}
+
+                <div class="return-block">
+                    <a href="/" class="return-link">
+                        <i class="fas fa-undo-alt"></i>
+                        <p class="return-text">Retour au site</p>
+                    </a>
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+
+    </div> {# /.page #}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function () {
+
+            /**
+             * Keyup sur le formulaire de connection
+             * **/
+            $('#form-connect input').on('keyup', remove_errors());
+
+            /**
+             * Soumission d'une connexion
+             */
+            $('#form-connect').validate({
+                rules: {
+                    connect_email: {
+                        required: true,
+                        email: true
+                    },
+                    connect_password: {
+                        required: true,
+                    }
+                },
+                messages: {
+                    connect_password: {
+                        required: "{{ translation.page_errors_invalid_password|default('Mot de passe invalide')|raw }}",
+                    },
+                    connect_email: "{{ translation.page_errors_invalid_email|default('Adresse e-mail invalide')|raw }}"
+                },
+
+                submitHandler: function (form) {
+
+                    var button = $('#connect-submit');
+                    var errors = $('#connect-errors');
+
+                    var dataToSend = {
+                        'email': $('#connect_email').val(),
+                        'password': $('#connect_password').val(),
+                    };
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                    remove_errors();
+
+                    $('#container-ellipsis').css("z-index","100");
+                    $('#connect-submit').css("color","#003668");
+
+                    $.ajax({
+                        url: '{{ path('user_login') }}',
+                        data: dataToSend,
+                    }).done(function (data) {
+
+                        let redirect = data['content']['redirect'];
+                        window.location.replace(redirect);
+
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        button.html('{{ translation.page_connect_form_btn_submit|default('')|raw }}');
+
+                        if (jqXHR.status == 401) {
+                            errors.html('{{ translation.page_errors_id|default('')|raw }}');
+                        } else {
+                            errors.html('{{ translation.page_errors_fire|default('')|raw }}');
+                        }
+
+                        errors.addClass('active');
+
+                    }).always(function(){
+                        $('#container-ellipsis').css("z-index","-1");
+                        $('#connect-submit').css("color","white");
+                    });
+
+                }
+            });
+
+            /**
+             * Nettoie l'affichage des erreurs
+             */
+            function remove_errors() {
+                var errors = $('#connect-errors');
+
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,145 @@
+{#
+    Module affichant la sidebar de navigation
+
+    Liste des propriétées utilisable dans le fichier de configuration :
+
+    - url: string
+
+    - icon: string -> Utilise "Font Awesome"
+    - icon_design: string -> Utilise "Matérial Design"
+    - label: string
+    - section: string
+    - type: string (divider)
+    - children: array()
+    - use_module: string -> Affiche uniquement si le module est activé
+    - role: array(string) -> Affiche uniquement si l'utilisateur possède le rôle
+
+    - controller: string
+    - enable: boolean
+    - alternative: boolean
+
+#}
+
+{# MACRO - Icone d'un lien de navigation #}
+{% macro icon(item) %}
+
+    {% if item.icon is defined %}
+        <i class="{{ item.icon }} nav-icon"></i>
+
+    {% elseif item.icon_design is defined %}
+        <i class="material-icons nav-icon">{{ item.icon_design }}</i>
+
+    {% else %}
+        {% set thumb = '' %}
+
+        {# Découpe le label pour en afficher les Initiales #}
+        {% for word in item.label|split(' ') %}
+            {% for element in word|split("'") %}
+                {% if element not in ['de', 'que', 'qui', 'ou', 'donc', 'or', 'ni', 'car'] and element|length > 1 %}
+                    {% set thumb = thumb ~ element|first|upper %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        <div class="nav-thumb">{{ thumb }}</div>
+    {% endif %}
+
+{% endmacro %}
+
+{# MACRO - Lien de navigation #}
+{% macro link(item, url) %}
+
+    <a href="{{ url }}" class="nav-link">
+
+        {# ICON #}
+        <div class="container-picto">
+            {{ _self.icon(item) }}
+        </div>
+
+        {# LABEL #}
+        <div class="container-span">
+            <span class="item-label">{{ item.label }}</span>
+        </div>
+    </a>
+
+{% endmacro %}
+
+{% set break = false %}
+
+    {# Recherche d'autorisation d'accès #}
+    {% if item.role is defined %}
+        {% for role in item.role %}
+            {% if not is_granted(role) %}
+                {% set break = true %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {# Si l'accès est autorisé #}
+    {% if break == false %}
+        {% if item.use_module is not defined or (item.use_module is defined and item.use_module in authorized_modules ) %}
+
+            {# SECTION #}
+            {% if item.section is defined %} {# SECTION #}
+                <li class="nav-item nav-section" data-type="0">
+                    <span>{{ item.section }}</span>
+                </li>
+
+                {# SEPARATEUR#}
+            {% elseif item.type is defined and item.type == 'divider' %}
+                <li class="nav-item nav-divider" data-type="1"></li>
+
+                {# CATEGORIE #}
+            {% elseif item.children is defined %}
+                <li id="navbar-list-{{ loop.index }}" class="nav-item" data-type="2">
+                    <a id="navbar-user-header" class="nav-link" data-toggle="collapse"
+                       href="#navbar-sublist-{{ loop.index }}">
+                        <div class="container-picto">
+                            <i class="fa fa-angle-down icon-category"></i>
+                            {{ _self.icon(item) }}
+                        </div>
+
+                        <div class="container-span">
+                            {{ item.label }}
+                        </div>
+                    </a>
+                    <ul id="navbar-sublist-{{ loop.index }}" class="collapse sublist"
+                        data-parent="#navbar-list-{{ loop.index }}">
+                        {% for subitem in item.children %}
+                            {% include '@core/admin/theme/basique/includes/navigation.html.twig' with {'item' : subitem} %}
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                {# LIEN - EXTERNE #}
+            {% elseif item.url is  defined %}
+                <li class="nav-item" data-type="3">{{ _self.link(item, item.url) }}</li>
+
+                {# LIEN - CONTROLLER #}
+            {% elseif item.controller is defined %}
+                <li class="nav-item" data-type="4">{{ _self.link(item, path(item.controller)) }}</li>
+
+                {# LIEN - AUTO FORM #}
+            {% else %}
+                {% set path = path('core_admin_controller_entity_auto') ~ '?module='~ item.module ~'&entity=' ~ item.entity~'&action=' ~ item.action %}
+
+                {% if item.action != 'list' %}
+                    {% if item.id is defined %}
+                        {% set path = path ~ '&id=' ~ item.id %}
+                    {% endif %}
+                {% endif %}
+
+                {# Redirige le formulaire vers une autre entités #}
+                {% if item.alternative is defined %}
+                    {% set path = path ~ '&alternative=' ~ item.alternative %}
+                {% endif %}
+
+                {# Affiche uniquement les entités isEnabled #}
+                {% if item.enable is defined %}
+                    {% set path = path ~ '&enable=' ~ item.enable %}
+                {% endif %}
+
+                <li class="nav-item" data-type="5">{{ _self.link(item, path) }}</li>
+            {% endif %}
+        {% endif %}
+    {% endif %}

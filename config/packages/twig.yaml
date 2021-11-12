@@ -1,0 +1,10 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    paths:
+        '%kernel.project_dir%/templates/modules/app': app
+        '%kernel.project_dir%/templates/modules/core': core
+        '%kernel.project_dir%/templates/modules/sender': sender
+        '%kernel.project_dir%/templates/modules/shopping': shopping
+        '%kernel.project_dir%/templates/modules/user': user

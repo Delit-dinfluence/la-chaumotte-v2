@@ -1,0 +1,21 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block stylesheets %}
+    {% include '@sender/admin/theme/basique/includes/templates/styles.html.twig' %}
+
+{% endblock %}
+
+
+{% block content %}
+    {% include '@sender/admin/theme/basique/includes/template_drag_and_drop.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {#<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/inline/ckeditor.js"></script>#}
+    <script src="{{ asset('assets/vendors/jquery-ui-1.12.1/js/jquery-ui.min.js') }}"></script>
+
+    {% include '@sender/admin/theme/basique/includes/templates/scripts.html.twig' %}
+
+{% endblock %}

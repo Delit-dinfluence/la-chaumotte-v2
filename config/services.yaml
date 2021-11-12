@@ -1,0 +1,95 @@
+parameters:
+    google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+    locale: 'fr'
+#    app_locales: fr|en|zh # Utiliser pour la gestion des URL
+#    translates_locales: [fr,en,zh] # Utiliser pour les traductions de textes
+
+    admin_prefix: '/4DM1n157R4710N/'
+
+    knp.doctrine_behaviors.translatable_subscriber.translatable_trait: Core\Entity\Traits\TranslatableTrait
+    knp.doctrine_behaviors.translatable_subscriber.translation_trait: Core\Entity\Traits\TranslationTrait
+
+    file_cache_hystory: '%kernel.root_dir%/../var/log/history.log'
+    file_templates: '%kernel.root_dir%/../templates/modules/'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.date:
+        class: Twig_Extensions_Extension_Date
+        tags:
+            - { name: twig.extension }
+
+    onKernelController:
+        class: Core\Listener\ControllerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    login_listener:
+        class:  User\Listener\LoginListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    logout_listener:
+        class:  User\Listener\LogoutListener
+
+
+    manager.session:
+        class: Core\Service\Session\Session
+        arguments: ['@session', '@doctrine.orm.entity_manager', '@doctrine.orm.manager_registry']
+
+    history_message:
+        class: Core\Service\History\HistoryMessage
+        arguments: ['@doctrine.orm.entity_manager']
+
+    Fixture\:
+        resource: '../src/DataFixtures/*'
+        exclude: '../src/DataFixtures/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\:
+        resource: '../src/AppBundle/*'
+        exclude: '../src/AppBundle/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/AppBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    Core\:
+        resource: '../src/CoreBundle/*'
+        exclude: '../src/CoreBundle/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Core\Controller\:
+        resource: '../src/CoreBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    Sender\:
+        resource: '../src/SenderBundle/*'
+        exclude: '../src/SenderBundle/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Sender\Controller\:
+        resource: '../src/SenderBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    Shopping\:
+        resource: '../src/ShoppingBundle/*'
+        exclude: '../src/ShoppingBundle/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Shopping\Controller\:
+        resource: '../src/ShoppingBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    User\:
+        resource: '../src/UserBundle/*'
+        exclude: '../src/UserBundle/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    User\Controller\:
+        resource: '../src/UserBundle/Controller'
+        tags: ['controller.service_arguments']

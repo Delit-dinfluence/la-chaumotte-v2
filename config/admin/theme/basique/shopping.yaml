@@ -1,0 +1,834 @@
+
+order:
+  disabled_actions: ['view', 'new', ]
+
+  list:
+    title: 'Commandes'
+    card_title: 'Liste des commandes (##count_total##)'
+
+    breadcrumb:
+      - { label: 'Commandes'}
+
+    fields:
+      - { property: 'reference', label: 'Référence' }
+      - { property: 'status', label: 'Status' ,  type: 'sign', format: [ { value: '0', class: 'btn-warning', label: 'En attente de paiement' },{ value: '1', class: 'btn-primary', label: 'Payée' },{ value: '2', class: 'btn-info', label: 'En cours de préparation' },{ value: '3', class: 'btn-success', label: 'Expediée' },{ value: '4', class: 'btn-danger', label: 'Annulée' },{ value: '5', class: 'btn-danger', label: 'Erreur de paiement' }]}
+      - { property: 'email', label: 'Email' }
+      #      - { property: 'debug', label: 'Commande de test' }
+      - { property: 'updatedAt', type: "datetime", format: "d-m-Y h:i:s", label: 'Dernière mise à jours' }
+
+  form:
+    breadcrumb:
+      - { label: 'ECommerce'}
+      - { label: 'Commandes', url: '' }
+
+    fields:
+      - { property: 'reference', type: 'text' }
+      - { property: 'use_same_address', type: 'text' }
+      - { property: 'payment_method', type: 'radio'}
+      - { property: 'delivery_method', type: 'radio'}
+      - { property: 'delivery_price', type: 'radio'}
+      - { property: 'status', type: 'select', choices: []}
+
+  edit:
+    title: "Commande"
+    card_title: 'Récapitulatif de la commande'
+
+product:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Produits'
+    card_title: 'Produits de la boutique (##count_total##)'
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Produits' }
+
+    fields:
+#      - { property: 'type', type: 'text', label: 'Type' }
+      - { property: 'cover', type: 'image', label: 'Image' }
+      - { property: 'designation', label: 'Désignation',  type: 'self'}
+      - { property: 'reference', label: 'Référence' }
+      - { property: 'categories', label: 'Catégorie(s)', type: 'collection', collection_module: 'shopping', collection_entity: 'Category' }
+      - { property: 'priceHt', label: 'Prix HT', type: 'price' }
+      - { property: 'priceTtc', label: 'Prix TTC', type: 'price' }
+      - { property: 'tax', label: 'Taux TVA' }
+      #      - { property: 'updatedAt', type: "datetime", label: 'Dernière mise à jours' }
+      - { property: 'isEnabled', label: 'En ligne', type: 'toggle' }
+      - { property: 'isIndexable', type: 'toggle', label: 'Moteur de recherche' }
+
+  form:
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Produits' }
+
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'En ligne' }
+      - { property: 'reference', type: 'text' }
+      - { property: 'url', type: 'translation' }
+      - { property: 'designation', label: 'Désignation', type: 'translation', required: 'true', help: 'Titre principal du produit'}
+      - { property: 'subtitle', label: 'Sous-titre', type: 'translation', help: 'Titre complémentaire du produit' }
+
+      - { property: 'description_short', type: 'translation', class: 'wysiwyg'}
+      - { property: 'description_long', type: 'translation', class: 'wysiwyg' }
+      - { property: 'redirect', type: 'select' }
+      - { property: 'redirect_link', type: 'text' }
+      - { property: 'type', type: 'select', label: 'Type de produit' }
+      - { property: 'price_ht', type: 'text' }
+      - { property: 'categories', type: 'entity',  module: 'shopping', entity: 'Category', action_label: 'Ajouter une catégorie', action_icon: 'fas fa-plus'  }
+      - { property: 'sortorder', type: 'select', visible: 'false' }
+      - { property: 'related_products', type: 'select', class: 'js-select-theme-multiple' }
+
+  edit:
+    title: "Modification d'un produit"
+
+  new:
+    title: "Nouveau   produit"
+
+product_variation:
+  disabled_actions: ['view', 'new', 'remove']
+
+  list:
+    fields:
+      - { property: 'id', label: '#' }
+
+  form:
+    fields:
+
+  edit:
+    title: "Modification d'un panier"
+
+category:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Catégories'
+    card_title: 'Catégories de la boutique (##count_total##)'
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Catégories' }
+
+    fields:
+      - { property: 'isEnabled', label: 'Status', type: 'toggle' }
+      - { property: 'image', type: 'image', label: 'Image' }
+      #      - { property: 'reference', type: 'text',  label: 'Référence' }
+      - { property: 'designation', type: 'self',  label: 'Désignation' }
+      - { property: 'parent', type: 'entity', module: 'shopping',  entity: 'Category', label: 'Parent' }
+      - { property: 'slug', type: 'text',  label: 'URL' }
+  #      - { property: 'updatedAt', type: "datetime", label: 'Dernière mise à jours' }
+
+  form:
+    actions:
+      list: { label: 'Retour aux catégories', icon: 'fa fa-bars'}
+
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'En ligne', }
+      - { property: 'is_indexable', type: 'checkbox', label: 'Indexer la catégorie',  help: 'Répertorie la page dans les moteurs de recherches' }
+      - { property: 'priority', type: 'checkbox', label: 'Priorité'}
+      - { property: 'reference', type: 'text', help: 'Référence unique de la catégorie', required: 'true' }
+      - { property: 'imageFile', type: 'image' }
+      - { property: 'image_alt', type: 'translation' }
+      - { property: 'designation', type: 'translation' }
+      - { property: 'description', type: 'translation', class: 'wysiwyg' }
+      - { property: 'parent', type: 'entity', module: 'shopping',  entity: 'componentCategory'}
+      - { property: 'url', type: 'translation' }
+
+  edit:
+    title: "Modification d'une catégorie"
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Catégories' }
+      - { label: "Modification d'une catégorie" }
+
+  new:
+    title: "Création d'une catégorie"
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Catégories' }
+      - { label: "Création d'une catégorie" }
+
+attributes_features:
+
+  list:
+    title: 'Attributs & Caractéristiques'
+    card_attribute_title: "Groupes d'attributs de la boutique (##count_total##)"
+    card_feature_title: "Groupes de caractéristique de la boutique (##count_total##)"
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Attributs & Caractéristiques' }
+
+attribute_group:
+  disabled_actions: ['view']
+
+
+  list:
+    title: 'Catégories'
+    card_title: 'Catégories de la boutique (##count_total##)'
+
+    fields:
+      - { property: 'image', type: 'image', label: 'Image' }
+      - { property: 'designation', type: 'collection', label: 'Désignation', collection_module: 'Shopping', collection_entity: 'Attribute', collection_property: 'attribute_group' }
+      - { property: 'groupRequired',   label: 'Obligatoire' }
+
+  form:
+    title: "Groupe d'attributs"
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Attributs & Caractéristiques', url: '/4DM1n157R4710N/shopping/features_attributes' }
+      - { label: "Groupe d'attributs" }
+
+
+    fields:
+      - { property: 'is_enabled', type: 'toggle', label: 'Activer' }
+      - { property: 'group_required', type: 'checkbox', label: 'Obligatoire' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'label', type: 'translation', label: 'Label' }
+      - { property: 'print_type', type: 'text', label: 'Type' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+      - { property: 'formats', type: 'select', label: 'Formats autorisés' }
+
+
+  edit:
+    card_title: "Modification du groupe d'attributs (##entity_id##)"
+
+  new:
+    card_title: "Nouveau groupe de d'attributs"
+
+attribute:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Attributs'
+    card_title: "Attributs de la boutique (##count_total##)"
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Attributs & Caractéristiques', url: '/4DM1n157R4710N/shopping/features_attributes' }
+      - { label: 'Attributs' }
+
+    fields:
+      - { property: 'image', type: 'image', label: 'Image' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+
+  form:
+    title: 'Attributs'
+    card_title: "Attributs de la boutique (##count_total##)"
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Attributs & Caractéristiques', url: '/4DM1n157R4710N/shopping/features_attributes' }
+      - { label: 'Attributs' }
+
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'content', type: 'translation', label: 'Contenu', class: 'wysiwyg' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+      - { property: 'attribute_group', label: 'Groupe', type: 'entity', module: 'Shopping', entity: 'AttributeGroup'}
+
+  edit:
+    title: "Modification d'un attribut"
+
+  new:
+    title: "Nouvel attribut"
+
+feature_group:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Attributs & Caractéristiques'
+    card_title: "Groupes d'attributs de la boutique (##count_total##)"
+
+    fields:
+      - { property: 'designation', type: 'collection', label: 'Désignation', collection_module: 'Shopping', collection_entity: 'Feature', , collection_property: 'feature_group'  }
+      - { property: 'printType', type: 'text', label: 'Type' }
+
+  form:
+    title: "Groupe de caractéristiques"
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Attributs & Caractéristiques', url: '/4DM1n157R4710N/shopping/features_attributes' }
+      - { label: "Groupe de caractéristiques" }
+
+
+    fields:
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'print_type', type: 'text', label: 'Type' }
+
+  edit:
+    card_title: "Modification du groupe de caractéristique (##entity_id##)"
+
+  new:
+    card_title: "Nouveau groupe de caractéristique"
+
+feature:
+  disabled_actions: ['view']
+
+  list:
+    title: 'Caractéristiques'
+    card_title: "Caractéristiques de la boutique (##count_total##)"
+
+    breadcrumb:
+      - { label: 'Catalogue' }
+      - { label: 'Attributs & Caractéristiques', url: '/4DM1n157R4710N/shopping/features_attributes' }
+      - { label: 'Caractéristiques' }
+
+    fields:
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'toggle', label: 'Activer' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'feature_group', label: 'Groupe', type: 'entity', module: 'Shopping', entity: 'FeatureGroup'}
+
+
+  edit:
+    title: "Modification d'une caractéristique"
+
+  new:
+    title: "Nouvelle caractéristique"
+
+
+
+
+
+
+
+
+order_action:
+  disabled_actions: ['edit', 'remove', 'new']
+
+  list:
+    title: 'Liste des commandes'
+    breadcrumb:
+      - { label: 'Commandes'}
+
+    fields:
+      - { property: 'libelle', label: 'Désignation' }
+      - { property: 'updatedAt', type: "datetime", format: "d-m-Y", label: 'Dernière mise à jours' }
+
+  view:
+    fields:
+      - { property: 'libelle', type: 'text', label: 'Désignation' }
+      - { property: 'content', type: 'text', label: 'Options' }
+      - { property: 'updatedAt',  type: "datetime", format: "d-m-Y", label: 'Mise à jours' }
+
+
+
+
+cart:
+  disabled_actions: ['view']
+
+  list:
+    fields:
+      - { property: 'id', label: '#' }
+
+  form:
+    fields:
+
+  edit:
+    title: "Modification d'un panier"
+  new:
+    title: "Nouveau panier"
+
+
+
+reduction:
+  disabled_actions: ['view']
+
+  breadcrumb:
+    - { label: 'Personnalisation' }
+    - { label: 'International' }
+    - { label: 'Langues' }
+
+  list:
+    title: 'Liste des réductions'
+    actions:
+      new:
+        icon: 'fa fa-plus'
+        label: 'Ajouter une promotion'
+
+
+    fields:
+      - { property: 'isEnabled', label: 'Statut', type: 'toggle' }
+
+  form:
+
+    fields:
+      - { property: 'is_enabled', label: 'Statut', type: 'toggle' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'description', type: 'translation', label: 'Description' }
+      - { property: 'value', type: 'text', label: 'Code' }
+
+      - { property: 'type', type: 'text', label: 'Désignation' }
+
+      - { property: 'use_timer', type: 'text', label: 'Utiliser une limite dans le temps' }
+      - { property: 'available_from', type: 'text', label: 'Du' }
+      - { property: 'available_to', type: 'text', label: 'Au' }
+      - { property: 'starting_at', type: 'text', label: 'Quantité minimum' }
+      - { property: 'groups', type: 'text', label: 'Groupes' }
+      - { property: 'customers', type: 'text', label: 'Clients' }
+
+  edit:
+    title: "Modification d'une réduction"
+
+  new:
+    title: "Nouvelle réduction"
+
+
+
+
+
+tax:
+  disabled_actions: ['view', 'remove']
+
+  list:
+    breadcrumb:
+      - { label: 'International' }
+      - { label: 'Taxes' }
+
+    title: 'Liste des taxes'
+
+
+    fields:
+      - { property: 'designation', type: 'text', label: 'Désignation' }
+      - { property: 'rate', type: 'text', label: 'Taux', suffixe: ' %' }
+      - { property: 'isEnabled', label: 'Statut', type: 'toggle' }
+
+  form:
+
+    fields:
+      - { property: 'is_enabled', label: 'Status', type: 'toggle' }
+      - { property: 'designation', type: 'text', label: 'Désignation' }
+      - { property: 'rate', type: 'text', label: 'Taux' }
+
+  edit:
+    title: "Modification d'une taxe"
+
+  new:
+    title: "Nouvelle taxe"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+delivery_configuration:
+  disabled_actions: ['view', 'new', 'list', 'remove']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'chekbox', label: 'Activer' }
+
+  edit:
+    title: "Configuration des moyens de livraison"
+
+delivery_method:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+  list:
+    breadcrumb:
+      - { label: 'Paramètres Boutique' }
+      - { label: 'Moyens de livraison' }
+
+    #    design: 'card'
+    title: 'Liste des "Moyens de livraison"'
+    fields:
+      - { property: 'reference', label: 'Désignation' }
+      - { property: 'isEnabled', label: 'Status', type: 'toggle' }
+
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'controller_module', type: 'text', label: 'Module' }
+      - { property: 'controller_entity', type: 'text', label: 'Entity' }
+      - { property: 'controller_action', type: 'text', label: 'Action' }
+      - { property: 'controller_id', type: 'text', label: 'ID' }
+      - { property: 'controller', type: 'text', label: 'Controller' }
+  edit:
+    title: "Modification d'un moyen de livraison"
+
+  new:
+    title: "Nouveau moyen de livraison"
+
+delivery_shop:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'text', label: 'Référence' }
+
+  edit:
+    title: "Modification d'un moyen de livraison"
+
+delivery_home:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+      - { property: 'out_of_range_behavior', label: 'Comportement en cas de conflit' , type: 'text' }
+      - { property: 'rules', label: 'Règles de taxe', type: 'entity',  module: 'shopping', entity: 'DeliveryRule' }
+
+
+  edit:
+    title: "Modification d'un moyen de livraison"
+
+delivery_rule:
+  disabled_actions: ['view']
+  list:
+    fields:
+      - { property: 'chargeType', label: 'Type' ,  type: 'sign', format: [ { value: '0',  label: 'Prix HT' },{ value: '1', label: 'Poids' },{ value: '2', label: 'Quantité' }]}
+      - { property: 'limitLower', label: 'X supérieur  à' }
+      - { property: 'limitLowerOrEqual', type: 'toggle', label: 'ou égale' }
+      - { property: 'limitUpper', label: 'X inférieur à' }
+      - { property: 'limitUpperOrEqual', type: 'toggle', label: 'ou égale' }
+      - { property: 'chargePrice', label: 'Valeur ajoutée au prix HT' }
+      - { property: 'freeChargePrice', type: 'toggle', label: 'Gratuit' }
+
+
+  form:
+    fields:
+
+      - { property: 'charge_type', type: 'text', label: 'Prix / Poids / Quantité' }
+      - { property: 'limit_lower', type: 'text', label: 'Supérieur à' }
+      - { property: 'limit_lower_or_equal', type: 'checkbox', label: 'Supérieur ou égale' }
+      - { property: 'limit_upper', type: 'text', label: 'Inférieur à'}
+      - { property: 'limit_upper_or_equal', type: 'checkbox', label: 'Inférieur ou égale' }
+      - { property: 'charge_price', type: 'text', label: 'Valeur ajoutée au prix HT', label_complement: '€'}
+      - { property: 'free_charge_price', type: 'checkbox', label: 'Gratuit' }
+
+
+  edit:
+    title: "Modification d'un moyen de livraison"
+
+delivery_collisimo:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'text', label: 'Référence' }
+
+  edit:
+    title: "Modification d'un moyen de livraison"
+
+delivery_mondial_relay:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'client_code', type: 'text', label: 'Code client' }
+      - { property: 'private_key', type: 'text', label: 'Clé privée' }
+
+  edit:
+    title: "Modification d'un moyen de livraison"
+
+shop:
+  list:
+    fields:
+      - { property: 'id', label: '#' }
+
+  form:
+    fields:
+      - { property: 'controller_module', type: 'text', label: 'Module' }
+
+  edit:
+    title: "Modification moyen de paiement"
+
+  new:
+    title: "Nouveau moyen de paiement"
+
+
+
+payment_configuration:
+  disabled_actions: ['view', 'new', 'list', 'remove']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'chekbox', label: 'Activer' }
+
+  edit:
+    title: "Configuration des moyens de paiement"
+
+
+payment_method:
+  disabled_actions: ['view']
+  list:
+    breadcrumb:
+      - { label: 'Paramètres Boutique' }
+      - { label: 'Moyens de paiement' }
+
+    #    design: 'card'
+    title: 'Liste des "Moyens de paiements"'
+    fields:
+      - { property: 'image', type: 'image', label: 'Image' }
+      - { property: 'reference', label: 'Désignation' }
+      - { property: 'isEnabled', label: 'Status', type: 'toggle' }
+
+
+  form:
+    fields:
+      - { property: 'reference', type: 'text', label: 'Référence' }
+      - { property: 'imageFile', type: 'image', label: 'Image' }
+      - { property: 'controller_module', type: 'text', label: 'Module' }
+      - { property: 'controller_entity', type: 'text', label: 'Entity' }
+      - { property: 'controller_action', type: 'text', label: 'Action' }
+      - { property: 'controller_id', type: 'text', label: 'ID' }
+      - { property: 'controller', type: 'text', label: 'Controller' }
+  edit:
+    title: "Modification d'un moyen de paiement"
+
+  new:
+    title: "Nouveau moyen de paiement"
+
+payment_paypal:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+
+      - { property: 'buisness_id', type: 'text', label: 'Buisness ID' }
+      - { property: 'buisness_token', type: 'text', label: 'Buisness Token' }
+      - { property: 'webhook_id', type: 'text', label: "Webhook ID" }
+
+      - { property: 'debug_buisness_id', type: 'text', label: 'DEBUG - Buisness ID' }
+      - { property: 'debug_buisness_token', type: 'text', label: 'DEBUG - Buisness Token' }
+      - { property: 'debug_webhook_id', type: 'text', label: "DEBUG - Webhook ID" }
+
+      - { property: 'currency', type: 'text', label: 'Currency' }
+      - { property: 'description', type: 'text', label: 'Description' }
+
+      - { property: 'url_cancel', type: 'text', label: "URL d'annulation" }
+      - { property: 'url_notify', type: 'text', label: "URL de notification" }
+
+  edit:
+    title: "Modification d'un moyen de paiement"
+
+payment_check:
+  disabled_actions: ['view', 'remove', 'new', 'list']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'chekbox', label: 'Activer' }
+      - { property: 'beneficiary', type: 'text', label: "Bénéficiaire" }
+      - { property: 'bank', type: 'text', label: "Banque" }
+      - { property: 'rib_key', type: 'text', label: "Clé RIB" }
+      - { property: 'account_number', type: 'text', label: "Numéro de compte" }
+      - { property: 'branch_code', type: 'text', label: "Code guichet" }
+      - { property: 'bank_code', type: 'text', label: "Code banque" }
+      - { property: 'iban', type: 'text', label: "BIC" }
+      - { property: 'bic', type: 'text', label: "BIC" }
+      - { property: 'other', type: 'text', label: "Autres" }
+
+  edit:
+    title: "Modification d'un moyen de paiement"
+
+payment_credit_agricole:
+  disabled_actions: ['view', 'remove', 'list', 'new']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: 'Activer' }
+
+      - { property: 'paybox_site', type: 'text', label: "Numéro du magasin" }
+      - { property: 'paybox_rang', type: 'text', label: "Numéro du rang" }
+      - { property: 'paybox_id', type: 'text', label: "Identifiant Paybox" }
+
+      - { property: 'paybox_url_success', type: 'text', label: "URL de succès" }
+      - { property: 'paybox_url_cancel', type: 'text', label: "URL d'annulation" }
+      - { property: 'paybox_url_fail', type: 'text', label: "URL d'echec" }
+      - { property: 'paybox_url_reply_to', type: 'text', label: "URL de notification" }
+      - { property: 'paybox_settings_cancel', type: 'text', label: "Paramétrage de retour" }
+      - { property: 'paybox_key_hmac', type: 'text', label: "Clé secrète HMAC" }
+
+  edit:
+    title: "Modification d'un moyen de paiement"
+
+payment_wire:
+  disabled_actions: ['view', 'remove', 'new', 'list']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'chekbox', label: 'Activer' }
+      - { property: 'beneficiary', type: 'text', label: "Bénéficiaire" }
+      - { property: 'bank', type: 'text', label: "Banque" }
+      - { property: 'rib_key', type: 'text', label: "Clé RIB" }
+      - { property: 'account_number', type: 'text', label: "Numéro de compte" }
+      - { property: 'branch_code', type: 'text', label: "Code guichet" }
+      - { property: 'bank_code', type: 'text', label: "Code banque" }
+      - { property: 'iban', type: 'text', label: "BIC" }
+      - { property: 'bic', type: 'text', label: "BIC" }
+      - { property: 'other', type: 'text', label: "Autres" }
+
+  edit:
+    title: "Modification d'un moyen de paiement"
+
+
+country:
+  disabled_actions: ['view', 'remove']
+
+  list:
+    breadcrumb:
+      - { label: 'International' }
+      - { label: 'Pays' }
+
+    title: 'Pays'
+    actions:
+      new:
+        icon: 'fa fa-plus'
+        label: 'Ajouter un pays'
+
+    fields:
+      - { property: 'designation', label: 'Désignation' }
+      - { property: 'codeIso', label: 'Code ISO' }
+      - { property: 'callPrefix', label: 'Indicatif téléphonique', prefix: '+'}
+      - { property: 'countryZone', label: 'Zone', type: 'entity', module: 'Shopping', entity: 'CountryZone'}
+      - { property: 'isEnabled', label: 'Statut' }
+
+  form:
+    fields:
+      - { property: 'is_enabled',type: 'text', label: 'Statut' }
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+      - { property: 'code_iso', type: 'text', label: 'Code ISO' }
+      - { property: 'call_prefix',type: 'text', label: 'Préfixe de téléphone'  }
+      - { property: 'country_zone', type: 'select', label: 'Zone' }
+
+
+  edit:
+    title: "Modification d'un pays"
+  new:
+    title: "Nouveau pays"
+
+country_zone:
+  disabled_actions: ['view', 'remove']
+
+  list:
+    breadcrumb:
+      - { label: 'International' }
+      - { label: 'Zones Géographiques' }
+
+    title: 'Zones géographiques'
+    actions:
+      new:
+        icon: 'fa fa-plus'
+        label: 'Ajouter une zone'
+
+    fields:
+      - { property: 'designation', label: 'Désignation' }
+
+  form:
+    fields:
+      - { property: 'designation', type: 'text', label: 'Désignation' }
+
+  edit:
+    title: "Modification d'une zone géographique"
+  new:
+    title: "Nouvelle zone géographique"
+
+
+
+
+shop_configuration:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'bought_redirect_type', type: 'select', label: 'Redirection après un achat' }
+      - { property: 'random_type', type: 'text', label: 'Type de produit aléatoire' }
+      - { property: 'random_count', type: 'text', label: 'Nombre de produit aléatoire' }
+      - { property: 'free_delivery_count', type: 'text', label: 'Nombre de bouteille avant la livraison offerte' }
+
+  edit:
+    title: "Configuration de la boutique"
+
+order_configuration:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: '#' }
+  edit:
+    title: "Configuration des commandes"
+
+product_configuration:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: '#' }
+  edit:
+    title: "Configuration des produits"
+
+customer_address:
+  disabled_actions: ['view']
+  list:
+    fields:
+      - { property: 'isEnabled', type: 'checkbox', label: '#' }
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: '#' }
+  edit:
+    title: "Configuration des produits"
+
+customer:
+  disabled_actions: ['view']
+  list:
+    fields:
+      - { property: 'isEnabled', type: 'checkbox', label: '#' }
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: '#' }
+  edit:
+    title: "Configuration des produits"
+
+reduction_code:
+  disabled_actions: ['view']
+
+  form:
+    fields:
+      - { property: 'is_enabled', type: 'checkbox', label: '#' }
+  edit:
+    title: "Configuration des produits"
+
+research_configuration:
+  disabled_actions: ['view', 'remove', 'list']
+
+  form:
+    fields:
+      - { property: 'use_cache', type: 'checkbox', label: 'Activer la mise en cache des recherches' }
+      - { property: 'use_suggest', type: 'checkbox', label: 'Activer les suggestions' }
+      - { property: 'by_reference', type: 'checkbox', label: 'Par référence' }
+      - { property: 'by_url', type: 'checkbox', label: 'Par URL' }
+      - { property: 'by_designation', type: 'checkbox', label: 'Par désignation' }
+      - { property: 'by_keywords', type: 'checkbox', label: 'Par mot(s) clé(s)' }
+  edit:
+    title: "Configuration de la recherche"
+
+research_keyword:
+  disabled_actions: ['view']
+
+  list:
+    fields:
+      - { property: 'designation', label: 'Désignation' }
+
+  form:
+    fields:
+      - { property: 'designation', type: 'translation', label: 'Désignation' }
+
+  edit:
+    title: "Configuration des produits"

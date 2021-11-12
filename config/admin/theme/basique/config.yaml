@@ -1,0 +1,133 @@
+
+navigation:
+  title: 'Administration'
+  welcome: 'Bienvenue,'
+
+  fields:
+
+    - { label: 'Tableau de bords', controller: 'core_admin_dashboard', icon: 'fas fa-tachometer-alt', use_module: 'dashboard'  }
+
+    - label: 'Médias'
+      icon_design: 'g_translate'
+      use_module: 'media'
+      children:
+        - { label: 'Images', entity: 'Image', module: 'core', action: 'list'}
+        - { label: 'Fichiers', icon: 'fas fa-file', entity: 'MediaFile', module: 'core', action: 'list'}
+
+    - { label: 'Commandes', icon_design: 'shopping_cart', entity: 'Order', module: 'shopping', action: 'list',  use_module: 'shopping' }
+
+    - label: 'Catalogue'
+      icon: 'fa fa-project-diagram'
+      use_module: 'shopping'
+      children:
+        - { label: 'Produits',  entity: 'Product', module: 'shopping', action: 'list' }
+        - { label: 'Catégories', entity: 'Category', module: 'shopping', action: 'list' }
+#        - { label: 'Suivi', controller: 'shopping_admin_monitoring' }
+        - { label: 'Attributs & Caractéristiques', controller: 'shopping_admin_features_attributes'}
+#        - { label: 'Réductions', controller: 'shopping_admin_reductions' }
+#        - { label: 'Stocks', entity: 'ProductVariation', module: 'shopping', action: 'list' }
+
+
+#    - label: 'Clients'
+#      icon: 'fa fa-users'
+#      use_module: 'shopping'
+#      children:
+#        - { label: 'Clients', entity: 'Customer', module: 'shopping', action: 'list', role: ['ROLE_SUPER_ADMIN'] }
+#        - { label: 'Adresses', entity: 'CustomerAddress', module: 'shopping', action: 'list', role: ['ROLE_SUPER_ADMIN'] }
+
+
+
+    - { label: 'Articles', icon: 'fa fa-thumbtack',  entity: 'Customer', module: 'shopping', action: 'list', use_module: 'blog' }
+
+    - { label: 'Calendrier', icon: 'fa fa-newspaper',  entity: 'Customer', module: 'shopping', action: 'list', use_module: 'calendar' }
+
+    - { label: 'Partages', icon_design: 'backup',  entity: 'Customer', module: 'shopping', action: 'list', use_module: 'library' }
+
+#    - label: 'Messagerie'
+#      icon: 'fa fa-mail-bulk'
+#      children:
+#        - { label: 'Boite de réception', entity: 'Inbox', module: 'sender', action: 'list' }
+#        - { label: 'Newsletter', entity: 'Newsletter', module: 'sender', action: 'list', alternative: 'form', use_module: 'newsletter' }
+
+
+
+    - { label: 'Galerie', entity: 'GalleryConfiguration', module: 'core', action: 'form', id: '1', use_module: 'gallery' }
+
+    - { label: 'Références', entity: 'Reference', module: 'core', action: 'list', use_module: 'reference' }
+
+
+#    - { label: 'Actiualites', icon: 'fa fa-thumbtack',  entity: 'Actualite', module: 'app', action: 'list' }
+
+
+    - { label: 'Statistiques', controller: 'shopping_admin_statistics', icon: 'fa fa-chart-bar', use_module: 'statistics' }
+
+    - label: 'Apparence'
+      icon_design: 'g_translate'
+      children:
+        - { label: 'Pages', entity: 'Page',   icon: 'fa fa-desktop', module: 'core', action: 'list', alternative: 'form', enable: 'true' }
+        - { label: 'Slides', entity: 'Slide',   icon: 'fas fa-sliders-h', module: 'app', action: 'list' }
+        - { label: 'Histoire', icon: 'fa fa-thumbtack',  entity: 'History', module: 'app', action: 'list' }
+
+
+#    - label: 'Apparence'
+#      icon: 'fa fa-desktop'
+#      children:
+#        - { label: 'Pages', entity: 'Page', module: 'core', action: 'list', alternative: 'form' }
+#        - { label: 'Templates', entity: 'EmailTemplate', module: 'sender', action: 'list' }
+#        - { label: 'Administration', entity: 'Design', module: 'core', action: 'form', id: '1' }
+
+    - label: 'International'
+      icon_design: 'g_translate'
+      use_module: 'language'
+      children:
+        - { label: 'Pays', entity: 'Country', module: 'shopping', action: 'list', use_module: 'shopping'}
+        - { label: 'Zones géographiques', entity: 'CountryZone', module: 'shopping', action: 'list', use_module: 'shopping'}
+        - { label: 'Taxes', entity: 'Tax', module: 'shopping', action: 'list', use_module: 'shopping'}
+        - { label: 'Langues', entity: 'Language', module: 'core', action: 'list', enable: 'true' }
+        - { label: 'Traductions', controller: 'core_admin_translation_list'}
+
+#    - { section: 'Configuration' }
+#    - { label: 'Utilisateurs', icon: 'fa fa-users',  entity: 'User', module: 'user', action: 'list' }
+
+    - label: 'Utilisateurs'
+      icon_design: 'g_translate'
+      use_module: 'users'
+      children:
+        - { label: 'Utilisateurs', icon: 'fa fa-user',  entity: 'User', module: 'user', action: 'list' }
+        - { label: 'Groupes', icon: 'fa fa-users',  entity: 'UserGroup', module: 'user', action: 'list' }
+        - { label: 'Authorisation', icon: 'fa fa-check',  entity: 'Authorization', module: 'user', action: 'list' }
+        - { label: 'Authorisations de groupe', icon: 'fa fa-user-check',  entity: 'AuthorizationGroup', module: 'user', action: 'list' }
+
+    - label: 'Paramètres'
+      icon: 'fa fa-cog'
+      children:
+        - { label: 'Paramètres généraux', entity: 'Configuration', module: 'core', action: 'form', id: '1' }
+        - { label: 'Réseaux sociaux', entity: 'SocialNetwork', module: 'core', action: 'list' }
+        - { label: "Emails", entity: 'EmailConfiguration', module: 'sender', action: 'form', id: '1' }
+        - { label: "Page d'attente", entity: 'ComingSoonConfiguration', module: 'core', action: 'form', id: '1', use_module: 'coming_soon' }
+        - { label: 'Maintenance', entity: 'MaintenanceConfiguration', module: 'core', action: 'form', id: '1' }
+        - { label: 'Redirection', entity: 'Redirection', module: 'core', action: 'list' }
+
+    - label: 'Paramètres Boutique'
+      icon: 'fa fa-cog'
+      use_module: 'shopping'
+      children:
+        - { label: 'Paramètres généraux', entity: 'ShopConfiguration', module: 'shopping', action: 'form', id: '1' }
+        - { label: 'Rechercher', entity: 'ResearchConfiguration', module: 'shopping', action: 'form', id: '1' }
+#        - { label: 'Produit', entity: 'ProductConfiguration', module: 'shopping', action: 'form', id: '1' }
+#        - { label: 'Commande', entity: 'OrderConfiguration', module: 'shopping', action: 'form', id: '1' }
+        - { label: 'Moyens de paiement', entity: 'PaymentMethod', module: 'shopping', action: 'list', alternative: 'form' }
+        - { label: 'Moyens de livraison', entity: 'DeliveryMethod', module: 'shopping', action: 'list', alternative: 'form' }
+        - { label: 'Taxes de livraison', entity: 'DeliveryRule', module: 'shopping', action: 'list' }
+
+    - label: 'Paramètres avancés'
+      icon: 'fa fa-cog'
+      children:
+        - { label: 'Informations', entity: 'Information', module: 'core', action: 'form', id: '1' , role: ['ROLE_SUPER_ADMIN'] }
+#        - { label: 'Administration', entity: 'Configuration', module: 'core', action: 'form', id: '1' , role: ['ROLE_SUPER_ADMIN'] }
+        - { label: 'Historique', entity: 'HistoryConfiguration', module: 'core', action: 'form', id: '1',  role: ['ROLE_SUPER_ADMIN'] }
+
+#    - { section: 'Documentation' }
+#    - { label: 'Documentation', icon_design: 'library_books' , entity: 'Documentation', module: 'core', action: 'list' }
+#    - { label: 'Développeurs', icon_design: 'library_books' ,controller: 'core_admin_code_documentation', role: ['ROLE_SUPER_ADMIN'] }
+

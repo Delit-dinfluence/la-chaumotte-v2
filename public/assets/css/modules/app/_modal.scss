@@ -1,0 +1,161 @@
+.modal-cancel-wrapper {
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: none;
+  z-index: 999999;
+
+}
+
+
+.modal-cancel {
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999999;
+
+  background: rgba(0, 0, 0, .8);
+
+}
+
+
+.modal-cancel .modal-content {
+  border: none;
+
+  width: calc(100% - 40px);
+  max-width: 650px;
+  margin: 0 auto;
+
+  font-size: 20px;
+  text-align: center;
+}
+
+.modal-cancel .modal-content a {
+  text-decoration: underline;
+}
+
+.modal-cancel .modal-close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  border: none;
+  background: none;
+
+  svg {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+
+    path, rect {
+      fill: #000;
+
+      -webkit-transition: linear .3s;
+      -moz-transition: linear .3s;
+      -ms-transition: linear .3s;
+      -o-transition: linear .3s;
+      transition: linear .3s;
+    }
+  }
+
+  &:hover {
+    svg {
+      path, rect {
+
+      }
+    }
+  }
+}
+
+@media all and (max-width: 500px) {
+  .modal-cancel .modal-content {
+    padding: 25px;
+    max-width: 100%;
+  }
+}
+
+
+.modal-cancel-wrapper {
+
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.3s ease 0s;
+
+  .container {
+    width: 100%;
+    max-width: 664px;
+    padding: 32px 30px;
+    box-sizing: border-box;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    position: relative;
+    max-height: 100%;
+    overflow-y: auto;
+    //@include background_gradient;
+  }
+
+  .modal-header {
+
+  }
+
+  .btn-close {
+    position: absolute;
+    right: 16px;
+    top: 18px;
+    display: block;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    //background: url("/assets/images/button-close.svg") no-repeat scroll center center transparent;
+    background-size: 22px;
+  }
+
+  .modal-title {
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+    text-transform: uppercase;
+  }
+
+  .modal-text {
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 21px;
+    line-height: 27px;
+  }
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+}

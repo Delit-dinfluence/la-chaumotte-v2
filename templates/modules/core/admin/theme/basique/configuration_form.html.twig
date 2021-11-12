@@ -1,0 +1,116 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block content %}
+
+    <ul class="nav nav-tabs card-tabs">
+        <li class="nav-item active"><a class="nav-link active" data-toggle="tab" href="#configuration">Générale</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#maintenance">Maintenance</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#coming_soon">Page d'attente</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#files">Fichiers</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cookies">Cookies</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#google">Google Map</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div id="configuration" class="tab-pane fade in active show">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' with {'admin_entity_settings' : configuration_settings , 'default_entity' : configuration, 'form_entity': form_configuration} %}
+        </div>
+
+        <div id="maintenance" class="tab-pane fade">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' with {'admin_entity_settings' : maintenance_settings , 'default_entity' : maintenance, 'form_entity': form_maintenance } %}
+        </div>
+
+        <div id="coming_soon" class="tab-pane fade">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' with {'admin_entity_settings' : coming_soon_settings , 'default_entity' : coming_soon, 'form_entity': form_coming_soon } %}
+        </div>
+
+        <div id="files" class="tab-pane fade">
+            {% include '@core/admin/theme/basique/includes/table.html.twig' with {'admin_entity_settings' : files_settings , 'entities' : files, 'default_entity': file } %}
+        </div>
+        <div id="cookies" class="tab-pane fade">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' with {'admin_entity_settings' : cookie_settings , 'default_entity' : cookie, 'form_entity': form_cookie } %}
+        </div>
+        <div id="google" class="tab-pane fade">
+            {% include '@core/admin/theme/basique/includes/form.html.twig' with {'admin_entity_settings' : google_settings , 'default_entity' : google, 'form_entity': form_google } %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+        //#region Cookies
+
+        $('#cookie_configuration_submit').on('click', function (event) {
+            event.preventDefault();
+
+            let google = $('#cookie_configuration_google_analytics').val();
+            let add_this = $('#cookie_configuration_add_this').val();
+            let pixel_facebook = $('#cookie_configuration_pixel_facebook').val();
+            let recaptcha_client = $('#cookie_configuration_recaptcha_client').val();
+            let recaptcha_server = $('#cookie_configuration_recaptcha_server').val();
+            let recaptcha_hostname = $('#cookie_configuration_recaptcha_hostname').val();
+
+
+            let dataToSend = {
+                'google_analytics': google,
+                'add_this': add_this,
+                'pixel_facebook': pixel_facebook,
+                'recaptcha_client': recaptcha_client,
+                'recaptcha_server': recaptcha_server,
+                'recaptcha_hostname': recaptcha_hostname,
+            };
+
+            $.ajax({
+                url: "{{ path('core_admin_cookie_configuration_save') }}",
+                data: dataToSend
+
+            }).done(function (data) {
+
+            }).fail(function () {
+
+            });
+
+        });
+
+        //#endregion
+
+        //#region GoogleMap
+
+        $('#google_map_configuration_submit').on('click', function (event) {
+            event.preventDefault();
+
+            let api_key = $('#google_map_configuration_api_key').val();
+            let zoom = $('#google_map_configuration_zoom').val();
+            let latitude = $('#google_map_configuration_latitude').val();
+            let longitude = $('#google_map_configuration_longitude').val();
+
+            let dataToSend = {
+                'api_key': api_key,
+                'zoom': zoom,
+                'latitude': latitude,
+                'longitude': longitude,
+            };
+
+            $.ajax({
+                url: "{{ path('core_admin_google_map_configuration_save') }}",
+                data: dataToSend
+
+            }).done(function (data) {
+
+            }).fail(function () {
+
+            });
+
+        });
+
+        //#endregion
+
+    </script>
+
+{% endblock %}

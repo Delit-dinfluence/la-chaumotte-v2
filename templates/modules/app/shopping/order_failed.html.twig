@@ -1,0 +1,31 @@
+{% extends '@app/base.html.twig' %}
+
+{% block content %}
+    <div class="page page-annexe page-order-failed">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+
+        <header class="page-header">
+            <h1 class="page-title">{{ translation.order_payment_fail_title|raw }}</h1>
+        </header>
+        <div class="page-content">
+            <div class="page-container">
+
+                <div>
+                  {{ translation.order_payment_fail_content|raw }}
+
+                    <div class="controls">
+                        <a href="{{ '/' ~ locale ~  pages.account.translate(locale).uri }}">{{ translation.order_payment_fail_link_1|raw }}</a>
+                        <a href="{{ '/' ~ locale ~  pages.home.translate(locale).uri }}">{{ translation.order_payment_fail_link_2|raw }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# PAGE FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div> {# /.page #}
+{% endblock %}

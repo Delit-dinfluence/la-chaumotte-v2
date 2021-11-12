@@ -1,0 +1,219 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+
+{% block content %}
+
+    <div class="page page-order">
+
+        <ul class="nav nav-tabs">
+            {#<li class="active"><a data-toggle="tab" href="#order">Commande</a></li>#}
+            {#<li><a data-toggle="tab" href="#products">Produits</a></li>#}
+            {#<li><a data-toggle="tab" href="#historic">Historique</a></li>#}
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="order" class="tab-pane fade in active show">
+                {#{% include '@core/admin/theme/basique/includes/form.html.twig' %}#}
+
+                {% set item_content %}
+                    <div class="form">
+
+                        <div class="recapitulatif">
+
+                            <div><span>Référence:</span> {{ order.reference }}</div>
+                            <div><span>Date de création:</span> {{ order.createdAt|date('d-m-Y h:i') }}</div>
+                            <div><span>Dernière modification:</span> {{ order.updatedAt|date('d-m-Y h:i') }}</div>
+                        </div>
+
+                        <div class="addresses">
+
+                            <div class="address address_delivery">
+                                <span class="address-title">Adresse de livraison</span>
+                                <span>{{ delivery_title ~ ' ' ~ address_delivery.firstname|default('') ~ ' ' ~ address_delivery.lastname|default('') }}</span>
+                                <span>{{ address_delivery.address|default('') }}</span>
+                                <span>{{ address_delivery.complement|default('') }}</span>
+                                <span>{{ address_delivery.zipCode|default('') ~ ' ' ~ address_delivery.city|default('') }}</span>
+                                <span>{{ address_delivery.country|default('') }}</span>
+                            </div>
+
+                            <div class="address address_invoice">
+                                <span class="address-title">Adresse de facturation</span>
+                                <span>{{ invoice_title ~ ' ' ~ address_invoice.firstname|default('') ~ ' ' ~ address_invoice.lastname|default('') }}</span>
+                                <span>{{ address_invoice.address|default('') }}</span>
+                                <span>{{ address_invoice.complement|default('') }}</span>
+                                <span>{{ address_invoice.zipCode|default('') ~ ' ' ~ address_invoice.city|default('') }}</span>
+                                <span>{{ address_invoice.country|default('') }}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="informations">
+
+                            <div><span>Méthode de paiement :</span> {{ order.paymentMethod }}</div>
+                            <div><span>Méthode de livraison :</span> {{ order.deliveryMethod }}</div>
+                            <div><span>Etat de la commande :</span> {{ form_widget(form_entity.status) }}</div>
+                        </div>
+
+                        <div class="cart">
+
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Couverture</th>
+                                    <th>Informations</th>
+                                    <th>Prix Unitaire</th>
+                                    <th>Prix HT</th>
+                                    <th>TVA</th>
+                                    <th>Quantité</th>
+                                </tr>
+                                </thead>
+
+                                {% set thumbConfig = {"thumbnail": {"size": [150, 150] }} %}
+
+
+                                {% for item in products %}
+                                    {% set product = item.product %}
+
+                                    <tr class="product">
+                                        <td>{{ loop.index }}</td>
+
+                                        <td>
+                                            <div>
+                                                <figure>
+                                                    {% if product.cover != null %}
+                                                        <img src="{{ asset('assets/media/images/' ~ product.cover.image) }}"
+                                                             alt="">
+                                                    {% else %}
+                                                        <img src="{{ images['5ccbebe46b80d'].slug  }}"
+                                                             alt="">
+                                                    {% endif %}
+                                                </figure>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                <span>{{ item.designation }}</span>
+
+
+
+                                                {% if item.attributes|length > 0 %}
+
+
+                                                    <div class="products-attributes">
+                                                        {% for key, value in item.attributes %}
+                                                            <div class="product-attribute">{{ value.group.designation }} :
+
+
+                                                                {% if value.group.id == 6 %}
+                                                                    <div class="lightgallery">
+                                                                        <a href="{{ value.value }}" class="attribute-image">
+                                                                            <img src="{{ value.value }}"/>
+                                                                        </a>
+                                                                    </div>
+                                                                {% else %}
+
+                                                                    {% if value.group.groupRequired == true %}
+                                                                        {{ value.value }}
+                                                                    {% else %}
+                                                                        {{ value.value.designation }}
+                                                                    {% endif %}
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+
+
+
+                                                <a href="/4DM1n157R4710N/entity-management?module=shopping&entity=Product&action=form&id={{ product.id }}"
+                                                   target="_blank">Voir le produit </a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                {{ item.priceHt }} &euro;
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                {{ item.priceHt * item.quantity }} &euro;
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                {{ item.rateTva }} %
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div>
+                                                {{ item.quantity }}
+                                            </div>
+                                        </td>
+
+                                        {#<td>#}
+                                        {#{{ item.weight }}#}
+                                        {#</td>#}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+
+                            <table class="order-recap">
+                                <thead>
+                                <tr colspan="2">
+                                    <th>Récapitulatif du panier</th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td>Total HT</td>
+                                    <td>{{ cart.totalHT }} &euro;</td>
+                                </tr>
+                                <tr>
+                                    <td>Livraison</td>
+                                    <td>{{ order.deliveryPrice }} &euro;</td>
+                                </tr>
+                                <tr>
+                                    <td>TVA</td>
+                                    <td>0 &euro;</td>
+                                </tr>
+                                <tr>
+                                    <td>Total TTC</td>
+                                    <td>{{ order.deliveryPrice + cart.totalHT }} &euro;</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                {% endset %}
+
+                {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                    title: 'Récapitulatif de la commande',
+                    content: item_content,
+                } %}
+            </div>
+
+            <div id="historic" class="tab-pane fade">
+                {% include '@core/admin/theme/basique/includes/table.html.twig' with {'admin_entity_settings' : logs_settings , 'entities' : logs, 'default_entity': log } %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+
+
+{% block page_footer_static %}
+
+    {{ form_row(form_entity.submit, {'label' : 'Enregistrer', 'attr' : {'class' : 'btn btn-submit'}}) }}
+
+{% endblock %}

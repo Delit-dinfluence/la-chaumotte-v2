@@ -1,0 +1,48 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block content %}
+
+    <div class="row cards cards-small">
+        <div class="col-md-3">
+            {% set item_content %}
+                <div>
+                    <p><span>Mode: </span>{{ environment.debug }}</p>
+                </div>
+
+            {% endset %}
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                title: 'Environement',
+                image: asset('assets/media/images/card_small_1.jpg'),
+                content: item_content,
+                type: 'small'
+            } %}
+        </div>
+
+        <div class="col-md-3">
+            {% set item_content %}
+
+                <div>
+                    <p><span>Version: </span>{{ versioning.version }}</p>
+                    <p><span>Mise à jours: </span>{{ versioning.maj_last_date }} - "{{ versioning.maj_last_object }}"</p>
+                </div>
+
+            {% endset %}
+
+            {% include '@core/admin/theme/basique/includes/card.html.twig' with {
+                title: 'Mises à jours',
+                image: asset('assets/media/images/card_small_1.jpg'),
+                content: item_content,
+                type: 'small'
+            } %}
+        </div>
+    </div>
+
+    <p>Liste des modules: </p>
+    {% include '@core/admin/theme/basique/includes/form.html.twig' %}
+
+{% endblock %}
+
+

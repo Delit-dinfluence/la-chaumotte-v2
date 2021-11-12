@@ -1,0 +1,115 @@
+{% extends '@app/account/base.html.twig' %}
+
+{% block account_title %}
+    {{ translation.page_account_adress_title }}
+{% endblock %}
+
+{% block account_content %}
+
+    <div class="addresses">
+
+        <div class="form form-addresses">
+
+            <div class="ariane">
+                <a href="{{ '/' ~ locale ~  pages.account.translate(locale).uri }}">{{ translation.page_account_ariane_home }} </a>
+                - {{ translation.page_account_adress_title }}
+            </div>
+
+            <form>
+                {% if addresses|length > 0 %}
+                    <div class="address-list">
+                        {% for item in addresses %}
+
+                            <div class="address" data-id="{{ item.id }}">
+                                <div>
+                                    <p class="address-designation">
+                                        {{ item.designation }}
+                                    </p>
+
+                                    <p class="address-title">
+                                        {% if item.title == 0 %}Mr. {% else %}Mme. {% endif %} {{ item.lastname ~ ' ' ~ item.firstname }}
+                                    </p>
+
+                                    <p class="address-address">
+                                        {{ item.address }}
+                                    </p>
+
+                                    <p class="address-localisation">
+                                        {{ item.zipCode ~ ' ' ~ item.city ~ ' ' ~  item.country }}
+                                    </p>
+
+                                </div>
+
+                                <div class="controls">
+                                    <button class="btn btn-remove btn-address-remove">{{ translation.page_account_address_remove|raw }}</button>
+                                    <a href="/compte/adresse/edition/{{ item.id }}"
+                                       class="btn btn-edit">{{ translation.page_account_address_update|raw }}</a>
+                                    <p class="address-errors"></p>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>{{ translation.page_account_address_empty|raw }}</p>
+                {% endif %}
+
+
+                <div class="controls">
+                    <a href="/compte/adresse/edition/-1"
+                       class="btn btn-submit">{{ translation.page_account_address_create }}</a>
+                </div> {# /.controls #}
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            /**
+             * Suppression d'une adresse
+             */
+            $('.btn-address-remove').on('click', function (event) {
+                event.preventDefault();
+
+                let address = $(this).closest('.address');
+                let button = $(this);
+                let errors = $(this).find('.address-errors');
+
+                let dataToSend = {
+                    'id': address.attr('data-id')
+                };
+
+                button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                remove_errors(errors);
+
+                $.ajax({
+                    url: '{{ path('user_remove_address') }}',
+                    data: dataToSend,
+                }).done(function () {
+
+                    window.location.replace("{{ '/' ~ locale ~  pages.account_adress.translate(locale).uri }}");
+
+                }).fail(function () {
+
+                    button.html('{{ translation.page_account_address_remove|raw }}');
+                    errors.html('{{ translation.page_errors_fire|raw }}');
+                    errors.addClass('active');
+
+                });
+
+            });
+
+            /**
+             * Nettoie les erreurs
+             */
+            function remove_errors(errors) {
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+        });
+    </script>
+{% endblock %}

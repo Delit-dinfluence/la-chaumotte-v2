@@ -1,0 +1,12 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block content %}
+
+    {% include '@core/admin/theme/basique/includes/form.html.twig' with {
+        'title':title|default(''),
+        'icon':icon|default('')
+    } %}
+
+{% endblock %}

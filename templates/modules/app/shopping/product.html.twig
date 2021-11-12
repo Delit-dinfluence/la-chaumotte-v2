@@ -1,0 +1,308 @@
+{% extends '@app/base.html.twig' %}
+
+{% block page_title %}
+    {{ product_primary.designation }}
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/vendors/lightslider-1.1.6/css/lightslider.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/ligthGallery-1.6.11/css/lightgallery.min.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="page page-product">
+
+        {# NAVIGATION #}
+        {% include '@app/includes/navigation.html.twig' %}
+
+        {% if product_primary.productFeatures|length > 0 %}
+            {% set type =  product_primary.productFeatures[0].feature %}
+        {% endif %}
+{#        <section id="product" class="product" data-type="{% if type is defined %}{{ type.id }}{% endif %}" data-product="{{ product_primary.id }}">#}
+
+{#            <div class="column">#}
+
+{#                {% if product_primary.medal != null %}#}
+{#                    <div class="medal">#}
+{#                        <img src="{{ asset('assets/media/images/' ~ product_primary.medal) }}" alt="">#}
+{#                    </div>#}
+{#                {% endif %}#}
+
+{#                <ul id="product_images">#}
+{#                    {% for item in product_primary.productImages %}#}
+{#                        <li data-thumb="{{ asset('assets/media/images/' ~ item.image) }}" class="product-slider"#}
+{#                            data-src="{{ asset('assets/media/images/' ~ item.image) }}">#}
+{#                            <img src="{{ asset('assets/media/images/' ~ item.image) }}" alt=""/>#}
+{#                        </li>#}
+{#                    {% endfor %}#}
+
+{#                    {% if product_primary.productImages|length < 1 %}#}
+{#                        <li>#}
+{#                            <img src="{{ asset('assets/mefdia/images/core/no_image.png') }}" alt="">#}
+{#                        </li>#}
+{#                    {% endif %}#}
+{#                </ul>#}
+
+{#            </div> #}{# /.column #}
+
+{#            <div class="column">#}
+
+{#                <p class="category-big">#}
+{#                    {% for item in product.categories %}#}
+{#                        {% if loop.index > 1 %},{% endif %}#}
+{#                        {{ item.designation ~ ' ' }}#}
+{#                    {% endfor %}#}
+{#                </p>#}
+
+{#                <p class="product-title">{{ product_primary.designation }}</p>#}
+{#                <p class="product-title-complement">{{ product_primary.subtitle }}</p>#}
+
+{#                <div class="product-price">#}
+{#                    <span class="price">{{ (product_primary.priceHT * (1 + (product_primary.tax.rate / 100)))|number_format(2, '.', ' ') }} &euro;</span>#}
+{#                    <span class="price-help">{{ translation.page_product_unit_price|raw }}</span>#}
+{#                </div>#}
+
+{#                <div class="product-quantity">#}
+
+{#                    <div class="form-group">#}
+{#                        <input type="number" value="1" id="product_quantity">#}
+
+{#                        <div class="controls">#}
+{#                            <button id="product_quantity_add" class="btn">+</button>#}
+{#                            <button id="product_quantity_remove" class="btn active">-</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <button id="submit" class="btn-add-cart">{{ translation.page_product_cart_add|raw }}</button>#}
+{#                </div>#}
+
+{#                <div id="product-errors"></div>#}
+
+{#                <div class="product-informations">#}
+
+
+{#                    {% for item in product_primary.productFiles %}#}
+
+{#                        {% if locale in item.language %}#}
+{#                            <a href="{{ asset('assets/media/files/' ~ item.document) }}" class="btn btn-download"#}
+{#                               target="_blank">{{ translation.page_product_download_file|raw }}</a>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+
+{#                    <div class="product-resume">{{ product_primary.descriptionShort|raw }}</div>#}
+
+{#                    {% if product_primary.descriptionLong|striptags != '' %}#}
+{#                        <button id="product-more"#}
+{#                                class="btn product-more ">{{ translation.page_product_more_infos|raw }}</button>#}
+
+{#                        <div id="product-description"#}
+{#                             class="product-description">{{ product_primary.descriptionLong|raw }}</div>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div> #}{# /.column #}
+
+{#        </section> #}{# /.products #}
+
+{#        <div class="modal cart-modal fade" id="cart-modal" data-type="{{ type.id }}" tabindex="-1" role="dialog"#}
+{#             aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#            <div class="modal-dialog" role="document">#}
+{#                <div class="modal-content">#}
+{#                    <div class="modal-header">#}
+{#                        <h5 class="modal-title"#}
+{#                            id="exampleModalLabel">{{ translation.page_product_popup_title|raw }}</h5>#}
+{#                    </div>#}
+
+{#                    <div class="modal-body">#}
+
+{#                        <div class="modal-product">#}
+{#                            <figure>#}
+{#                                {% if product_primary.cover != '' %}#}
+{#                                    <img src="{{ asset('assets/media/images/' ~ product_primary.cover.image) }}" alt=""#}
+{#                                         class="modal-image">#}
+{#                                {% else %}#}
+{#                                    <img src="{{ images['5ccbebe46b80d'].slug }}" alt="" class="modal-image">#}
+{#                                {% endif %}#}
+{#                            </figure>#}
+
+{#                            <div>#}
+{#                                <p class="item-category">#}
+{#                                    {% for item in product.categories %}#}
+{#                                        {% if loop.index > 1 %},{% endif %}#}
+
+{#                                        {% if item.designationOrder == 0 %}#}
+{#                                            <span class="category-designation">{{ item.designationBig ~ ' ' ~ item.designationSmall }}</span>#}
+{#                                        {% else %}#}
+{#                                            <span class="category-designation">{{ item.designationSmall ~ ' ' ~ item.designationBig }}</span>#}
+{#                                        {% endif %}#}
+
+{#                                    {% endfor %}#}
+{#                                </p>#}
+
+{#                                <p class="item-title">{{ product_primary.designation }}</p>#}
+
+{#                                {% for feature in product.productFeatures %}#}
+{#                                    <p class="product-feature">{{ feature.featureGroup.designation ~ ' : ' ~ feature.feature.designation }}</p>#}
+{#                                {% endfor %}#}
+
+{#                                <p class="item-price">{{ translation.page_product_popup_unit_price ~ ' ' ~ product_primary.priceHT|number_format(2, '.', ' ') }}#}
+{#                                    &euro;</p>#}
+
+{#                                <p class="item-quantity">{{ translation.page_product_popup_quantity|raw }} <span#}
+{#                                            id="popup-quantity"></span></p>#}
+{#                            </div>#}
+{#                        </div>#}
+
+{#                        <div>#}
+{#                            <p class="cart-infos">{{ translation.page_product_popup_recap_1|raw }} <span#}
+{#                                        id="modal-total-products">X</span> {{ translation.page_product_popup_recap_2|raw }}#}
+{#                            </p>#}
+
+{#                            <p class="cart-total-ht">{{ translation.page_product_popup_total|raw }} <span#}
+{#                                        id="modal-total-ht">--</span> &euro;</p>#}
+{#                        </div>#}
+{#                    </div>#}
+
+{#                    <div class="modal-footer modal-controls">#}
+{#                        <button id="cart-" type="button" class="btn btn-return" data-dismiss="modal">#}
+{#                            {{ translation.page_product_popup_previous|raw }}#}
+{#                        </button>#}
+
+{#                        <a href="{{ pages.cart.uri }}" id="cart-redirect" class="btn btn-submit">#}
+{#                            {{ translation.page_product_popup_next|raw }}#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+        {# RANDOM PRODUCTS #}
+{#        {% include '@app/includes/products_random.html.twig' with { title: translation.page_product_random_title|raw } %}#}
+
+        {# FOOTER #}
+        {% include '@app/includes/footer.html.twig' %}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('assets/vendors/lightslider-1.1.6/js/lightslider.min.js') }}"></script>
+    <script src="{{ asset('assets/vendors/ligthGallery-1.6.11/js/lightgallery-all.min.js') }}"></script>
+
+    <script>
+
+        {#$(document).ready(function () {#}
+
+        {#    /**#}
+        {#     * Initialisation du Carousel/Gallery des images du produit#}
+        {#     */#}
+        {#    $('#product_images').lightSlider({#}
+        {#        gallery: true,#}
+        {#        item: 1,#}
+        {#        mode: 'fade',#}
+        {#        thumbItem: 6,#}
+        {#        thumbMargin: 4,#}
+        {#        slideMargin: 0,#}
+        {#        controls: false,#}
+        {#        onSliderLoad: function (el) {#}
+        {#            el.lightGallery({#}
+        {#                selector: '#product_images .lslide',#}
+        {#                share: false,#}
+        {#                fullScreen: false,#}
+        {#                download: false,#}
+        {#                autoplay: false,#}
+        {#                hash: false,#}
+        {#                pager: false,#}
+        {#                autoplayControls: false,#}
+        {#            });#}
+        {#        }#}
+        {#    });#}
+
+
+        {#    $('#cart-redirect').on('click', function () {#}
+
+        {#        $(this).html('<i class="fas fa-spinner fa-spin"></i>');#}
+        {#    });#}
+
+        {#    /**#}
+        {#     * Désactive la pagination si le nombre d'images <= 1#}
+        {#     **/#}
+        {#    if ($('.product .lSPager li').length <= 1) {#}
+        {#        $('.product .lSPager').remove();#}
+        {#    }#}
+
+        {#    /**#}
+        {#     * Affiche la version longue/courte de la description du produit#}
+        {#     **/#}
+        {#    $('#product-more').on('click', function () {#}
+        {#        $('#product-description').toggleClass('active');#}
+        {#        $('#product-more').remove();#}
+        {#    });#}
+
+        {#    /**#}
+        {#     * Ajout du produit au panier#}
+        {#     */#}
+        {#    $('#submit').on('click', function (event) {#}
+        {#        event.preventDefault();#}
+
+        {#        let button = $(this);#}
+        {#        let errors = $('#product-errors');#}
+        {#        let product = $('#product');#}
+        {#        let quantity = $('#product_quantity').val();#}
+
+        {#        let dataToSend = {#}
+        {#            'product_id': product.attr('data-product'),#}
+        {#            'quantity': (quantity > 0 ? quantity : 1)#}
+        {#        };#}
+
+        {#        button.html('<i class="fas fa-spinner fa-pulse"></i>');#}
+        {#        remove_product_errors();#}
+
+        {#        $.ajax({#}
+        {#            url: '{{ path('shopping_cart_product_add') }}',#}
+        {#            data: dataToSend,#}
+        {#        }).done(function (data) {#}
+
+        {#            button.html('{{ translation.page_product_cart_add|raw }}');#}
+
+        {#            $('#modal-total-products').html(data['content']['cart']['cartTotalProductsCount']);#}
+        {#            $('#modal-total-ht').html(data['content']['cart']['cartTotalTTC']);#}
+        {#            $('#popup-quantity').html(quantity);#}
+
+        {#            $('#cart-modal').modal('show');#}
+
+        {#            $('#cart-tag').html(data['content']['cart']['cartTotalProductsCount']);#}
+
+        {#            $('.navigation-wrapper .cart-tag').html(data['content']['cart']['cartTotalProductsCount']);#}
+
+
+        {#        }).fail(function (jqXHR, textStatus, errorThrown) {#}
+
+        {#            button.html('{{ translation.page_product_cart_add|raw }}');#}
+
+        {#            if (jqXHR.status == 401) {#}
+        {#                errors.html('{{ translation.page_errors_id }}');#}
+        {#            } else {#}
+        {#                errors.html('{{ translation.page_errors_fire|raw }}');#}
+        {#            }#}
+
+        {#            errors.addClass('active');#}
+
+        {#        });#}
+
+        {#    });#}
+
+        {#    /**#}
+        {#     * Nettoie l'affichage des erreurs#}
+        {#     */#}
+        {#    function remove_product_errors() {#}
+        {#        let errors = $('#product-errors');#}
+
+        {#        errors.removeClass('active');#}
+        {#        errors.html('');#}
+        {#    }#}
+
+        {#});#}
+
+    </script>
+
+{% endblock %}

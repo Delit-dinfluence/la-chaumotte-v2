@@ -1,0 +1,98 @@
+{#
+
+
+ #}
+
+{% if type is defined and  type == 'small' %}
+    {% set type = 'small' %}
+{% elseif type is defined and type == 'mini' %}
+    {% set type = 'mini' %}
+{% else %}
+    {% set type = 'normal' %}
+{% endif %}
+
+<div class="card card-{{ type }}">
+
+    {% if card_header|default(' ') != 'null' %}
+        <div class="card-header">
+            {% if  type == 'small' %}
+                <figure class="card-image">
+                    {% if image is defined %}
+                        <img src="{{ image }}" alt="">
+                    {% endif %}
+                </figure>
+
+                <h2 class="card-title">{{ title }}</h2>
+            {% elseif type == 'mini' %}
+                {% if icon is defined %}
+                    <div class="card-icon" {% if background is defined %}style="background:{{ background }}"{% endif %}>
+                        <i class="material-icons">{{ icon }}</i>
+                </div>
+                {% endif %}
+
+
+                <div class="card-infos">
+                    {% if title is defined %}
+                        <h2 class="card-title">{{ title }}</h2>
+                    {% endif %}
+                    {% if data is defined %}
+                        <p class="card-data">{{ data|raw }}</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                {% if icon is defined and icon != false %}
+                    <div class="card-icon">
+                        {% if icon is defined %}
+                            <i class="material-icons">{{ icon }}</i>
+                        {% endif %}
+                        {% if icon_title is defined %}
+                            {{ icon_title }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                {% if title is defined %}
+
+                    <h2 class="card-title{% if icon is defined and not icon %} card-light{% endif %}">{{ title }}</h2>
+                {% endif %}
+            {% endif %}
+
+            {% if select_language is defined %}
+                <div class="languages">
+                    <select name="" id="select-languages">
+                        {% for language in languages %}
+                            <option value="{{ language.id }}" data-position="{{ loop.index }}">
+                                {{ language.designation }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+    <div class="card-body">
+        {{ content }}
+
+        {% if controls is defined  and controls|trim != '' %}
+            <div class="card-controls">
+                {{ controls }}
+            </div>
+        {% endif %}
+    </div>
+    {% if footer_left is defined and footer_left != false  or footer_right is defined and  footer_right != false %}
+        <div class="card-footer">
+            <div class="card-footer--left">
+                {% if footer_left is defined %}
+                    {{ footer_left|raw }}
+                {% endif %}
+            </div>
+            <div class="card-footer--right">
+                {% if footer_right is defined %}
+                    {{ footer_right|raw }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>

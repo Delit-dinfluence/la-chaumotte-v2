@@ -1,0 +1,68 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+{% block content %}
+
+    <ul class="nav nav-tabs  card-tabs">
+        <li class="nav-item active" data-btn="btn_attributes_group">
+            <a class="nav-link active" data-toggle="tab" href="#attributs">Attributs</a>
+        </li>
+        <li class="nav-item" data-btn="btn_features_group">
+            <a class="nav-link" data-toggle="tab" href="#features">Caractéristiques</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="attributs" class="tab-pane fade in active show">
+            {% set title = '' %}
+            {% if admin_entity_settings.list.card_attribute_title is defined %}
+                {% set title = admin_entity_settings.list.card_attribute_title %}
+            {% endif %}
+
+            {% include '@core/admin/theme/basique/includes/table.html.twig' with {'admin_entity_settings' : attributes_settings , 'entities' : attributes, 'default_entity': attribute } %}
+        </div>
+        <div id="features" class="tab-pane fade">
+            {% set title = '' %}
+            {% if admin_entity_settings.list.card_feature_title is defined %}
+                {% set title = admin_entity_settings.list.card_feature_title %}
+            {% endif %}
+
+            {% include '@core/admin/theme/basique/includes/table.html.twig' with {'admin_entity_settings' : features_settings , 'entities' : features, 'default_entity': feature } %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page_footer_static %}
+
+    <div class="attributes_features_controls">
+        <a id="btn_attributes_group"
+           href="{{ '/4DM1n157R4710N/shopping/entity-management?module=shopping&entity=AttributeGroup&action=form&id=-1' }}"
+           class="btn btn-submit active">
+            <i class="fas fa-plus"></i> Groupe d'attributs
+        </a>
+
+        <a id="btn_features_group"
+           href="{{ '/4DM1n157R4710N/entity-management?module=Shopping&entity=FeatureGroup&id=1&action=form&id=-1' }}"
+           class="btn btn-submit">
+            <i class="fas fa-plus"></i> Groupe de caractéristique
+        </a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+
+        $(document).ready(function () {
+
+            $('.nav-item').on('click', function () {
+                var item = $(this).attr('data-btn');
+
+                $('.attributes_features_controls a.btn').removeClass('active');
+                $('#' + item).addClass('active');
+            })
+        });
+
+    </script>
+{% endblock %}

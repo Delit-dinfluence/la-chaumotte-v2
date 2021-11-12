@@ -1,0 +1,19 @@
+app_bundle:
+    resource: ../../src/AppBundle/Controller/
+    type: annotation
+
+core_bundle:
+    resource: ../../src/CoreBundle/Controller/
+    type: annotation
+
+shopping_bundle:
+    resource: ../../src/ShoppingBundle/Controller/
+    type: annotation
+
+sender_bundle:
+    resource: ../../src/SenderBundle/Controller/
+    type: annotation
+
+user_bundle:
+    resource: ../../src/UserBundle/Controller/
+    type: annotation

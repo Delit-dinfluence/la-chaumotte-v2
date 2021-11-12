@@ -1,0 +1,7 @@
+maker:
+#  root_namespace: 'Root'
+#  root_namespace: 'App'
+#  root_namespace: 'Core'
+#  root_namespace: 'Mailbox'
+  root_namespace: 'Shopping'
+#  root_namespace: 'User'

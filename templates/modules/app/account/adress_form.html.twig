@@ -1,0 +1,190 @@
+{% extends '@app/account/base.html.twig' %}
+
+{% block account_title %}
+    {{ translation.page_account_adress_title }}
+{% endblock %}
+
+{% block account_content %}
+
+    <div class="address-form">
+        <form id="form-address" class="form form-address" data-id="{{ address.id|default(-1) }}">
+
+            <div class="ariane">
+                <a href="{{ '/' ~ locale ~  pages.account.translate(locale).uri }}">{{ translation.page_account_ariane_home }} </a> - <a
+                        href="{{ '/' ~ locale ~  pages.account_adress.translate(locale).uri }}">{{ translation.page_account_adress_title }}</a> - {{ translation.page_account_newsletters_title_update }}
+            </div>
+
+            <div class="form-group">
+                <label for="edit-address-designation">{{ translation.page_account_address_designation|raw }}</label>
+                <input type="text" id="edit-address-designation" name="edit-address-designation" required value="{{ address.designation|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="row row-split">
+                <div class="form-group form-radio">
+                    <input type="radio" name="edit-address-title" value="0"
+                           id="edit-address-title-mr" {% if address.title|default(0) == 0 %}checked{% endif %}>
+                    <label for="edit-address-title-mr">{{ translation.page_account_address_mr|raw }}</label>
+                </div>
+
+                <div class="form-group form-radio">
+                    <input type="radio" name="edit-address-title" value="1"
+                           id="edit-address-title-mrs" {% if address.title|default(0) == 1 %}checked{% endif %}>
+                    <label for="edit-address-title-mrs">{{ translation.page_account_address_mrs|raw }}</label>
+                </div> {# /.form-group #}
+            </div> {# /.row #}
+
+            <div class="form-group">
+                <label for="edit-address-lastname">{{ translation.page_account_address_lastname|raw }}</label>
+                <input type="text" id="edit-address-lastname" name="edit-address-lastname" required value="{{ address.lastname|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address-firstname">{{ translation.page_account_address_firstname|raw }}</label>
+                <input type="text" id="edit-address-firstname" name="edit-address-firstname" required value=" {{ address.firstname|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address">{{ translation.page_account_address_address|raw }}</label>
+                <input type="text" id="edit-address" name="edit-address" value="{{ address.address|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address-complement">{{ translation.page_account_address_complement|raw }}</label>
+                <input type="text" id="edit-address-complement" name="edit-address-complement" value="{{ address.complement|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address-zip-code">{{ translation.page_account_address_zipcode|raw }}</label>
+                <input type="text" id="edit-address-zip-code" name="edit-address-zip-code" value="{{ address.zipCode|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address-city">{{ translation.page_account_address_city|raw }}</label>
+                <input type="text" id="edit-address-city" name="edit-address-city" value="{{ address.city|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address-country">{{ translation.page_account_address_country|raw }}</label>
+                <input type="text" id="edit-address-country" name="edit-address-country" value="{{ address.country|default('') }}">
+            </div> {# /.form-group #}
+
+            <div class="form-group">
+                <label for="edit-address-instruction">{{ translation.page_account_address_instruction|raw }}</label>
+                <textarea id="edit-address-instruction" name="edit-address-instruction">{{ address.instruction|default('') }}</textarea>
+            </div> {# /.form-group #}
+
+            <div class="controls">
+                <button id="edit-address-submit" class="btn btn-submit">{{ translation.page_account_save|default('') }}</button>
+                <p id="edit-address-errors"></p>
+            </div> {# /.controls #}
+
+        </form> {# /.form #}
+    </div> {# /.address-form #}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function () {
+
+            $('#form-address').validate({
+                rules: {
+                    'edit-address-designation': {
+                        required : true
+                    },
+                    'edit-address-title': {
+                        required : true
+                    },
+                    'edit-address-lastname': {
+                        required : true
+                    },
+                    'edit-address-firstname': {
+                        required : true
+                    },
+                    'edit-address': {
+                        required : true
+                    },
+                    'edit-address-complement': {
+
+                    },
+                    'edit-address-zip-code': {
+                        required : true
+                    },
+                    'edit-address-city': {
+                        required : true
+                    },
+                    'edit-address-country': {
+                        required : true
+                    },
+                    'edit-address-instruction': {
+
+                    },
+                },
+                messages: {
+                    'edit-address-designation': '{{ translation.page_errors_invalid_designation|raw }}',
+                    'edit-address-title': '{{ translation.page_errors_invalid_title|raw }}',
+                    'edit-address-lastname': '{{ translation.page_errors_invalid_lastname|raw }}',
+                    'edit-address-firstname': '{{ translation.page_errors_invalid_firstname|raw }}',
+                    'edit-address': '{{ translation.page_errors_invalid_address|raw }}',
+                    'edit-address-zip-code': '{{ translation.page_errors_invalid_zip_code|raw }}',
+                    'edit-address-city': '{{ translation.page_errors_invalid_city|raw }}',
+                    'edit-address-country': '{{ translation.page_errors_invalid_country|raw }}',
+                },
+
+                submitHandler: function (form) {
+
+                    let button = $('#edit-address-submit');
+                    let errors = $('#edit-address-errors');
+                    let dataToSend = {
+                        'id': $('#form-address').attr('data-id'),
+                        'designation': $('#edit-address-designation').val(),
+                        'title': $('input[name="edit-address-title"]:checked').val(),
+                        'lastname': $('#edit-address-lastname').val(),
+                        'firstname': $('#edit-address-firstname').val(),
+                        'address': $('#edit-address').val(),
+                        'complement': $('#edit-address-complement').val(),
+                        'zip_code': $('#edit-address-zip-code').val(),
+                        'city': $('#edit-address-city').val(),
+                        'country': $('#edit-address-country').val(),
+                        'instruction': $('#edit-address-instruction').val(),
+                    };
+
+                    button.html('<i class="fas fa-spinner fa-pulse"></i>');
+                    remove_errors();
+
+                    $.ajax({
+                        url: '{{ path('user_update_address') }}',
+                        data: dataToSend,
+                    }).done(function () {
+
+                        button.html('{{ translation.page_account_save|raw }}');
+                        errors.html('{{ translation.page_account_saved|raw }}');
+
+                        window.location.replace("{{ '/' ~ locale ~  pages.account_adress.translate(locale).uri }}");
+
+                    }).fail(function () {
+
+                        button.html('{{ translation.page_account_save|raw }}');
+                        errors.html('{{ translation.page_errors_fire|raw }}');
+                        errors.addClass('active');
+
+                    });
+
+                }
+
+            });
+
+            /**
+             * Nettoie l'affichage des erreurs
+             */
+            function remove_errors() {
+                var errors = $('#edit-address-errors');
+
+                errors.removeClass('active');
+                errors.html('');
+            }
+
+        });
+
+    </script>
+{% endblock %}

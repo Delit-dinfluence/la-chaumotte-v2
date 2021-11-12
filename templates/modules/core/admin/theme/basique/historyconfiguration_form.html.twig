@@ -1,0 +1,18 @@
+{% extends '@core/admin/theme/basique/base.html.twig' %}
+
+{% import "bundles/a2lix/macros.html.twig" as a2lixTranslations %}
+
+
+{% block content %}
+
+    <ul>
+        {% for rappel in rappels %}
+            <li><button data-level="{{ loop.index }}">{{ rappel }}</button></li>
+        {% endfor %}
+    </ul>
+
+    {% include '@core/admin/theme/basique/includes/table.html.twig' with {'admin_entity_settings' : blocks_settings , 'entities' : blocks, 'default_entity': block } %}
+
+    {% include '@core/admin/theme/basique/includes/form.html.twig'  %}
+
+{% endblock %}
